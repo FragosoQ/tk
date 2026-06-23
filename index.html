@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#16213A">
-<title>Tóquio · 18–25 Ago</title>
+<title>Tóquio · 30 Ago – 6 Set</title>
 <style>
 :root{
   --ink:#16213A;        /* indigo escuro — texto/primário */
@@ -192,6 +192,18 @@ header.top{
   padding:2px 7px;border-radius:6px}
 .find a.fpin{margin-left:auto;color:#fff;background:var(--ink);text-decoration:none;font-size:11.5px;
   font-weight:700;padding:6px 10px;border-radius:9px}
+.acard.cat{padding:0;overflow:hidden}
+.cathead{display:flex;align-items:center;gap:10px;width:100%;border:none;background:none;text-align:left;
+  padding:15px 16px;cursor:pointer;color:var(--ink);font:inherit}
+.cathead:focus-visible{outline:3px solid var(--shu);outline-offset:-3px}
+.cathead .dot{width:9px;height:9px;border-radius:50%;background:var(--shu);flex:0 0 auto}
+.cathead .cattitle{font-size:16px;font-weight:800;flex:1;min-width:0;line-height:1.2}
+.cathead .catcount{font-size:11px;font-weight:800;color:var(--indigo);background:#eef1f7;border-radius:20px;
+  padding:2px 9px;flex:0 0 auto}
+.cathead .chev{flex:0 0 auto;color:var(--muted);transition:transform .2s}
+.acard.cat.open .chev{transform:rotate(180deg)}
+.catbody{display:none;padding:0 16px 16px}
+.acard.cat.open .catbody{display:block}
 
 footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 10px;line-height:1.7}
 
@@ -206,7 +218,7 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 1
     <div class="brand">
       <span class="kanji">東京</span>
       <span class="latin">Tóquio
-        <small>18 – 25 <b>Agosto 2026</b> · Hakone + Kamakura</small>
+        <small>30 Ago – 6 Set <b>2026</b> · Hakone + Kamakura</small>
       </span>
     </div>
   </header>
@@ -247,7 +259,7 @@ function mapsLink(q){
 
 const DAYS = [
 {
-  n:1, kanji:"一", date:"18 Ago", day:18, dow:"Terça", trip:false,
+  n:1, kanji:"一", date:"30 Ago", day:30, mon:8, dow:"Domingo", trip:false,
   theme:"Chegada & Shinjuku à noite",
   why:"Dia leve para aterrar, tratar do cartão de transportes e provar a energia noturna de Shinjuku. Não exageres — o jet lag chega.",
   stops:[
@@ -278,7 +290,7 @@ const DAYS = [
   ]
 },
 {
-  n:2, kanji:"二", date:"19 Ago", day:19, dow:"Quarta", trip:false,
+  n:3, kanji:"三", date:"1 Set", day:1, mon:9, dow:"Terça", trip:false,
   theme:"Asakusa, Skytree & Ueno",
   why:"O Tóquio antigo: templo histórico, vista do céu e mercado de rua. Começa cedo — Senso-ji enche e o calor aperta ao meio-dia.",
   stops:[
@@ -310,7 +322,7 @@ const DAYS = [
   ]
 },
 {
-  n:3, kanji:"三", date:"20 Ago", day:20, dow:"Quinta", trip:false,
+  n:2, kanji:"二", date:"31 Ago", day:31, mon:8, dow:"Segunda", trip:false,
   theme:"Harajuku, Shibuya & Meiji Jingu",
   why:"Cultura jovem, moda e o santuário-floresta no meio da cidade. Termina no famoso cruzamento ao pôr do sol.",
   stops:[
@@ -346,7 +358,7 @@ const DAYS = [
   ]
 },
 {
-  n:4, kanji:"四", date:"21 Ago", day:21, dow:"Sexta", trip:true,
+  n:4, kanji:"四", date:"2 Set", day:2, mon:9, dow:"Quarta", trip:true,
   theme:"Viagem de dia · Hakone",
   why:"Montanha, vale vulcânico, lago com vista para o Monte Fuji e onsen. O dia útil ajuda a evitar multidões. Parte cedo de Shinjuku.",
   pass:{title:"Hakone Free Pass (2 dias)",
@@ -391,13 +403,13 @@ const DAYS = [
   ]
 },
 {
-  n:5, kanji:"五", date:"22 Ago", day:22, dow:"Sábado", trip:false,
+  n:5, kanji:"五", date:"3 Set", day:3, mon:9, dow:"Quinta", trip:false,
   theme:"Tsukiji, Akihabara & teamLab",
   why:"Comida de mercado de manhã, paraíso anime/tecnologia à tarde e arte digital imersiva à noite. Reserva o teamLab com antecedência.",
   stops:[
     {time:"08:00", tag:"comida", name:"Mercado exterior de Tsukiji", jp:"築地場外市場",
      desc:"Bancas e tasquinhas de marisco fresquíssimo: sushi, tamagoyaki em espeto, vieiras grelhadas, uni. O melhor pequeno-almoço da viagem.",
-     dica:"<b>Vai cedo</b> (8–9h) — fecha a meio da tarde e está fechado aos domingos e quartas. Sábado está aberto.",
+     dica:"<b>Vai cedo</b> (8–9h) — fecha a meio da tarde e está fechado aos domingos e quartas. Quinta está aberto.",
      q:"Tsukiji Outer Market"},
     {time:"11:00", tag:"anime", name:"Akihabara — Electric Town", jp:"秋葉原",
      desc:"O bairro otaku: lojas de anime e mangá, eletrónica em arranha-céus (Yodobashi), arcades de vários andares, figuras, retro-gaming e maid cafés.",
@@ -423,13 +435,13 @@ const DAYS = [
   ]
 },
 {
-  n:6, kanji:"六", date:"23 Ago", day:23, dow:"Domingo", trip:false,
+  n:7, kanji:"七", date:"5 Set", day:5, mon:9, dow:"Sábado", trip:false,
   theme:"Palácio Imperial, Tóquio & Ginza",
-  why:"História de Edo, a estação mais bonita do país e o luxo de Ginza — que ao domingo à tarde fecha a avenida aos carros.",
+  why:"História de Edo, a estação mais bonita do país e o luxo de Ginza — que ao sábado à tarde fecha a avenida aos carros.",
   stops:[
     {time:"09:30", tag:"historia", name:"Jardins Orientais do Palácio Imperial", jp:"皇居東御苑",
      desc:"Os jardins do antigo castelo de Edo, com muralhas de pedra, torres e relva imensa. Entrada gratuita e raramente cheios.",
-     dica:"<b>Abre ao domingo</b> (fecha às 2ªs e 6ªs). Bom passeio matinal à sombra antes do calor.",
+     dica:"<b>Aberto ao sábado</b> (fecha às 2ªs e 6ªs). Bom passeio matinal à sombra antes do calor.",
      q:"Imperial Palace East Gardens Tokyo"},
     {time:"11:30", tag:"historia", name:"Estação de Tóquio & KITTE", jp:"東京駅",
      desc:"A fachada Marunouchi de 1914 em tijolo vermelho. No edifício KITTE em frente, o terraço do 6º andar tem vista grátis sobre a estação.",
@@ -437,7 +449,7 @@ const DAYS = [
      q:"Tokyo Station Marunouchi"},
     {time:"13:30", tag:"compras", name:"Ginza", jp:"銀座",
      desc:"O bairro mais elegante: flagships (Uniqlo, Itoya de papelaria, Ginza Six), galerias e cafés. Almoço e tarde a passear.",
-     dica:"<b>Ao domingo à tarde</b> a avenida Chuo-dori fecha ao trânsito ('paraíso dos peões') — passeia pelo meio da rua.",
+     dica:"<b>Ao fim de semana à tarde</b> a avenida Chuo-dori fecha ao trânsito ('paraíso dos peões') — passeia pelo meio da rua.",
      q:"Ginza Chuo-dori Tokyo"},
     {time:"16:00", tag:"comida", name:"Depachika (cave gourmet)", jp:"デパ地下",
      desc:"As caves de comida dos grandes armazéns (ex.: Mitsukoshi, Matsuya) são um espetáculo: doces, bentos perfeitos, queijos e wagashi.",
@@ -455,7 +467,7 @@ const DAYS = [
   ]
 },
 {
-  n:7, kanji:"七", date:"24 Ago", day:24, dow:"Segunda", trip:true,
+  n:6, kanji:"六", date:"4 Set", day:4, mon:9, dow:"Sexta", trip:true,
   theme:"Viagem de dia · Kamakura",
   why:"O Grande Buda, templos junto ao mar e o comboio Enoden à beira da praia. Dia útil = menos multidões no comboio panorâmico.",
   pass:{title:"Como ir (Suica chega)",
@@ -499,7 +511,7 @@ const DAYS = [
   ]
 },
 {
-  n:8, kanji:"八", date:"25 Ago", day:25, dow:"Terça", trip:false,
+  n:8, kanji:"八", date:"6 Set", day:6, mon:9, dow:"Domingo", trip:false,
   theme:"Últimas compras & partida",
   why:"Ajusta ao horário do voo. Guarda as malas, faz as últimas compras perto da estação e segue para o aeroporto com folga.",
   stops:[
@@ -687,12 +699,15 @@ function dayHTML(d){
   </section>`;
 }
 
+function ordered(){ return DAYS.slice().sort((a,b)=>a.n-b.n); }
+
 function renderDays(){
-  document.getElementById("days").innerHTML = DAYS.map(dayHTML).join("");
+  const list = ordered();
+  document.getElementById("days").innerHTML = list.map(dayHTML).join("");
   // nav pills
-  document.getElementById("daynav").innerHTML = DAYS.map(d=>`
+  document.getElementById("daynav").innerHTML = list.map(d=>`
     <button class="pill ${d.trip?'trip':''}" id="pill${d.n}" onclick="goDay(${d.n})">
-      <div class="pk">${d.kanji}</div><div class="pd">${d.date.replace(' Ago','')}</div>
+      <div class="pk">${d.kanji}</div><div class="pd">${d.day}/${d.mon}</div>
     </button>`).join("");
 }
 
@@ -719,16 +734,16 @@ function renderEssenciais(){
 const DISCOVER = [
 { title:"Em 2ª mão & vintage", intro:"Tóquio é a capital mundial do usado em ótimo estado. Garimpa livros, jogos, roupa de marca e raridades a preços baixos.",
   items:[
-   {name:"Book Off / Super Bazaar", jp:"ブックオフ", area:"Shibuya · Akihabara", day:"Dia 3 / 5", desc:"Cadeia de usados baratos: mangá, livros, jogos, CDs e roupa. As lojas 'Super Bazaar' juntam tudo num só edifício.", tip:"As prateleiras de jogos e mangá a ~¥110 valem a garimpagem.", q:"Book Off Super Bazaar Shinjuku"},
+   {name:"Book Off / Super Bazaar", jp:"ブックオフ", area:"Shibuya · Akihabara", day:"Dia 2 / 5", desc:"Cadeia de usados baratos: mangá, livros, jogos, CDs e roupa. As lojas 'Super Bazaar' juntam tudo num só edifício.", tip:"As prateleiras de jogos e mangá a ~¥110 valem a garimpagem.", q:"Book Off Super Bazaar Shinjuku"},
    {name:"Hard Off + Mode Off", jp:"ハードオフ", area:"Akihabara", day:"Dia 5", desc:"O irmão da eletrónica e instrumentos usados (Hard Off) e da roupa (Mode Off): gadgets, câmaras e consolas retro.", q:"Hard Off Akihabara"},
    {name:"2nd Street", jp:"セカンドストリート", area:"Shimokitazawa · Harajuku", day:"Extra", desc:"A maior cadeia de roupa em 2ª mão — de marcas correntes a peças vintage e designer.", q:"2nd Street Shimokitazawa"},
    {name:"Shimokitazawa", jp:"下北沢", area:"Shimokitazawa", day:"Extra", desc:"Um bairro inteiro de vintage, thrift, cafés e lojas indie. A melhor zona de garimpo de roupa da cidade.", tip:"Fica a ~5 min de comboio de Shibuya — ótimo para encaixar numa tarde livre.", q:"Shimokitazawa"},
    {name:"Kōenji", jp:"高円寺", area:"Koenji", day:"Extra", desc:"Vintage mais barato e local, longe das multidões turísticas. Atmosfera boémia e retro.", q:"Koenji Tokyo"},
-   {name:"Cat Street / Ura-Harajuku", jp:"裏原宿", area:"Harajuku", day:"Dia 3", desc:"Streetwear e designer em 2ª mão (RAGTAG, Kindal) nas ruas calmas atrás de Harajuku.", q:"Cat Street Harajuku"}
+   {name:"Cat Street / Ura-Harajuku", jp:"裏原宿", area:"Harajuku", day:"Dia 2", desc:"Streetwear e designer em 2ª mão (RAGTAG, Kindal) nas ruas calmas atrás de Harajuku.", q:"Cat Street Harajuku"}
   ]},
 { title:"Cartas Pokémon & TCG", intro:"Desde lojas oficiais a singles e raridades usadas — Akihabara e Nakano são o coração do TCG.",
   items:[
-   {name:"Pokémon Center Shibuya", jp:"ポケモンセンター", area:"Shibuya", day:"Dia 3", desc:"Loja oficial no Shibuya Parco, com exclusivos e cartas promo. Ao lado ficam a Nintendo Tokyo e a Capcom Store.", q:"Pokemon Center Shibuya"},
+   {name:"Pokémon Center Shibuya", jp:"ポケモンセンター", area:"Shibuya", day:"Dia 2", desc:"Loja oficial no Shibuya Parco, com exclusivos e cartas promo. Ao lado ficam a Nintendo Tokyo e a Capcom Store.", q:"Pokemon Center Shibuya"},
    {name:"Pokémon Center Mega Tokyo", jp:"メガトウキョー", area:"Ikebukuro", day:"Extra", desc:"A maior loja Pokémon da cidade, no Sunshine City.", q:"Pokemon Center Mega Tokyo Ikebukuro"},
    {name:"Pokémon Café", jp:"ポケモンカフェ", area:"Nihonbashi", day:"Extra", desc:"Café temático com pratos e bebidas Pokémon e encontro com o Pikachu.", tip:"<b>Só com reserva</b> online — esgota com semanas de antecedência.", q:"Pokemon Cafe Nihonbashi Tokyo"},
    {name:"Lojas de cartas de Akihabara", jp:"トレカ", area:"Akihabara", day:"Dia 5", desc:"Hareruya, Card Rush e Yellow Submarine: TCG novo e usado, singles, caixas e torneios.", q:"Hareruya Akihabara"},
@@ -737,10 +752,10 @@ const DISCOVER = [
   ]},
 { title:"Livros & papelaria",
   items:[
-   {name:"Jimbocho", jp:"神保町", area:"Jimbocho", day:"Extra (perto Dia 6)", desc:"O bairro dos alfarrabistas: dezenas de livrarias de usados, mapas antigos e gravuras ukiyo-e.", tip:"Algumas lojas têm secções de arte e livros em inglês.", q:"Jimbocho Book Town"},
-   {name:"Tsutaya Books Daikanyama", jp:"蔦屋書店", area:"Daikanyama", day:"Extra (perto Dia 3)", desc:"Livraria-café de design lindíssima, perfeita para passar horas a folhear.", q:"Daikanyama Tsutaya Books"},
-   {name:"Village Vanguard", jp:"ヴィレッジヴァンガード", area:"Shibuya · Shimokitazawa", day:"Dia 3", desc:"Livraria-bazar caótica: livros, gadgets, snacks estranhos e cultura pop.", q:"Village Vanguard Shibuya"},
-   {name:"Itoya", jp:"伊東屋", area:"Ginza", day:"Dia 6", desc:"Papelaria icónica de 12 andares: papel washi, canetas e cadernos. Um clássico de Ginza.", q:"Itoya Ginza"},
+   {name:"Jimbocho", jp:"神保町", area:"Jimbocho", day:"Extra (perto Dia 7)", desc:"O bairro dos alfarrabistas: dezenas de livrarias de usados, mapas antigos e gravuras ukiyo-e.", tip:"Algumas lojas têm secções de arte e livros em inglês.", q:"Jimbocho Book Town"},
+   {name:"Tsutaya Books Daikanyama", jp:"蔦屋書店", area:"Daikanyama", day:"Extra (perto Dia 2)", desc:"Livraria-café de design lindíssima, perfeita para passar horas a folhear.", q:"Daikanyama Tsutaya Books"},
+   {name:"Village Vanguard", jp:"ヴィレッジヴァンガード", area:"Shibuya · Shimokitazawa", day:"Dia 2", desc:"Livraria-bazar caótica: livros, gadgets, snacks estranhos e cultura pop.", q:"Village Vanguard Shibuya"},
+   {name:"Itoya", jp:"伊東屋", area:"Ginza", day:"Dia 7", desc:"Papelaria icónica de 12 andares: papel washi, canetas e cadernos. Um clássico de Ginza.", q:"Itoya Ginza"},
    {name:"Kinokuniya", jp:"紀伊國屋書店", area:"Shinjuku", day:"Dia 1", desc:"Livraria enorme com boa secção de livros estrangeiros e revistas.", q:"Kinokuniya Shinjuku"}
   ]},
 { title:"Anime, figuras & retro games",
@@ -754,30 +769,30 @@ const DISCOVER = [
   ]},
 { title:"Comida que não podes perder",
   items:[
-   {name:"Sushi de tapete rolante", jp:"回転寿司", area:"Shibuya", day:"Dia 3", desc:"No Uobei/Genki pedes no ecrã e o prato chega no balcão. Barato, rápido e divertido.", q:"Uobei Sushi Shibuya"},
-   {name:"Gyukatsu", jp:"牛カツ", area:"Shibuya", day:"Dia 3", desc:"Bife panado mal-passado que acabas de grelhar tu numa pedra quente. Viciante.", q:"Gyukatsu Motomura Shibuya"},
+   {name:"Sushi de tapete rolante", jp:"回転寿司", area:"Shibuya", day:"Dia 2", desc:"No Uobei/Genki pedes no ecrã e o prato chega no balcão. Barato, rápido e divertido.", q:"Uobei Sushi Shibuya"},
+   {name:"Gyukatsu", jp:"牛カツ", area:"Shibuya", day:"Dia 2", desc:"Bife panado mal-passado que acabas de grelhar tu numa pedra quente. Viciante.", q:"Gyukatsu Motomura Shibuya"},
    {name:"Ramen de cabine", jp:"ラーメン", area:"vários", day:"Dia 1", desc:"No Ichiran comes em cabines individuais e personalizas tudo — caldo, picante, textura.", q:"Ichiran Ramen Shinjuku"},
    {name:"Monjayaki", jp:"もんじゃ焼き", area:"Tsukishima", day:"Extra (perto Dia 5)", desc:"A versão líquida do okonomiyaki, especialidade de Tóquio. Uma rua inteira só de monja.", tip:"Faz-se na chapa da própria mesa — pede ajuda ao staff da 1ª vez.", q:"Tsukishima Monja Street"},
-   {name:"Sukiyaki / unagi", jp:"すき焼き", area:"Asakusa", day:"Dia 2", desc:"O Asakusa Imahan serve sukiyaki tradicional desde o séc. XIX, num cenário clássico.", q:"Asakusa Imahan"},
-   {name:"Depachika", jp:"デパ地下", area:"Ginza · Shinjuku", day:"Dia 6", desc:"As caves gourmet dos armazéns: bentos perfeitos, doces e iguarias. Um festival visual.", q:"Mitsukoshi Ginza depachika"},
+   {name:"Sukiyaki / unagi", jp:"すき焼き", area:"Asakusa", day:"Dia 3", desc:"O Asakusa Imahan serve sukiyaki tradicional desde o séc. XIX, num cenário clássico.", q:"Asakusa Imahan"},
+   {name:"Depachika", jp:"デパ地下", area:"Ginza · Shinjuku", day:"Dia 7", desc:"As caves gourmet dos armazéns: bentos perfeitos, doces e iguarias. Um festival visual.", q:"Mitsukoshi Ginza depachika"},
    {name:"Kissaten retro", jp:"喫茶店", area:"Ginza · vários", day:"Extra", desc:"Cafés à moda antiga, com pudim, ovo-sando e café de filtro. Cápsula do tempo da era Showa.", q:"Cafe de l'Ambre Ginza"}
   ]},
 { title:"Snacks, konbini & 100 ienes",
   items:[
-   {name:"Don Quijote (Donki)", jp:"ドンキホーテ", area:"Shibuya · Shinjuku", day:"Dia 1 / 3", desc:"Megastore caótica e 24h: snacks, cosmética, eletrónica e souvenirs num labirinto.", tip:"A parede de KitKats de sabores e o corredor de snacks valem a visita.", q:"Don Quijote Shibuya"},
+   {name:"Don Quijote (Donki)", jp:"ドンキホーテ", area:"Shibuya · Shinjuku", day:"Dia 1 / 2", desc:"Megastore caótica e 24h: snacks, cosmética, eletrónica e souvenirs num labirinto.", tip:"A parede de KitKats de sabores e o corredor de snacks valem a visita.", q:"Don Quijote Shibuya"},
    {name:"Konbini", jp:"コンビニ", area:"em todo o lado", day:"todos os dias", desc:"7-Eleven, Lawson e FamilyMart têm refeições surpreendentemente boas a qualquer hora.", tip:"Experimenta o egg sando, o frango karaage do balcão e o famoso frango frito da Lawson.", q:""},
-   {name:"Daiso / lojas de ¥100", jp:"ダイソー", area:"Harajuku", day:"Dia 3", desc:"Quase tudo a ~¥110: utilidades, papelaria e souvenirs baratos e engraçados.", q:"Daiso Harajuku"},
-   {name:"Calbee+", jp:"カルビープラス", area:"Harajuku", day:"Dia 3", desc:"Batatas fritas e snacks acabados de fritar na hora.", q:"Calbee Plus Harajuku"},
-   {name:"Doces de rua", jp:"食べ歩き", area:"Asakusa · Ueno", day:"Dia 2", desc:"Senbei, dango, melonpan e mais nas ruas Nakamise (Asakusa) e Ameyoko (Ueno).", q:"Nakamise-dori Asakusa"}
+   {name:"Daiso / lojas de ¥100", jp:"ダイソー", area:"Harajuku", day:"Dia 2", desc:"Quase tudo a ~¥110: utilidades, papelaria e souvenirs baratos e engraçados.", q:"Daiso Harajuku"},
+   {name:"Calbee+", jp:"カルビープラス", area:"Harajuku", day:"Dia 2", desc:"Batatas fritas e snacks acabados de fritar na hora.", q:"Calbee Plus Harajuku"},
+   {name:"Doces de rua", jp:"食べ歩き", area:"Asakusa · Ueno", day:"Dia 3", desc:"Senbei, dango, melonpan e mais nas ruas Nakamise (Asakusa) e Ameyoko (Ueno).", q:"Nakamise-dori Asakusa"}
   ]},
 { title:"Fora da caixa", intro:"Experiências que não cabem nas listas habituais — o lado mais peculiar e memorável de Tóquio.",
   items:[
-   {name:"Kappabashi", jp:"かっぱ橋", area:"perto de Asakusa", day:"Dia 2", desc:"A rua dos utensílios de cozinha: facas japonesas e os famosos modelos de comida em plástico (sampuru).", tip:"Uma faca de cozinha ou um íman de 'sushi de plástico' dão lembranças únicas.", q:"Kappabashi Kitchen Town"},
-   {name:"Yanaka Ginza", jp:"谷中銀座", area:"Yanaka", day:"Extra (perto Dia 2)", desc:"Bairro velho de becos, lojas tradicionais e gatos. O Tóquio shitamachi que sobreviveu ao tempo.", tip:"Lindíssimo ao fim da tarde, com a 'escadaria do pôr do sol'.", q:"Yanaka Ginza"},
+   {name:"Kappabashi", jp:"かっぱ橋", area:"perto de Asakusa", day:"Dia 3", desc:"A rua dos utensílios de cozinha: facas japonesas e os famosos modelos de comida em plástico (sampuru).", tip:"Uma faca de cozinha ou um íman de 'sushi de plástico' dão lembranças únicas.", q:"Kappabashi Kitchen Town"},
+   {name:"Yanaka Ginza", jp:"谷中銀座", area:"Yanaka", day:"Extra (perto Dia 3)", desc:"Bairro velho de becos, lojas tradicionais e gatos. O Tóquio shitamachi que sobreviveu ao tempo.", tip:"Lindíssimo ao fim da tarde, com a 'escadaria do pôr do sol'.", q:"Yanaka Ginza"},
    {name:"Golden Gai", jp:"ゴールデン街", area:"Shinjuku", day:"Dia 1", desc:"Labirinto de ~200 bares minúsculos, cada um com o seu tema e personalidade.", tip:"Alguns cobram couvert; procura os que dizem 'tourist welcome'.", q:"Golden Gai Shinjuku"},
    {name:"Game Center Mikado", jp:"ミカド", area:"Takadanobaba", day:"Extra", desc:"Arcade retro vivo, cheio de máquinas clássicas e de regulares fiéis. Uma viagem ao passado.", q:"Game Center Mikado Takadanobaba"},
-   {name:"Chanko-nabe em Ryogoku", jp:"ちゃんこ鍋", area:"Ryogoku", day:"Extra", desc:"O guisado dos lutadores de sumo, servido no próprio bairro do sumo.", tip:"Em Agosto não há torneio em Tóquio, mas dá para comer como um rikishi.", q:"Ryogoku chanko nabe"},
-   {name:"Becos de tasquinhas", jp:"横丁", area:"Shinjuku · Shibuya", day:"Dia 1 / 3", desc:"Omoide Yokocho e Shibuya Yokocho: ruelas de yakitori e cerveja que param o tempo.", q:"Omoide Yokocho Shinjuku"},
+   {name:"Chanko-nabe em Ryogoku", jp:"ちゃんこ鍋", area:"Ryogoku", day:"Extra", desc:"O guisado dos lutadores de sumo, servido no próprio bairro do sumo.", tip:"Nestas datas não há torneio em Tóquio (o de setembro começa a meio do mês), mas dá para comer como um rikishi.", q:"Ryogoku chanko nabe"},
+   {name:"Becos de tasquinhas", jp:"横丁", area:"Shinjuku · Shibuya", day:"Dia 1 / 2", desc:"Omoide Yokocho e Shibuya Yokocho: ruelas de yakitori e cerveja que param o tempo.", q:"Omoide Yokocho Shinjuku"},
    {name:"teamLab + cápsula", jp:"カプセルホテル", area:"Toyosu", day:"Dia 5", desc:"Arte digital imersiva e, se quiseres a experiência completa, dormir uma noite num hotel-cápsula.", q:"teamLab Planets Tokyo"}
   ]}
 ];
@@ -800,14 +815,27 @@ function findHTML(it){
 }
 
 function renderAchados(){
-  const top = `<div class="intro">Garimpo, comida-gema e coisas fora do comum. O selo a vermelho mostra em que <b>dia/zona</b> do roteiro cada sítio encaixa melhor; "Extra" são pequenos desvios que valem a pena.</div>`;
-  const sections = DISCOVER.map(sec=>`
-    <div class="acard">
-      <h3><span class="dot"></span>${sec.title}</h3>
-      ${sec.intro?`<div class="intro">${sec.intro}</div>`:""}
-      <div class="finds">${sec.items.map(findHTML).join("")}</div>
+  const top = `<div class="intro">Garimpo, comida-gema e coisas fora do comum. O selo a vermelho mostra em que <b>dia/zona</b> do roteiro cada sítio encaixa melhor; "Extra" são pequenos desvios que valem a pena. Toca numa categoria para abrir.</div>`;
+  const sections = DISCOVER.map((sec,i)=>`
+    <div class="acard cat" id="cat${i}">
+      <button class="cathead" aria-expanded="false" onclick="toggleCat(${i})">
+        <span class="dot"></span>
+        <span class="cattitle">${sec.title}</span>
+        <span class="catcount">${sec.items.length}</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="catbody">
+        ${sec.intro?`<div class="intro">${sec.intro}</div>`:""}
+        <div class="finds">${sec.items.map(findHTML).join("")}</div>
+      </div>
     </div>`).join("");
   document.getElementById("panel-achados").innerHTML = top + sections;
+}
+
+function toggleCat(i){
+  const el = document.getElementById("cat"+i);
+  const open = el.classList.toggle("open");
+  el.querySelector(".cathead").setAttribute("aria-expanded", open);
 }
 
 function toggle(id, val){
@@ -856,9 +884,9 @@ function showTab(which){
 
 function markToday(){
   const now = new Date();
-  if(now.getFullYear()!==TRIP_YEAR || (now.getMonth()+1)!==TRIP_MONTH) return null;
-  const dd = now.getDate();
-  const match = DAYS.find(d=>d.day===dd);
+  if(now.getFullYear()!==TRIP_YEAR) return null;
+  const mon = now.getMonth()+1, dd = now.getDate();
+  const match = DAYS.find(d=>d.mon===mon && d.day===dd);
   if(match){
     const sec = document.getElementById("day"+match.n);
     sec.classList.add("istoday");
