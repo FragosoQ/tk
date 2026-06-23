@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#16213A">
+<title>Tóquio · 18–25 Ago</title>
+<style>
+:root{
+  --ink:#16213A;        /* indigo escuro — texto/primário */
+  --indigo:#2E4A78;     /* indigo médio */
+  --shu:#DB4F36;        /* vermelhão (torii) — acento */
+  --shu-soft:#fbe7e2;
+  --teal:#2F7E8C;       /* transportes */
+  --gold:#B8860B;
+  --paper:#F2F1EC;      /* fundo papel (frio, não creme) */
+  --card:#FBFAF6;
+  --line:#E2DFD6;
+  --muted:#6C7385;
+  --ok:#2E8B6F;
+  --shadow:0 1px 2px rgba(22,33,58,.06),0 6px 22px rgba(22,33,58,.07);
+  --r:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--paper);color:var(--ink);
+  -webkit-font-smoothing:antialiased;line-height:1.5;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.wrap{max-width:600px;margin:0 auto;padding:0 14px 60px}
+
+/* ---------- HEADER ---------- */
+header.top{
+  padding:30px 0 16px;position:relative;
+}
+.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--shu);font-weight:700;margin:0 0 6px}
+.brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.brand .kanji{font-size:52px;font-weight:800;line-height:.9;color:var(--ink);letter-spacing:.04em}
+.brand .latin{font-size:30px;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
+.brand .latin small{display:block;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--muted);margin-top:4px}
+.brand .latin small b{color:var(--indigo);font-weight:700}
+
+/* ---------- TABS ---------- */
+.tabs{display:flex;gap:6px;margin:18px 0 4px;position:sticky;top:0;z-index:30;
+  background:linear-gradient(var(--paper) 70%,rgba(242,241,236,0));padding:8px 0 10px}
+.tab{flex:1;border:none;background:#e8e6df;color:var(--indigo);font-weight:700;font-size:13.5px;
+  padding:10px 6px;border-radius:11px;cursor:pointer;transition:.15s}
+.tab[aria-selected="true"]{background:var(--ink);color:#fff}
+.tab:focus-visible{outline:3px solid var(--shu);outline-offset:2px}
+
+/* ---------- DAY NAV PILLS ---------- */
+.daynav{display:flex;gap:7px;overflow-x:auto;padding:6px 2px 12px;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none}
+.daynav::-webkit-scrollbar{display:none}
+.pill{flex:0 0 auto;border:1.5px solid var(--line);background:var(--card);border-radius:12px;
+  padding:7px 11px;cursor:pointer;text-align:center;min-width:54px;transition:.15s}
+.pill:focus-visible{outline:3px solid var(--shu);outline-offset:2px}
+.pill .pk{font-size:18px;font-weight:800;color:var(--indigo);line-height:1}
+.pill .pd{font-size:10px;color:var(--muted);font-weight:600;margin-top:3px}
+.pill.active{border-color:var(--ink);background:var(--ink)}
+.pill.active .pk{color:#fff}.pill.active .pd{color:#cfd6e6}
+.pill.trip .pk{color:var(--shu)}
+.pill.trip.active{background:var(--shu);border-color:var(--shu)}
+.pill.trip.active .pk{color:#fff}
+
+/* ---------- DAY SECTION ---------- */
+.day{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);margin:0 0 14px;overflow:hidden;scroll-margin-top:120px}
+.day.istoday{border-color:var(--shu);box-shadow:0 0 0 2px var(--shu-soft),var(--shadow)}
+.dayhead{display:flex;align-items:center;gap:14px;width:100%;border:none;background:none;
+  text-align:left;padding:16px 16px;cursor:pointer;color:var(--ink)}
+.dayhead:focus-visible{outline:3px solid var(--shu);outline-offset:-3px}
+.daynum{flex:0 0 auto;width:50px;height:50px;border-radius:13px;background:var(--ink);color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.day.trip .daynum{background:var(--shu)}
+.daynum .k{font-size:24px;font-weight:800;line-height:1}
+.daynum .n{font-size:9px;letter-spacing:.1em;opacity:.7;margin-top:1px}
+.daymeta{flex:1;min-width:0}
+.daymeta .dt{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.daymeta .th{font-size:17px;font-weight:800;margin:1px 0 0;line-height:1.25}
+.tripbadge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.06em;color:#fff;
+  background:var(--shu);padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:1px;text-transform:uppercase}
+.chev{flex:0 0 auto;color:var(--muted);transition:transform .2s}
+.day.open .chev{transform:rotate(180deg)}
+.daybody{display:none;padding:0 16px 18px}
+.day.open .daybody{display:block}
+.why{font-size:14px;color:var(--indigo);background:#eef1f7;border-left:3px solid var(--indigo);
+  padding:10px 12px;border-radius:0 10px 10px 0;margin:2px 0 16px}
+
+/* pass / transport banner for day trips */
+.passcard{background:linear-gradient(135deg,#fff,#fdeee9);border:1.5px solid var(--shu);
+  border-radius:13px;padding:13px 14px;margin:0 0 16px}
+.passcard h4{margin:0 0 4px;font-size:14px;color:var(--shu);letter-spacing:.02em}
+.passcard p{margin:0 0 8px;font-size:13px;color:var(--ink)}
+.passcard .price{font-weight:800}
+.passcard a.bbtn{display:inline-block;background:var(--shu);color:#fff;text-decoration:none;
+  font-size:12px;font-weight:700;padding:7px 12px;border-radius:9px}
+
+/* ---------- TIMELINE / STOPS ---------- */
+.timeline{position:relative;margin:0;padding:0;list-style:none}
+.transit{display:flex;align-items:center;gap:8px;color:var(--teal);font-size:12.5px;font-weight:600;
+  padding:7px 0 7px 4px;margin-left:8px;border-left:2px dashed #c9d6da}
+.transit .ico{flex:0 0 auto}
+.stop{position:relative;background:#fff;border:1px solid var(--line);border-radius:13px;
+  padding:12px 13px 12px;margin:0 0 4px}
+.stop .toprow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px}
+.time{font-size:12px;font-weight:800;color:var(--ink);background:#edeaf0;border-radius:7px;padding:3px 8px}
+.tag{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:7px}
+.tag.comida{background:#fbe7e2;color:#b23a24}
+.tag.historia{background:#e5ebf6;color:#2E4A78}
+.tag.vista{background:#dff0ee;color:#1f6b5c}
+.tag.anime{background:#ece4f6;color:#6a3fa0}
+.tag.compras{background:#f6efda;color:#8a6a08}
+.tag.arte{background:#fbe4f0;color:#a8347a}
+.tag.logistica{background:#e8e9ed;color:#525a6b}
+.stop h5{margin:2px 0 3px;font-size:15.5px;font-weight:800;line-height:1.25}
+.stop h5 .jp{font-weight:600;color:var(--muted);font-size:12px;margin-left:5px}
+.stop p.d{margin:0 0 8px;font-size:13.5px;color:#39415a}
+.stop .dica{font-size:12.5px;color:var(--ink);background:#fffaf2;border:1px dashed #e8d9b8;
+  border-radius:9px;padding:7px 9px;margin:0 0 10px}
+.stop .dica b{color:var(--gold)}
+.actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mapbtn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;background:var(--ink);
+  color:#fff;font-size:12.5px;font-weight:700;padding:8px 12px;border-radius:10px}
+.mapbtn:active{transform:translateY(1px)}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);
+  font-weight:600;cursor:pointer;user-select:none;margin-left:auto}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.stop.done{opacity:.62}
+.stop.done h5{text-decoration:line-through;text-decoration-color:var(--muted)}
+
+/* eat block */
+.eat{margin:14px 0 2px}
+.eat h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--shu);margin:0 0 8px}
+.eat ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.eat li{display:flex;gap:9px;align-items:flex-start;background:#fff;border:1px solid var(--line);
+  border-radius:11px;padding:9px 11px}
+.eat li .en{font-weight:700;font-size:13.5px}
+.eat li .enote{font-size:12px;color:var(--muted)}
+.eat li a{margin-left:auto;flex:0 0 auto;color:var(--ink);text-decoration:none;font-size:18px;
+  align-self:center;line-height:1}
+
+/* notes list */
+.notes{margin:14px 0 0;padding:0;list-style:none}
+.notes li{font-size:12.5px;color:#39415a;padding:5px 0 5px 20px;position:relative}
+.notes li::before{content:"▸";position:absolute;left:2px;color:var(--shu);font-size:11px;top:6px}
+
+/* ---------- ESSENCIAIS ---------- */
+.panel{display:none}
+.panel.show{display:block}
+.acard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:16px;margin:0 0 14px}
+.acard > h3{margin:0 0 12px;font-size:17px;display:flex;align-items:center;gap:9px}
+.acard > h3 .dot{width:9px;height:9px;border-radius:50%;background:var(--shu);flex:0 0 auto}
+.app{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line)}
+.app:first-of-type{border-top:none}
+.app .ai{flex:0 0 auto;width:38px;height:38px;border-radius:10px;background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px}
+.app .ai.p{background:var(--shu)}.app .ai.t{background:var(--teal)}.app .ai.g{background:var(--gold)}
+.app .info{flex:1;min-width:0}
+.app .info .nm{font-weight:800;font-size:14.5px}
+.app .info .nm .role{font-weight:600;color:var(--muted);font-size:12px}
+.app .info .ds{font-size:12.5px;color:#39415a;margin-top:2px}
+.app a.go{flex:0 0 auto;align-self:center;text-decoration:none;background:#e8e6df;color:var(--indigo);
+  font-size:12px;font-weight:700;padding:7px 11px;border-radius:9px}
+.tipgrid h4{font-size:13.5px;margin:14px 0 6px;color:var(--indigo)}
+.tipgrid h4:first-child{margin-top:0}
+.tipgrid ul{margin:0 0 4px;padding-left:18px}
+.tipgrid li{font-size:13px;color:#39415a;margin-bottom:5px}
+.tipgrid li b{color:var(--ink)}
+.emerg{background:#fff4f2;border:1px solid var(--shu);border-radius:11px;padding:11px 13px;margin-top:10px}
+.emerg b{color:var(--shu)}
+
+/* ---------- ACHADOS ---------- */
+.intro{font-size:13px;color:var(--indigo);background:#eef1f7;border-left:3px solid var(--indigo);
+  padding:10px 12px;border-radius:0 10px 10px 0;margin:0 0 14px}
+.finds{display:grid;gap:8px}
+.find{background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 12px}
+.find .fh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.find .fn{font-weight:800;font-size:14px;line-height:1.25}
+.find .fn .jp{font-weight:600;color:var(--muted);font-size:11.5px;margin-left:4px}
+.find .area{margin-left:auto;font-size:10px;font-weight:700;color:var(--indigo);background:#eef1f7;
+  padding:2px 7px;border-radius:6px;white-space:nowrap}
+.find .fd{font-size:12.5px;color:#39415a;margin:5px 0 0}
+.find .ftip{font-size:11.5px;color:#39415a;background:#fffaf2;border:1px dashed #e8d9b8;
+  border-radius:8px;padding:5px 8px;margin-top:6px}
+.find .ftip b{color:var(--gold)}
+.find .ffoot{display:flex;align-items:center;gap:8px;margin-top:7px}
+.find .fday{font-size:10px;font-weight:800;color:var(--shu);background:var(--shu-soft);
+  padding:2px 7px;border-radius:6px}
+.find a.fpin{margin-left:auto;color:#fff;background:var(--ink);text-decoration:none;font-size:11.5px;
+  font-weight:700;padding:6px 10px;border-radius:9px}
+
+footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 10px;line-height:1.7}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <p class="eyebrow">Roteiro de viagem · 7 dias</p>
+    <div class="brand">
+      <span class="kanji">東京</span>
+      <span class="latin">Tóquio
+        <small>18 – 25 <b>Agosto 2026</b> · Hakone + Kamakura</small>
+      </span>
+    </div>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tab-roteiro" role="tab" aria-selected="true" onclick="showTab('roteiro')">Roteiro</button>
+    <button class="tab" id="tab-achados" role="tab" aria-selected="false" onclick="showTab('achados')">Achados</button>
+    <button class="tab" id="tab-essenciais" role="tab" aria-selected="false" onclick="showTab('essenciais')">Essenciais</button>
+  </div>
+
+  <!-- ROTEIRO -->
+  <div class="panel show" id="panel-roteiro">
+    <nav class="daynav" id="daynav" aria-label="Dias"></nav>
+    <div id="days"></div>
+  </div>
+
+  <!-- ACHADOS -->
+  <div class="panel" id="panel-achados"></div>
+
+  <!-- ESSENCIAIS -->
+  <div class="panel" id="panel-essenciais"></div>
+
+  <footer>
+    Os dados podem mudar — confirma horários, preços e estado das atrações antes de cada dia.<br>
+    Marca cada paragem como visitada — fica guardado neste telemóvel.
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   DADOS DO ROTEIRO
+   ========================================================= */
+const TRIP_YEAR = 2026, TRIP_MONTH = 8; // Agosto
+
+function mapsLink(q){
+  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+}
+
+const DAYS = [
+{
+  n:1, kanji:"一", date:"18 Ago", day:18, dow:"Terça", trip:false,
+  theme:"Chegada & Shinjuku à noite",
+  why:"Dia leve para aterrar, tratar do cartão de transportes e provar a energia noturna de Shinjuku. Não exageres — o jet lag chega.",
+  stops:[
+    {time:"Aeroporto", tag:"logistica", name:"Cartão Suica / PASMO", jp:"IC card",
+     desc:"Antes de sair do aeroporto trata do cartão de transportes — paga metro, autocarros, lojas e máquinas com um toque. iPhone: adiciona Suica à Apple Wallet ou usa a app Welcome Suica Mobile (válida 180 dias). Android comprado fora do Japão geralmente não suporta — compra o Welcome Suica físico no balcão JR do aeroporto.",
+     dica:"Carrega ¥3.000–5.000 para começar. Recarregas em qualquer máquina de metro ou loja de conveniência (7-Eleven/Lawson/FamilyMart), só com dinheiro.",
+     q:"JR East Travel Service Center Narita Airport"},
+    {time:"Tarde", tag:"logistica", name:"Check-in & descanso", jp:"",
+     desc:"Larga as malas e dá um passeio curto pela zona do hotel para te orientares. Localiza a estação de metro mais próxima e uma loja de conveniência.",
+     dica:"Compra já uma garrafa de água e um chá gelado na loja de conveniência — em Agosto vais beber muito.",
+     q:"Shinjuku Station Tokyo"},
+    {time:"18:00", tag:"vista", name:"Tokyo Metropolitan Gov. Building", jp:"都庁",
+     desc:"Miradouro a 202 m de altura, totalmente grátis. Vê o pôr do sol e as luzes da cidade — em dias limpos avista-se o Monte Fuji ao longe.",
+     dica:"<b>Grátis</b> e sem filas grandes. Confirma o horário do deck (costuma fechar ~22h, dias variáveis).",
+     q:"Tokyo Metropolitan Government Building Observation Deck"},
+    {time:"19:30", tag:"comida", name:"Omoide Yokocho", jp:"思い出横丁",
+     desc:"Beco estreito de tasquinhas de yakitori (espetadas grelhadas) e cerveja, junto à saída oeste de Shinjuku. Primeiro jantar bem japonês e descontraído.",
+     dica:"Muitos sítios são minúsculos (5–6 lugares) e só dinheiro. Aponta para o que vês a grelhar.",
+     q:"Omoide Yokocho Shinjuku"},
+    {time:"21:00", tag:"vista", name:"Kabukicho & Godzilla", jp:"歌舞伎町",
+     desc:"Mar de néon, ecrãs gigantes e a cabeça do Godzilla no topo do hotel Gracery. Passeio noturno opcional se ainda tiveres energia.",
+     dica:"Ignora quem te aborda na rua a oferecer bares — segue em frente.",
+     q:"Godzilla Head Shinjuku Toho"}
+  ],
+  eat:[
+    {name:"Omoide Yokocho", note:"Yakitori e ambiente — jantar", q:"Omoide Yokocho Shinjuku"},
+    {name:"Ichiran / Ramen Shinjuku", note:"Ramen rápido se preferires", q:"Ichiran Ramen Shinjuku"}
+  ]
+},
+{
+  n:2, kanji:"二", date:"19 Ago", day:19, dow:"Quarta", trip:false,
+  theme:"Asakusa, Skytree & Ueno",
+  why:"O Tóquio antigo: templo histórico, vista do céu e mercado de rua. Começa cedo — Senso-ji enche e o calor aperta ao meio-dia.",
+  stops:[
+    {time:"08:30", tag:"historia", name:"Templo Senso-ji & Nakamise", jp:"浅草寺",
+     desc:"O templo mais antigo de Tóquio (ano 645), com o portão Kaminarimon e a sua lanterna gigante. A rua Nakamise-dori, a caminho, está cheia de bancas de doces e lembranças.",
+     dica:"<b>Chega antes das 9h</b> para fotos sem multidão. Prova um melonpan quente ou um senbei (bolacha de arroz) na Nakamise.",
+     q:"Senso-ji Temple Asakusa"},
+    {time:"10:30", tag:"vista", name:"Tokyo Skytree", jp:"東京スカイツリー",
+     desc:"A torre mais alta do Japão (634 m). Atravessa o rio Sumida a pé (~20 min) ou uma estação de Tobu. Miradouros a 350 m e 450 m.",
+     dica:"Compra bilhete antecipado online para evitar fila. A base (Solamachi) tem ar condicionado, lojas e restaurantes — bom refúgio do calor.",
+     q:"Tokyo Skytree"},
+    {time:"Transporte", tag:"logistica", name:"→ Ueno", jp:"",
+     desc:"Volta a Asakusa e apanha a linha Ginza (metro laranja) direta até Ueno, ~5 min.",
+     dica:"Tudo pago com o Suica — sem comprar bilhete.",
+     q:"Ueno Station Tokyo"},
+    {time:"13:00", tag:"comida", name:"Mercado Ameyoko", jp:"アメ横",
+     desc:"Mercado de rua vibrante sob a linha de comboio: marisco, espetadas, fruta, takoyaki e pechinchas. Almoço a petiscar.",
+     dica:"Um dos poucos sítios em Tóquio onde regatear é normal. Prova takoyaki (bolinhas de polvo).",
+     q:"Ameyoko Market Ueno"},
+    {time:"15:00", tag:"historia", name:"Parque & Museus de Ueno", jp:"上野公園",
+     desc:"Parque enorme com templos, lago de lótus e o Museu Nacional de Tóquio (a melhor coleção de arte e história japonesa do país).",
+     dica:"Se o calor cansar, o museu é fresco e vale muito a pena. Lago Shinobazu fica lindo ao fim do dia.",
+     q:"Tokyo National Museum Ueno"}
+  ],
+  eat:[
+    {name:"Ameyoko (bancas)", note:"Marisco e street food — almoço", q:"Ameyoko Market food Ueno"},
+    {name:"Asakusa Imahan", note:"Sukiyaki tradicional (mais formal)", q:"Asakusa Imahan"},
+    {name:"Innsyoutei", note:"Bento e teishoku no parque de Ueno", q:"Innsyoutei Ueno Park"}
+  ]
+},
+{
+  n:3, kanji:"三", date:"20 Ago", day:20, dow:"Quinta", trip:false,
+  theme:"Harajuku, Shibuya & Meiji Jingu",
+  why:"Cultura jovem, moda e o santuário-floresta no meio da cidade. Termina no famoso cruzamento ao pôr do sol.",
+  stops:[
+    {time:"09:00", tag:"vista", name:"Santuário Meiji Jingu", jp:"明治神宮",
+     desc:"Santuário xintoísta rodeado por uma floresta de 100.000 árvores, surpreendentemente calmo e fresco. Portões torii imensos em madeira.",
+     dica:"<b>Frescura matinal</b> antes do calor. Podes ver casamentos tradicionais ao fim de semana, mas é tranquilo a meio da semana.",
+     q:"Meiji Jingu Shrine"},
+    {time:"10:45", tag:"compras", name:"Takeshita-dori (Harajuku)", jp:"竹下通り",
+     desc:"Rua pedonal da moda kawaii e doce: crepes gigantes, algodão-doce arco-íris, lojas excêntricas. O coração da cultura jovem de Tóquio.",
+     dica:"Prova um crepe de Harajuku. A rua Omotesando, ao lado, é o oposto — elegante, com arquitetura de luxo.",
+     q:"Takeshita Street Harajuku"},
+    {time:"13:30", tag:"anime", name:"Shibuya — Hachiko & Center Gai", jp:"渋谷",
+     desc:"Estátua do cão fiel Hachiko, ruas de lojas, arcades e a energia pura de Shibuya. Almoço por aqui.",
+     dica:"A Shibuya é prática a partir de Harajuku: uma estação na linha JR Yamanote, ou ~20 min a pé.",
+     q:"Hachiko Statue Shibuya"},
+    {time:"15:00", tag:"vista", name:"Shibuya Hikarie — Sky Lobby", jp:"渋谷ヒカリエ",
+     desc:"No 11º andar do edifício Hikarie, colado à estação, o Sky Lobby tem janelas do chão ao teto com vista panorâmica e gratuita sobre Shibuya — vês o cruzamento e a cidade de cima sem bilhete.",
+     dica:"<b>Grátis.</b> Ótimo plano B se não apanhares o Shibuya Sky, ou para um café com vista a meio da tarde.",
+     q:"Shibuya Hikarie Sky Lobby"},
+    {time:"17:30", tag:"vista", name:"Shibuya Sky", jp:"渋谷スカイ",
+     desc:"Miradouro a céu aberto no topo do Shibuya Scramble Square. Reserva o slot do pôr do sol para a melhor vista da cidade.",
+     dica:"<b>Reserva online com antecedência</b> (~¥2.500) — o slot do pôr do sol esgota. Leva casaco fino: venta lá em cima.",
+     q:"Shibuya Sky"},
+    {time:"19:00", tag:"vista", name:"Cruzamento de Shibuya", jp:"スクランブル交差点",
+     desc:"O cruzamento mais movimentado do mundo, melhor à noite com os néons. Vê de cima do Starbucks do Tsutaya ou da passagem.",
+     dica:"Atravessa-o uma vez no meio da multidão — é uma experiência por si só.",
+     q:"Shibuya Crossing"}
+  ],
+  eat:[
+    {name:"Uobei Shibuya", note:"Sushi em tapete rolante, barato e divertido", q:"Uobei Sushi Shibuya"},
+    {name:"Gyukatsu Motomura", note:"Bife panado que grelhas tu — pode ter fila", q:"Gyukatsu Motomura Shibuya"},
+    {name:"Crepe de Harajuku", note:"Marion Crepes / Angels Heart", q:"Marion Crepes Harajuku"}
+  ]
+},
+{
+  n:4, kanji:"四", date:"21 Ago", day:21, dow:"Sexta", trip:true,
+  theme:"Viagem de dia · Hakone",
+  why:"Montanha, vale vulcânico, lago com vista para o Monte Fuji e onsen. O dia útil ajuda a evitar multidões. Parte cedo de Shinjuku.",
+  pass:{title:"Hakone Free Pass (2 dias)",
+    text:"Compra no Odakyu Sightseeing Service Center em Shinjuku. Inclui ida-e-volta Shinjuku–Odawara + uso ilimitado de comboio de montanha, funicular, teleférico, barco-pirata e autocarros, e descontos em ~70 locais.",
+    price:"¥7.100 (Shinjuku, 2 dias)", extra:"Romancecar (comboio expresso reservado) +¥1.200 por sentido — opcional mas confortável (~85 min direto).",
+    link:"https://www.odakyu.jp/english/passes/hakone/"},
+  stops:[
+    {time:"07:30", tag:"logistica", name:"Shinjuku → Hakone-Yumoto", jp:"小田急",
+     desc:"Linha Odakyu. Romancecar direto (~85 min, reservado) ou expresso normal (~2h, grátis com o passe, 1 transbordo em Odawara).",
+     dica:"Reserva o Romancecar no balcão Odakyu de Shinjuku ao comprar o passe. Senta-te à frente para as vistas.",
+     q:"Odakyu Sightseeing Service Center Shinjuku"},
+    {time:"10:00", tag:"vista", name:"Comboio de montanha → Gora", jp:"箱根登山鉄道",
+     desc:"Comboio panorâmico aos ziguezagues subindo a montanha entre hortênsias, até Gora. Depois o funicular curto até Sounzan.",
+     dica:"Senta-te do lado direito na subida para as melhores vistas do vale.",
+     q:"Hakone Tozan Railway Gora Station"},
+    {time:"11:30", tag:"vista", name:"Teleférico & Owakudani", jp:"大涌谷",
+     desc:"Teleférico sobre o vale vulcânico fumegante de Owakudani — cheiro a enxofre e, em dias limpos, o Monte Fuji ao fundo. Prova o famoso ovo preto cozido nas fontes.",
+     dica:"<b>Confirma o estado do teleférico nesse dia</b> — fecha por vezes por atividade vulcânica (há autocarro alternativo).",
+     q:"Owakudani Hakone"},
+    {time:"13:00", tag:"vista", name:"Barco-pirata no Lago Ashi", jp:"芦ノ湖",
+     desc:"Cruzeiro num galeão pelo lago Ashi até Moto-Hakone, com vista para o Fuji nos dias claros.",
+     dica:"Almoça leve antes ou em Togendai. O convés superior tem as melhores vistas.",
+     q:"Lake Ashi Hakone pirate ship"},
+    {time:"14:30", tag:"historia", name:"Santuário de Hakone (torii do lago)", jp:"箱根神社",
+     desc:"Santuário na floresta com o icónico portão torii vermelho 'da Paz' a flutuar sobre a água — uma das imagens mais fotografadas do Japão.",
+     dica:"Há sempre fila para a foto no torii sobre o lago; vai cedo ou aceita a espera.",
+     q:"Hakone Shrine torii Lake Ashi"},
+    {time:"16:00", tag:"vista", name:"Onsen open-air — Hakone Yuryo", jp:"箱根湯寮",
+     desc:"Casa de banhos termais com grandes rotenburo (banhos ao ar livre), banhos de cerâmica e sauna, na floresta. A 3 min de Hakone-Yumoto num shuttle gratuito. Levantou as restrições a tatuagens em abril de 2025. Regresso a Shinjuku ao fim da tarde.",
+     dica:"<b>Privacidade total:</b> reserva um dos 19 banhos open-air privados (~¥6.000/sala, toalhas incluídas) — sem qualquer regra de tatuagens. Reserva com antecedência. No comunal: lava-te bem antes de entrar.",
+     q:"Hakone Yuryo"}
+  ],
+  eat:[
+    {name:"Bakery & Table Hakone", note:"Pão e café com os pés no rio quente, junto ao lago", q:"Bakery and Table Hakone"},
+    {name:"Ovo preto de Owakudani", note:"Diz a lenda que prolonga a vida 7 anos", q:"Owakudani black egg"},
+    {name:"Gora Brewery", note:"Soba e cerveja artesanal perto de Gora", q:"Gora Brewery Hakone"}
+  ],
+  notes:[
+    "Leva o passe sempre à mão: mostras (ou inseres) em cada meio de transporte.",
+    "Faz o circuito num só sentido (loop) para não repetir caminho.",
+    "Em Agosto pode haver trovoadas à tarde na montanha — leva um impermeável leve."
+  ]
+},
+{
+  n:5, kanji:"五", date:"22 Ago", day:22, dow:"Sábado", trip:false,
+  theme:"Tsukiji, Akihabara & teamLab",
+  why:"Comida de mercado de manhã, paraíso anime/tecnologia à tarde e arte digital imersiva à noite. Reserva o teamLab com antecedência.",
+  stops:[
+    {time:"08:00", tag:"comida", name:"Mercado exterior de Tsukiji", jp:"築地場外市場",
+     desc:"Bancas e tasquinhas de marisco fresquíssimo: sushi, tamagoyaki em espeto, vieiras grelhadas, uni. O melhor pequeno-almoço da viagem.",
+     dica:"<b>Vai cedo</b> (8–9h) — fecha a meio da tarde e está fechado aos domingos e quartas. Sábado está aberto.",
+     q:"Tsukiji Outer Market"},
+    {time:"11:00", tag:"anime", name:"Akihabara — Electric Town", jp:"秋葉原",
+     desc:"O bairro otaku: lojas de anime e mangá, eletrónica em arranha-céus (Yodobashi), arcades de vários andares, figuras, retro-gaming e maid cafés.",
+     dica:"Sobe a arcade Taito/SEGA andar a andar. A Yodobashi-Akiba tem de tudo e ar condicionado para a pausa do calor.",
+     q:"Akihabara Electric Town"},
+    {time:"Transporte", tag:"logistica", name:"→ Toyosu (teamLab)", jp:"",
+     desc:"De Akihabara até Toyosu de metro (~25–30 min). O teamLab Planets fica a 2 min da estação Shin-Toyosu (linha Yurikamome) ou ~10 min a pé de Toyosu.",
+     dica:"Marca o slot da tarde/noite no site oficial antes de ires.",
+     q:"teamLab Planets Tokyo Toyosu"},
+    {time:"17:00", tag:"arte", name:"teamLab Planets", jp:"チームラボプラネッツ",
+     desc:"Museu de arte digital imersiva onde caminhas descalço pela água e por salas de luz, flores e espelhos infinitos. Expandido em 2026, com mais salas interativas. (~¥3.200)",
+     dica:"<b>Descalço e há água até aos joelhos</b> — leva calções ou calças que enrolem bem. Espelhos no chão: evita saias/vestidos.",
+     q:"teamLab Planets Tokyo"},
+    {time:"19:30", tag:"vista", name:"Odaiba & Gundam — opcional", jp:"お台場",
+     desc:"Se sobrar energia, a ilha de Odaiba (perto) tem a estátua gigante do Gundam em DiverCity, beira-mar e vista da Rainbow Bridge.",
+     dica:"O Gundam tem pequenas 'animações' a horas certas à noite.",
+     q:"Unicorn Gundam Statue Odaiba DiverCity"}
+  ],
+  eat:[
+    {name:"Tsukiji (bancas)", note:"Sushi e marisco grelhado — pequeno-almoço", q:"Tsukiji Outer Market sushi"},
+    {name:"Kanda / Akihabara curry", note:"Almoço rápido entre lojas", q:"CoCo Ichibanya Akihabara"},
+    {name:"Vegan Ramen UZU", note:"No próprio teamLab Planets, sem reserva", q:"Vegan Ramen UZU teamLab Planets"}
+  ]
+},
+{
+  n:6, kanji:"六", date:"23 Ago", day:23, dow:"Domingo", trip:false,
+  theme:"Palácio Imperial, Tóquio & Ginza",
+  why:"História de Edo, a estação mais bonita do país e o luxo de Ginza — que ao domingo à tarde fecha a avenida aos carros.",
+  stops:[
+    {time:"09:30", tag:"historia", name:"Jardins Orientais do Palácio Imperial", jp:"皇居東御苑",
+     desc:"Os jardins do antigo castelo de Edo, com muralhas de pedra, torres e relva imensa. Entrada gratuita e raramente cheios.",
+     dica:"<b>Abre ao domingo</b> (fecha às 2ªs e 6ªs). Bom passeio matinal à sombra antes do calor.",
+     q:"Imperial Palace East Gardens Tokyo"},
+    {time:"11:30", tag:"historia", name:"Estação de Tóquio & KITTE", jp:"東京駅",
+     desc:"A fachada Marunouchi de 1914 em tijolo vermelho. No edifício KITTE em frente, o terraço do 6º andar tem vista grátis sobre a estação.",
+     dica:"A 'Character Street' subterrânea (Pokémon, Ghibli, etc.) é ótima para lembranças.",
+     q:"Tokyo Station Marunouchi"},
+    {time:"13:30", tag:"compras", name:"Ginza", jp:"銀座",
+     desc:"O bairro mais elegante: flagships (Uniqlo, Itoya de papelaria, Ginza Six), galerias e cafés. Almoço e tarde a passear.",
+     dica:"<b>Ao domingo à tarde</b> a avenida Chuo-dori fecha ao trânsito ('paraíso dos peões') — passeia pelo meio da rua.",
+     q:"Ginza Chuo-dori Tokyo"},
+    {time:"16:00", tag:"comida", name:"Depachika (cave gourmet)", jp:"デパ地下",
+     desc:"As caves de comida dos grandes armazéns (ex.: Mitsukoshi, Matsuya) são um espetáculo: doces, bentos perfeitos, queijos e wagashi.",
+     dica:"Compra um bento bonito e vai comer ao Hibiya Park ao lado.",
+     q:"Mitsukoshi Ginza depachika"},
+    {time:"18:30", tag:"vista", name:"Tokyo Tower — opcional", jp:"東京タワー",
+     desc:"A torre vermelha clássica acende-se à noite. Boa para encerrar o dia, especialmente vista das ruas em redor.",
+     dica:"Os degraus de Shiba Park ou a zona de Azabudai Hills dão ótimas fotos da torre iluminada.",
+     q:"Tokyo Tower"}
+  ],
+  eat:[
+    {name:"Kyubey Ginza", note:"Sushi de balcão de referência (reserva)", q:"Kyubey Ginza"},
+    {name:"Ginza Kagari", note:"Ramen de frango cremoso, pode ter fila", q:"Ginza Kagari ramen"},
+    {name:"Depachika bento", note:"Comer ao ar livre no Hibiya Park", q:"Hibiya Park Tokyo"}
+  ]
+},
+{
+  n:7, kanji:"七", date:"24 Ago", day:24, dow:"Segunda", trip:true,
+  theme:"Viagem de dia · Kamakura",
+  why:"O Grande Buda, templos junto ao mar e o comboio Enoden à beira da praia. Dia útil = menos multidões no comboio panorâmico.",
+  pass:{title:"Como ir (Suica chega)",
+    text:"De comboio JR: Linha Yokosuka desde a Estação de Tóquio (~1h) ou Shonan-Shinjuku desde Shinjuku (~1h). Pagas tudo com o Suica. Em Kamakura, usa o pequeno comboio Enoden entre os templos e a costa.",
+    price:"~¥940 só ida (Tóquio→Kamakura)", extra:"Alternativa: 'Enoshima–Kamakura Freepass' (Odakyu) se planeares muitas viagens de Enoden.",
+    link:"https://www.japan-guide.com/e/e2165.html"},
+  stops:[
+    {time:"09:00", tag:"historia", name:"Grande Buda de Kamakura", jp:"鎌倉大仏",
+     desc:"Estátua de bronze de 13 m e 750 anos (templo Kotoku-in), ao ar livre desde que um tsunami levou o templo no séc. XV. Podes entrar lá dentro.",
+     dica:"De Kamakura, apanha o Enoden até Hase (~5 min) e sobe a pé. Vai cedo.",
+     q:"Kotoku-in Great Buddha Kamakura"},
+    {time:"10:30", tag:"vista", name:"Templo Hase-dera", jp:"長谷寺",
+     desc:"Templo em socalcos com jardins, milhares de estátuas Jizo e um miradouro sobre a baía de Kamakura. Lindíssimo.",
+     dica:"Fica a poucos minutos a pé do Grande Buda. A gruta de Benten é pequena e fresca.",
+     q:"Hasedera Temple Kamakura"},
+    {time:"12:30", tag:"comida", name:"Komachi-dori", jp:"小町通り",
+     desc:"A rua de comércio e street food a caminho do santuário principal: shirasu (peixinho local), dango, matcha, croquetes. Almoço a petiscar.",
+     dica:"Prova algo com shirasu (lula/peixe branco) — é a especialidade da zona.",
+     q:"Komachi-dori Kamakura"},
+    {time:"13:30", tag:"historia", name:"Santuário Tsurugaoka Hachimangu", jp:"鶴岡八幡宮",
+     desc:"O grande santuário de Kamakura, no topo de uma avenida cerimonial, fundado no séc. XII. Coração espiritual da antiga capital samurai.",
+     dica:"A avenida Dankazura, a aproximar-se, é uma alameda elevada muito bonita.",
+     q:"Tsurugaoka Hachimangu Kamakura"},
+    {time:"15:30", tag:"vista", name:"Enoden até à costa", jp:"江ノ電",
+     desc:"Comboio panorâmico que serpenteia entre casas e a beira-mar até Enoshima. A passagem de Kamakurakōkōmae (do genérico de Slam Dunk) é famosa.",
+     dica:"Senta-te do lado do mar. Sai em Enoshima para o pôr do sol sobre o Pacífico — em dias limpos com o Fuji.",
+     q:"Kamakurakokomae Station Enoden"},
+    {time:"17:30", tag:"vista", name:"Enoshima — opcional", jp:"江の島",
+     desc:"Ilhota com santuário, grutas e farol-miradouro, ligada por uma ponte. Bom para terminar o dia junto ao mar antes de voltar.",
+     dica:"Há escadas rolantes pagas para subir a ilha — poupa pernas no fim do dia.",
+     q:"Enoshima Island"}
+  ],
+  eat:[
+    {name:"Komachi-dori (bancas)", note:"Street food — almoço", q:"Komachi-dori food Kamakura"},
+    {name:"Bills Shichirigahama", note:"Pequeno-almoço/brunch com vista de mar", q:"Bills Shichirigahama"},
+    {name:"Shirasu-don local", note:"Tigela de arroz com peixinho fresco", q:"shirasu don Kamakura"}
+  ],
+  notes:[
+    "Distâncias curtas mas com escadas e calor — leva água e protetor solar.",
+    "O Enoden enche ao fim do dia; uma viagem em hora de ponta é apertada mas vale pela vista."
+  ]
+},
+{
+  n:8, kanji:"八", date:"25 Ago", day:25, dow:"Terça", trip:false,
+  theme:"Últimas compras & partida",
+  why:"Ajusta ao horário do voo. Guarda as malas, faz as últimas compras perto da estação e segue para o aeroporto com folga.",
+  stops:[
+    {time:"Manhã", tag:"logistica", name:"Guardar malas", jp:"",
+     desc:"Se já fizeste check-out mas o voo é à tarde, usa cacifos da estação ou a app ecbo Cloak para guardar bagagem em cafés/lojas próximas.",
+     dica:"Os cacifos grandes esgotam cedo — a ecbo Cloak é o plano B fiável.",
+     q:"coin lockers Tokyo Station"},
+    {time:"—", tag:"compras", name:"Últimas lembranças", jp:"",
+     desc:"Character Street e a cave de doces na Estação de Tóquio, ou um Don Quijote para tudo num só sítio (snacks, cosmética, eletrónica, souvenirs).",
+     dica:"KitKats de sabores, Tokyo Banana e doces da depachika são clássicos para levar.",
+     q:"Tokyo Station Character Street"},
+    {time:"Transporte", tag:"logistica", name:"Aeroporto", jp:"",
+     desc:"Narita: Narita Express (N'EX) ou Skyliner (~60 min). Haneda: monocarril ou Keikyu (~30 min). Confirma de qual aeroporto partes e o tempo de viagem.",
+     dica:"<b>Chega 3h antes</b> de voo internacional. O N'EX pode reservar-se na app Welcome Suica Mobile.",
+     q:"Narita Express Tokyo Station"}
+  ],
+  eat:[
+    {name:"Ekiben", note:"Bento de viagem comprado na estação", q:"ekiben Tokyo Station"}
+  ]
+}
+];
+
+/* =========================================================
+   ESSENCIAIS — apps + dicas
+   ========================================================= */
+const APPS = [
+  {ini:"GM", cls:"", name:"Google Maps", role:"navegação principal",
+   ds:"A pé, metro e autocarro: mostra a plataforma certa, a saída da estação (vital em Shinjuku, 200+ saídas) e horários, custos e avaliações. Descarrega o mapa de Tóquio para usar offline.",
+   url:"https://maps.google.com"},
+  {ini:"NV", cls:"t", name:"NAVITIME Japan Travel", role:"planeamento de transportes",
+   ds:"Melhor que o Maps para planear viagens longas: cobertura de passes, carruagem certa para transbordos e horários detalhados. Funciona offline.",
+   url:"https://japantravel.navitime.com/en/"},
+  {ini:"GT", cls:"", name:"Google Translate", role:"barreira linguística",
+   ds:"Tradução por câmara para menus e sinais, e modo conversação. Descarrega o pacote de japonês offline antes de viajar.",
+   url:"https://translate.google.com"},
+  {ini:"KL", cls:"p", name:"Klook", role:"reservas & passeios",
+   ds:"Reserva o Hakone Free Pass, o teamLab e o Shibuya Sky, muitas vezes com desconto face à compra no local.",
+   url:"https://www.klook.com"},
+  {ini:"Su", cls:"t", name:"Suica / Welcome Suica", role:"pagamento de transporte",
+   ds:"Cartão (físico ou no telemóvel) para metro, autocarros, lojas e máquinas. Toca e anda — sem bilhetes. iPhone: Apple Wallet ou app Welcome Suica Mobile.",
+   url:"https://www.jreast.co.jp/multi/en/welcomesuica/"},
+  {ini:"Tb", cls:"p", name:"Tabelog", role:"restaurantes locais",
+   ds:"O 'Yelp japonês' com avaliações exigentes — 3,5/5 já é excelente. Para comer onde os japoneses comem.",
+   url:"https://tabelog.com/en/"},
+  {ini:"GO", cls:"g", name:"GO Taxi", role:"táxi",
+   ds:"Chamar táxi quando precisares; aceita cartão estrangeiro.",
+   url:"https://go.goinc.jp/"},
+  {ini:"ec", cls:"", name:"ecbo Cloak", role:"guardar malas",
+   ds:"Reserva sítio para guardar bagagem em lojas/cafés quando os cacifos das estações estiverem cheios.",
+   url:"https://cloak.ecbo.io/en"},
+  {ini:"NV", cls:"g", name:"NERV", role:"alertas de desastres",
+   ds:"Avisos antecipados de sismos e tufões — importante em Agosto. Notificações rápidas e fiáveis.",
+   url:"https://nerv.app/"}
+];
+
+const TIPS = `
+<div class="acard">
+  <h3><span class="dot"></span>Cartão de transportes (Suica / PASMO)</h3>
+  <div class="tipgrid">
+    <h4>Como obter</h4>
+    <ul>
+      <li><b>iPhone:</b> adiciona Suica à Apple Wallet (cartões Mastercard/Amex funcionam melhor que Visa) ou usa a app <b>Welcome Suica Mobile</b> (válida 180 dias).</li>
+      <li><b>Android comprado fora do Japão:</b> normalmente não suporta — compra o <b>Welcome Suica físico</b> no balcão JR de Narita/Haneda.</li>
+      <li>Os cartões físicos normais voltaram a estar disponíveis em 2025.</li>
+    </ul>
+    <h4>Usar e recarregar</h4>
+    <ul>
+      <li>Toca à entrada e à saída das estações; nos autocarros tocas ao entrar (e por vezes ao sair).</li>
+      <li>Recarregas em máquinas de metro e em lojas de conveniência — <b>só com dinheiro</b> (exceto Suica no iPhone). Saldo máximo ¥20.000.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="acard">
+  <h3><span class="dot"></span>Clima de Agosto — calor & humidade</h3>
+  <div class="tipgrid">
+    <ul>
+      <li><b>30–35 °C e muito húmido.</b> Começa os dias cedo e guarda o meio-dia para sítios com ar condicionado (museus, teamLab, lojas).</li>
+      <li>Hidrata-te constantemente — há máquinas de bebidas a cada esquina.</li>
+      <li>Trovoadas e <b>tufões</b> são possíveis: leva guarda-chuva dobrável (vende-se em qualquer loja) e ativa a app NERV.</li>
+      <li>Protetor solar, boné e uma toalha de arrefecimento ajudam muito.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="acard">
+  <h3><span class="dot"></span>Dinheiro</h3>
+  <div class="tipgrid">
+    <ul>
+      <li>Já se paga cartão/Suica quase em todo o lado, mas <b>leva sempre algum dinheiro</b> — tasquinhas e bancas pequenas só aceitam numerário.</li>
+      <li>Levanta dinheiro nos ATM das <b>7-Eleven</b> ou dos correios (Japan Post) — aceitam cartões estrangeiros.</li>
+      <li><b>Não se dá gorjeta</b> — não é costume e pode até confundir.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="acard">
+  <h3><span class="dot"></span>Etiqueta rápida</h3>
+  <div class="tipgrid">
+    <ul>
+      <li>Silêncio nos comboios; chamadas em voz baixa ou nenhuma.</li>
+      <li>Não se come a andar na rua — come junto à banca ou sentado.</li>
+      <li>Há poucos caixotes do lixo: <b>guarda o lixo</b> contigo até encontrares um.</li>
+      <li>Faz fila ordeira nas plataformas e escadas rolantes (em Tóquio fica-se à esquerda).</li>
+      <li><b>Onsen:</b> lava-te bem antes de entrar, sem fato de banho; atenção às regras sobre tatuagens.</li>
+    </ul>
+    <div class="emerg">
+      <b>Emergência:</b> Polícia <b>110</b> · Bombeiros/Ambulância <b>119</b>. Os pequenos postos de polícia (kōban) em cada bairro ajudam com direções.
+    </div>
+  </div>
+</div>
+`;
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+const KEY = "toquio2026_done";
+let done = {};
+try { done = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e){ done = {}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(done)); }catch(e){} }
+
+function transitIcon(){ return "↳"; }
+
+function stopHTML(d, i, s){
+  const id = "d"+d.n+"s"+i;
+  const isDone = !!done[id];
+  const isTransit = s.tag === "logistica" && (s.name.startsWith("→") || s.time==="Transporte");
+  const tagLabel = {comida:"Comida",historia:"História",vista:"Vista",anime:"Anime/Tech",compras:"Compras",arte:"Arte",logistica:"Logística"}[s.tag]||s.tag;
+  return `
+  <li>
+    ${isTransit ? `<div class="transit"><span class="ico">${transitIcon()}</span>${s.desc}</div>` : ""}
+    ${isTransit ? "" : `
+    <div class="stop ${isDone?'done':''}" id="${id}">
+      <div class="toprow">
+        <span class="time">${s.time}</span>
+        <span class="tag ${s.tag}">${tagLabel}</span>
+      </div>
+      <h5>${s.name}${s.jp?` <span class="jp">${s.jp}</span>`:""}</h5>
+      <p class="d">${s.desc}</p>
+      ${s.dica?`<div class="dica"><b>Dica ·</b> ${s.dica}</div>`:""}
+      <div class="actions">
+        <a class="mapbtn" href="${mapsLink(s.q)}" target="_blank" rel="noopener">📍 Mapa</a>
+        <label class="chk"><input type="checkbox" ${isDone?"checked":""} onchange="toggle('${id}',this.checked)"> visitado</label>
+      </div>
+    </div>`}
+  </li>`;
+}
+
+function dayHTML(d){
+  const stops = d.stops.map((s,i)=>stopHTML(d,i,s)).join("");
+  const eat = d.eat ? `
+    <div class="eat">
+      <h4>Onde comer</h4>
+      <ul>${d.eat.map(e=>`
+        <li><div><div class="en">${e.name}</div><div class="enote">${e.note}</div></div>
+        <a href="${mapsLink(e.q)}" target="_blank" rel="noopener" aria-label="Mapa">📍</a></li>`).join("")}
+      </ul>
+    </div>` : "";
+  const notes = d.notes ? `<ul class="notes">${d.notes.map(n=>`<li>${n}</li>`).join("")}</ul>` : "";
+  const pass = d.pass ? `
+    <div class="passcard">
+      <h4>${d.pass.title}</h4>
+      <p>${d.pass.text}</p>
+      <p class="price">${d.pass.price}</p>
+      ${d.pass.extra?`<p style="font-size:12px;color:#6C7385;margin-bottom:8px">${d.pass.extra}</p>`:""}
+      <a class="bbtn" href="${d.pass.link}" target="_blank" rel="noopener">Mais info</a>
+    </div>` : "";
+  return `
+  <section class="day ${d.trip?'trip':''}" id="day${d.n}" data-day="${d.day}">
+    <button class="dayhead" aria-expanded="false" onclick="toggleDay(${d.n})">
+      <span class="daynum"><span class="k">${d.kanji}</span><span class="n">DIA ${d.n}</span></span>
+      <span class="daymeta">
+        <span class="dt">${d.date} · ${d.dow}</span>
+        <span class="th">${d.theme}${d.trip?'<span class="tripbadge">excursão</span>':''}</span>
+      </span>
+      <span class="chev">▾</span>
+    </button>
+    <div class="daybody">
+      <div class="why">${d.why}</div>
+      ${pass}
+      <ol class="timeline">${stops}</ol>
+      ${eat}
+      ${notes}
+    </div>
+  </section>`;
+}
+
+function renderDays(){
+  document.getElementById("days").innerHTML = DAYS.map(dayHTML).join("");
+  // nav pills
+  document.getElementById("daynav").innerHTML = DAYS.map(d=>`
+    <button class="pill ${d.trip?'trip':''}" id="pill${d.n}" onclick="goDay(${d.n})">
+      <div class="pk">${d.kanji}</div><div class="pd">${d.date.replace(' Ago','')}</div>
+    </button>`).join("");
+}
+
+function renderEssenciais(){
+  const apps = `
+    <div class="acard">
+      <h3><span class="dot"></span>Apps essenciais</h3>
+      ${APPS.map(a=>`
+        <div class="app">
+          <div class="ai ${a.cls}">${a.ini}</div>
+          <div class="info">
+            <div class="nm">${a.name} <span class="role">· ${a.role}</span></div>
+            <div class="ds">${a.ds}</div>
+          </div>
+          <a class="go" href="${a.url}" target="_blank" rel="noopener">Abrir</a>
+        </div>`).join("")}
+    </div>`;
+  document.getElementById("panel-essenciais").innerHTML = apps + TIPS;
+}
+
+/* =========================================================
+   ACHADOS — lojas, comida-gema e fora da caixa
+   ========================================================= */
+const DISCOVER = [
+{ title:"Em 2ª mão & vintage", intro:"Tóquio é a capital mundial do usado em ótimo estado. Garimpa livros, jogos, roupa de marca e raridades a preços baixos.",
+  items:[
+   {name:"Book Off / Super Bazaar", jp:"ブックオフ", area:"Shibuya · Akihabara", day:"Dia 3 / 5", desc:"Cadeia de usados baratos: mangá, livros, jogos, CDs e roupa. As lojas 'Super Bazaar' juntam tudo num só edifício.", tip:"As prateleiras de jogos e mangá a ~¥110 valem a garimpagem.", q:"Book Off Super Bazaar Shinjuku"},
+   {name:"Hard Off + Mode Off", jp:"ハードオフ", area:"Akihabara", day:"Dia 5", desc:"O irmão da eletrónica e instrumentos usados (Hard Off) e da roupa (Mode Off): gadgets, câmaras e consolas retro.", q:"Hard Off Akihabara"},
+   {name:"2nd Street", jp:"セカンドストリート", area:"Shimokitazawa · Harajuku", day:"Extra", desc:"A maior cadeia de roupa em 2ª mão — de marcas correntes a peças vintage e designer.", q:"2nd Street Shimokitazawa"},
+   {name:"Shimokitazawa", jp:"下北沢", area:"Shimokitazawa", day:"Extra", desc:"Um bairro inteiro de vintage, thrift, cafés e lojas indie. A melhor zona de garimpo de roupa da cidade.", tip:"Fica a ~5 min de comboio de Shibuya — ótimo para encaixar numa tarde livre.", q:"Shimokitazawa"},
+   {name:"Kōenji", jp:"高円寺", area:"Koenji", day:"Extra", desc:"Vintage mais barato e local, longe das multidões turísticas. Atmosfera boémia e retro.", q:"Koenji Tokyo"},
+   {name:"Cat Street / Ura-Harajuku", jp:"裏原宿", area:"Harajuku", day:"Dia 3", desc:"Streetwear e designer em 2ª mão (RAGTAG, Kindal) nas ruas calmas atrás de Harajuku.", q:"Cat Street Harajuku"}
+  ]},
+{ title:"Cartas Pokémon & TCG", intro:"Desde lojas oficiais a singles e raridades usadas — Akihabara e Nakano são o coração do TCG.",
+  items:[
+   {name:"Pokémon Center Shibuya", jp:"ポケモンセンター", area:"Shibuya", day:"Dia 3", desc:"Loja oficial no Shibuya Parco, com exclusivos e cartas promo. Ao lado ficam a Nintendo Tokyo e a Capcom Store.", q:"Pokemon Center Shibuya"},
+   {name:"Pokémon Center Mega Tokyo", jp:"メガトウキョー", area:"Ikebukuro", day:"Extra", desc:"A maior loja Pokémon da cidade, no Sunshine City.", q:"Pokemon Center Mega Tokyo Ikebukuro"},
+   {name:"Pokémon Café", jp:"ポケモンカフェ", area:"Nihonbashi", day:"Extra", desc:"Café temático com pratos e bebidas Pokémon e encontro com o Pikachu.", tip:"<b>Só com reserva</b> online — esgota com semanas de antecedência.", q:"Pokemon Cafe Nihonbashi Tokyo"},
+   {name:"Lojas de cartas de Akihabara", jp:"トレカ", area:"Akihabara", day:"Dia 5", desc:"Hareruya, Card Rush e Yellow Submarine: TCG novo e usado, singles, caixas e torneios.", q:"Hareruya Akihabara"},
+   {name:"Surugaya", jp:"駿河屋", area:"Akihabara · Nakano", day:"Dia 5", desc:"Colecionáveis e cartas usadas a bom preço, em várias lojas especializadas.", q:"Surugaya Akihabara"},
+   {name:"Nakano Broadway", jp:"中野ブロードウェイ", area:"Nakano", day:"Extra", desc:"Andares inteiros de cartas, figuras e raridades — menos turístico que Akihabara.", q:"Nakano Broadway"}
+  ]},
+{ title:"Livros & papelaria",
+  items:[
+   {name:"Jimbocho", jp:"神保町", area:"Jimbocho", day:"Extra (perto Dia 6)", desc:"O bairro dos alfarrabistas: dezenas de livrarias de usados, mapas antigos e gravuras ukiyo-e.", tip:"Algumas lojas têm secções de arte e livros em inglês.", q:"Jimbocho Book Town"},
+   {name:"Tsutaya Books Daikanyama", jp:"蔦屋書店", area:"Daikanyama", day:"Extra (perto Dia 3)", desc:"Livraria-café de design lindíssima, perfeita para passar horas a folhear.", q:"Daikanyama Tsutaya Books"},
+   {name:"Village Vanguard", jp:"ヴィレッジヴァンガード", area:"Shibuya · Shimokitazawa", day:"Dia 3", desc:"Livraria-bazar caótica: livros, gadgets, snacks estranhos e cultura pop.", q:"Village Vanguard Shibuya"},
+   {name:"Itoya", jp:"伊東屋", area:"Ginza", day:"Dia 6", desc:"Papelaria icónica de 12 andares: papel washi, canetas e cadernos. Um clássico de Ginza.", q:"Itoya Ginza"},
+   {name:"Kinokuniya", jp:"紀伊國屋書店", area:"Shinjuku", day:"Dia 1", desc:"Livraria enorme com boa secção de livros estrangeiros e revistas.", q:"Kinokuniya Shinjuku"}
+  ]},
+{ title:"Anime, figuras & retro games",
+  items:[
+   {name:"Super Potato", jp:"スーパーポテト", area:"Akihabara", day:"Dia 5", desc:"O templo dos jogos retro, com um arcade vintage jogável no andar de cima.", q:"Super Potato Retro Akihabara"},
+   {name:"Mandarake Complex", jp:"まんだらけ", area:"Akihabara", day:"Dia 5", desc:"Oito andares de mangá, figuras, doujin e raridades usadas.", q:"Mandarake Complex Akihabara"},
+   {name:"Nakano Broadway", jp:"中野ブロードウェイ", area:"Nakano", day:"Extra", desc:"A alternativa 'old-school' a Akihabara, com a Mandarake original. A 5 min de Shinjuku e cheio de tesouros.", q:"Nakano Broadway"},
+   {name:"Yodobashi Akiba", jp:"ヨドバシ", area:"Akihabara", day:"Dia 5", desc:"Megastore de eletrónica de 9 andares — e ar condicionado para a pausa do calor.", q:"Yodobashi Akiba"},
+   {name:"Salões de gachapon", jp:"ガチャポン", area:"Akihabara · Ikebukuro", day:"Dia 5", desc:"Paredes e paredes de máquinas de cápsulas; o Gashapon Bandai é gigantesco.", tip:"Guarda moedas de ¥100 e ¥500 para a caça às cápsulas.", q:"Gashapon no Mori Akihabara"},
+   {name:"Animate Ikebukuro", jp:"アニメイト", area:"Ikebukuro", day:"Extra", desc:"A maior loja de anime e mangá do mundo, no centro da 'Otome Road'.", q:"Animate Ikebukuro"}
+  ]},
+{ title:"Comida que não podes perder",
+  items:[
+   {name:"Sushi de tapete rolante", jp:"回転寿司", area:"Shibuya", day:"Dia 3", desc:"No Uobei/Genki pedes no ecrã e o prato chega no balcão. Barato, rápido e divertido.", q:"Uobei Sushi Shibuya"},
+   {name:"Gyukatsu", jp:"牛カツ", area:"Shibuya", day:"Dia 3", desc:"Bife panado mal-passado que acabas de grelhar tu numa pedra quente. Viciante.", q:"Gyukatsu Motomura Shibuya"},
+   {name:"Ramen de cabine", jp:"ラーメン", area:"vários", day:"Dia 1", desc:"No Ichiran comes em cabines individuais e personalizas tudo — caldo, picante, textura.", q:"Ichiran Ramen Shinjuku"},
+   {name:"Monjayaki", jp:"もんじゃ焼き", area:"Tsukishima", day:"Extra (perto Dia 5)", desc:"A versão líquida do okonomiyaki, especialidade de Tóquio. Uma rua inteira só de monja.", tip:"Faz-se na chapa da própria mesa — pede ajuda ao staff da 1ª vez.", q:"Tsukishima Monja Street"},
+   {name:"Sukiyaki / unagi", jp:"すき焼き", area:"Asakusa", day:"Dia 2", desc:"O Asakusa Imahan serve sukiyaki tradicional desde o séc. XIX, num cenário clássico.", q:"Asakusa Imahan"},
+   {name:"Depachika", jp:"デパ地下", area:"Ginza · Shinjuku", day:"Dia 6", desc:"As caves gourmet dos armazéns: bentos perfeitos, doces e iguarias. Um festival visual.", q:"Mitsukoshi Ginza depachika"},
+   {name:"Kissaten retro", jp:"喫茶店", area:"Ginza · vários", day:"Extra", desc:"Cafés à moda antiga, com pudim, ovo-sando e café de filtro. Cápsula do tempo da era Showa.", q:"Cafe de l'Ambre Ginza"}
+  ]},
+{ title:"Snacks, konbini & 100 ienes",
+  items:[
+   {name:"Don Quijote (Donki)", jp:"ドンキホーテ", area:"Shibuya · Shinjuku", day:"Dia 1 / 3", desc:"Megastore caótica e 24h: snacks, cosmética, eletrónica e souvenirs num labirinto.", tip:"A parede de KitKats de sabores e o corredor de snacks valem a visita.", q:"Don Quijote Shibuya"},
+   {name:"Konbini", jp:"コンビニ", area:"em todo o lado", day:"todos os dias", desc:"7-Eleven, Lawson e FamilyMart têm refeições surpreendentemente boas a qualquer hora.", tip:"Experimenta o egg sando, o frango karaage do balcão e o famoso frango frito da Lawson.", q:""},
+   {name:"Daiso / lojas de ¥100", jp:"ダイソー", area:"Harajuku", day:"Dia 3", desc:"Quase tudo a ~¥110: utilidades, papelaria e souvenirs baratos e engraçados.", q:"Daiso Harajuku"},
+   {name:"Calbee+", jp:"カルビープラス", area:"Harajuku", day:"Dia 3", desc:"Batatas fritas e snacks acabados de fritar na hora.", q:"Calbee Plus Harajuku"},
+   {name:"Doces de rua", jp:"食べ歩き", area:"Asakusa · Ueno", day:"Dia 2", desc:"Senbei, dango, melonpan e mais nas ruas Nakamise (Asakusa) e Ameyoko (Ueno).", q:"Nakamise-dori Asakusa"}
+  ]},
+{ title:"Fora da caixa", intro:"Experiências que não cabem nas listas habituais — o lado mais peculiar e memorável de Tóquio.",
+  items:[
+   {name:"Kappabashi", jp:"かっぱ橋", area:"perto de Asakusa", day:"Dia 2", desc:"A rua dos utensílios de cozinha: facas japonesas e os famosos modelos de comida em plástico (sampuru).", tip:"Uma faca de cozinha ou um íman de 'sushi de plástico' dão lembranças únicas.", q:"Kappabashi Kitchen Town"},
+   {name:"Yanaka Ginza", jp:"谷中銀座", area:"Yanaka", day:"Extra (perto Dia 2)", desc:"Bairro velho de becos, lojas tradicionais e gatos. O Tóquio shitamachi que sobreviveu ao tempo.", tip:"Lindíssimo ao fim da tarde, com a 'escadaria do pôr do sol'.", q:"Yanaka Ginza"},
+   {name:"Golden Gai", jp:"ゴールデン街", area:"Shinjuku", day:"Dia 1", desc:"Labirinto de ~200 bares minúsculos, cada um com o seu tema e personalidade.", tip:"Alguns cobram couvert; procura os que dizem 'tourist welcome'.", q:"Golden Gai Shinjuku"},
+   {name:"Game Center Mikado", jp:"ミカド", area:"Takadanobaba", day:"Extra", desc:"Arcade retro vivo, cheio de máquinas clássicas e de regulares fiéis. Uma viagem ao passado.", q:"Game Center Mikado Takadanobaba"},
+   {name:"Chanko-nabe em Ryogoku", jp:"ちゃんこ鍋", area:"Ryogoku", day:"Extra", desc:"O guisado dos lutadores de sumo, servido no próprio bairro do sumo.", tip:"Em Agosto não há torneio em Tóquio, mas dá para comer como um rikishi.", q:"Ryogoku chanko nabe"},
+   {name:"Becos de tasquinhas", jp:"横丁", area:"Shinjuku · Shibuya", day:"Dia 1 / 3", desc:"Omoide Yokocho e Shibuya Yokocho: ruelas de yakitori e cerveja que param o tempo.", q:"Omoide Yokocho Shinjuku"},
+   {name:"teamLab + cápsula", jp:"カプセルホテル", area:"Toyosu", day:"Dia 5", desc:"Arte digital imersiva e, se quiseres a experiência completa, dormir uma noite num hotel-cápsula.", q:"teamLab Planets Tokyo"}
+  ]}
+];
+
+function findHTML(it){
+  const pin = it.q ? `<a class="fpin" href="${mapsLink(it.q)}" target="_blank" rel="noopener">📍 Mapa</a>` : "";
+  const day = it.day ? `<span class="fday">${it.day}</span>` : "";
+  const tip = it.tip ? `<div class="ftip"><b>Dica ·</b> ${it.tip}</div>` : "";
+  const foot = (it.day || it.q) ? `<div class="ffoot">${day}${pin}</div>` : "";
+  return `
+   <div class="find">
+     <div class="fh">
+       <span class="fn">${it.name}${it.jp?` <span class="jp">${it.jp}</span>`:""}</span>
+       ${it.area?`<span class="area">${it.area}</span>`:""}
+     </div>
+     ${it.desc?`<div class="fd">${it.desc}</div>`:""}
+     ${tip}
+     ${foot}
+   </div>`;
+}
+
+function renderAchados(){
+  const top = `<div class="intro">Garimpo, comida-gema e coisas fora do comum. O selo a vermelho mostra em que <b>dia/zona</b> do roteiro cada sítio encaixa melhor; "Extra" são pequenos desvios que valem a pena.</div>`;
+  const sections = DISCOVER.map(sec=>`
+    <div class="acard">
+      <h3><span class="dot"></span>${sec.title}</h3>
+      ${sec.intro?`<div class="intro">${sec.intro}</div>`:""}
+      <div class="finds">${sec.items.map(findHTML).join("")}</div>
+    </div>`).join("");
+  document.getElementById("panel-achados").innerHTML = top + sections;
+}
+
+function toggle(id, val){
+  if(val) done[id]=1; else delete done[id];
+  save();
+  const el = document.getElementById(id);
+  if(el) el.classList.toggle("done", val);
+}
+
+let openDay = null;
+function toggleDay(n){
+  const sec = document.getElementById("day"+n);
+  const wasOpen = sec.classList.contains("open");
+  if(wasOpen){
+    sec.classList.remove("open");
+    sec.querySelector(".dayhead").setAttribute("aria-expanded","false");
+  } else {
+    sec.classList.add("open");
+    sec.querySelector(".dayhead").setAttribute("aria-expanded","true");
+  }
+  syncPills();
+}
+function goDay(n){
+  const sec = document.getElementById("day"+n);
+  if(!sec.classList.contains("open")) toggleDay(n);
+  sec.scrollIntoView({behavior:"smooth", block:"start"});
+  syncPills();
+}
+function syncPills(){
+  DAYS.forEach(d=>{
+    const sec = document.getElementById("day"+d.n);
+    const pill = document.getElementById("pill"+d.n);
+    if(pill) pill.classList.toggle("active", sec.classList.contains("open"));
+  });
+}
+
+const TAB_IDS = ["roteiro","achados","essenciais"];
+function showTab(which){
+  TAB_IDS.forEach(t=>{
+    const on = t===which;
+    document.getElementById("panel-"+t).classList.toggle("show", on);
+    document.getElementById("tab-"+t).setAttribute("aria-selected", on);
+  });
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function markToday(){
+  const now = new Date();
+  if(now.getFullYear()!==TRIP_YEAR || (now.getMonth()+1)!==TRIP_MONTH) return null;
+  const dd = now.getDate();
+  const match = DAYS.find(d=>d.day===dd);
+  if(match){
+    const sec = document.getElementById("day"+match.n);
+    sec.classList.add("istoday");
+    return match.n;
+  }
+  return null;
+}
+
+// init
+renderDays();
+renderAchados();
+renderEssenciais();
+const todayN = markToday();
+toggleDay(todayN || 1);
+goDay(todayN || 1);
+window.scrollTo({top:0});
+</script>
+</body>
+</html>
