@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#16213A">
-<title>Tóquio · 30 Ago – 6 Set</title>
+<title>Tóquio · 1–10 Nov</title>
 <style>
 :root{
   --ink:#16213A;        /* indigo escuro — texto/primário */
@@ -43,10 +43,10 @@ header.top{
 .brand .latin small b{color:var(--indigo);font-weight:700}
 
 /* ---------- TABS ---------- */
-.tabs{display:flex;gap:6px;margin:18px 0 4px;position:sticky;top:0;z-index:30;
+.tabs{display:flex;gap:5px;margin:18px 0 4px;position:sticky;top:0;z-index:30;
   background:linear-gradient(var(--paper) 70%,rgba(242,241,236,0));padding:8px 0 10px}
-.tab{flex:1;border:none;background:#e8e6df;color:var(--indigo);font-weight:700;font-size:13.5px;
-  padding:10px 6px;border-radius:11px;cursor:pointer;transition:.15s}
+.tab{flex:1;min-width:0;border:none;background:#e8e6df;color:var(--indigo);font-weight:700;font-size:12px;
+  padding:9px 3px;border-radius:10px;cursor:pointer;transition:.15s;white-space:nowrap}
 .tab[aria-selected="true"]{background:var(--ink);color:#fff}
 .tab:focus-visible{outline:3px solid var(--shu);outline-offset:2px}
 
@@ -96,6 +96,18 @@ header.top{
 .passcard p{margin:0 0 8px;font-size:13px;color:var(--ink)}
 .passcard .price{font-weight:800}
 .passcard a.bbtn{display:inline-block;background:var(--shu);color:#fff;text-decoration:none;
+  font-size:12px;font-weight:700;padding:7px 12px;border-radius:9px}
+.staycard{background:linear-gradient(135deg,#fff,#eef1f7);border:1.5px solid var(--indigo);
+  border-radius:13px;padding:13px 14px;margin:0 0 16px}
+.staycard h4{margin:0 0 4px;font-size:14px;color:var(--indigo);letter-spacing:.02em;
+  display:flex;align-items:center;gap:7px}
+.staycard .sname{font-weight:800;font-size:14px;color:var(--ink);margin:0 0 2px}
+.staycard .szone{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;
+  letter-spacing:.04em;margin:0 0 6px}
+.staycard p{margin:0 0 8px;font-size:13px;color:var(--ink)}
+.staycard .snights{display:inline-block;background:var(--indigo);color:#fff;font-size:11px;
+  font-weight:700;padding:2px 8px;border-radius:20px;margin-left:auto}
+.staycard a.bbtn{display:inline-block;background:var(--indigo);color:#fff;text-decoration:none;
   font-size:12px;font-weight:700;padding:7px 12px;border-radius:9px}
 
 /* ---------- TIMELINE / STOPS ---------- */
@@ -218,6 +230,14 @@ header.top{
 .acard.cat.open .chev{transform:rotate(180deg)}
 .catbody{display:none;padding:0 16px 16px}
 .acard.cat.open .catbody{display:block}
+.leg{background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 12px;margin-bottom:8px}
+.leg:last-child{margin-bottom:0}
+.legtop{font-weight:800;font-size:13.5px;line-height:1.3}
+.legtop .arr{color:var(--shu);margin:0 3px}
+.legrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+.legline{display:inline-block;font-size:11px;font-weight:800;color:#fff;padding:2px 9px;border-radius:6px}
+.legtime{font-size:11.5px;color:var(--muted);font-weight:700}
+.legnote{font-size:12.5px;color:#39415a;margin-top:6px}
 
 footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 10px;line-height:1.7}
 
@@ -228,18 +248,20 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 1
 <div class="wrap">
 
   <header class="top">
-    <p class="eyebrow">Roteiro de viagem · 7 dias</p>
+    <p class="eyebrow">Roteiro de viagem · 10 dias</p>
     <div class="brand">
       <span class="kanji">東京</span>
       <span class="latin">Tóquio
-        <small>30 Ago – 6 Set <b>2026</b> · Hakone + Kamakura</small>
+        <small>1 – 10 Nov <b>2026</b> · 9 noites · noite em Hakone</small>
       </span>
     </div>
   </header>
 
   <div class="tabs" role="tablist">
     <button class="tab" id="tab-roteiro" role="tab" aria-selected="true" onclick="showTab('roteiro')">Roteiro</button>
+    <button class="tab" id="tab-estadias" role="tab" aria-selected="false" onclick="showTab('estadias')">Estadias</button>
     <button class="tab" id="tab-achados" role="tab" aria-selected="false" onclick="showTab('achados')">Achados</button>
+    <button class="tab" id="tab-estacoes" role="tab" aria-selected="false" onclick="showTab('estacoes')">Estações</button>
     <button class="tab" id="tab-essenciais" role="tab" aria-selected="false" onclick="showTab('essenciais')">Essenciais</button>
   </div>
 
@@ -250,7 +272,12 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 1
   </div>
 
   <!-- ACHADOS -->
+  <div class="panel" id="panel-estadias"></div>
+
   <div class="panel" id="panel-achados"></div>
+
+  <!-- ESTAÇÕES -->
+  <div class="panel" id="panel-estacoes"></div>
 
   <!-- ESSENCIAIS -->
   <div class="panel" id="panel-essenciais"></div>
@@ -265,7 +292,7 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 1
 /* =========================================================
    DADOS DO ROTEIRO
    ========================================================= */
-const TRIP_YEAR = 2026, TRIP_MONTH = 8; // Agosto
+const TRIP_YEAR = 2026, TRIP_MONTH = 11; // Novembro
 
 function mapsLink(q){
   return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
@@ -273,277 +300,369 @@ function mapsLink(q){
 
 const DAYS = [
 {
-  n:1, kanji:"一", date:"30 Ago", day:30, mon:8, dow:"Domingo", trip:false,
-  theme:"Chegada & Shinjuku à noite",
-  why:"Dia leve para aterrar, tratar do cartão de transportes e provar a energia noturna de Shinjuku. Não exageres — o jet lag chega.",
+  n:1, kanji:"一", date:"1 Nov", day:1, mon:11, dow:"Domingo", trip:false,
+  theme:"Chegada + Asakusa & Skytree",
+  why:"Aterras de manhã (07:55) em Haneda. Trata do Suica, larga as malas e mergulha no Tóquio antigo — Senso-ji e a Skytree ficam lindíssimos iluminados ao anoitecer (cedo em novembro). Com dez dias pela frente, mantém hoje leve para vencer o jet lag.",
+  stay:{name:"Base Este (Asakusa/Ueno)", zone:"Taito-ku — sugestão de zona", nights:"Noites 1–4", note:"Sugestão: fica 4 noites numa base a este (Asakusa ou Ueno), central para Senso-ji, Skytree, Akihabara, Ueno e o mercado de Tsukiji. Nada está reservado — é só uma zona recomendada para minimizar mudanças de mala nos primeiros dias.", link:""},
   stops:[
-    {time:"Aeroporto", tag:"logistica", name:"Cartão Suica / PASMO", jp:"IC card",
-     desc:"Antes de sair do aeroporto trata do cartão de transportes — paga metro, autocarros, lojas e máquinas com um toque. iPhone: adiciona Suica à Apple Wallet ou usa a app Welcome Suica Mobile (válida 180 dias). Android comprado fora do Japão geralmente não suporta — compra o Welcome Suica físico no balcão JR do aeroporto.",
-     dica:"Carrega ¥3.000–5.000 para começar. Recarregas em qualquer máquina de metro ou loja de conveniência (7-Eleven/Lawson/FamilyMart), só com dinheiro.",
-     q:"JR East Travel Service Center Narita Airport"},
-    {time:"Tarde", tag:"logistica", name:"Check-in & descanso", jp:"",
-     desc:"Larga as malas e dá um passeio curto pela zona do hotel para te orientares. Localiza a estação de metro mais próxima e uma loja de conveniência.",
-     dica:"Compra já uma garrafa de água e um chá gelado na loja de conveniência — em Agosto vais beber muito.",
-     q:"Shinjuku Station Tokyo"},
-    {time:"18:00", tag:"vista", name:"Tokyo Metropolitan Gov. Building", jp:"都庁",
-     desc:"Miradouro a 202 m de altura, totalmente grátis. Vê o pôr do sol e as luzes da cidade — em dias limpos avista-se o Monte Fuji ao longe.",
-     dica:"<b>Grátis</b> e sem filas grandes. Confirma o horário do deck (costuma fechar ~22h, dias variáveis).",
-     q:"Tokyo Metropolitan Government Building Observation Deck"},
-    {time:"19:30", tag:"comida", name:"Omoide Yokocho", jp:"思い出横丁",
-     desc:"Beco estreito de tasquinhas de yakitori (espetadas grelhadas) e cerveja, junto à saída oeste de Shinjuku. Primeiro jantar bem japonês e descontraído.",
-     dica:"Muitos sítios são minúsculos (5–6 lugares) e só dinheiro. Aponta para o que vês a grelhar.",
-     q:"Omoide Yokocho Shinjuku"},
-    {time:"21:00", tag:"vista", name:"Kabukicho & Godzilla", jp:"歌舞伎町",
-     desc:"Mar de néon, ecrãs gigantes e a cabeça do Godzilla no topo do hotel Gracery. Passeio noturno opcional se ainda tiveres energia.",
-     dica:"Ignora quem te aborda na rua a oferecer bares — segue em frente.",
-     q:"Godzilla Head Shinjuku Toho"}
-  ],
-  eat:[
-    {name:"Omoide Yokocho", note:"Yakitori e ambiente — jantar", q:"Omoide Yokocho Shinjuku"},
-    {name:"Ichiran / Ramen Shinjuku", note:"Ramen rápido se preferires", q:"Ichiran Ramen Shinjuku"}
-  ]
-},
-{
-  n:3, kanji:"三", date:"1 Set", day:1, mon:9, dow:"Terça", trip:false,
-  theme:"Asakusa, Skytree & Ueno",
-  why:"O Tóquio antigo: templo histórico, vista do céu e mercado de rua. Começa cedo — Senso-ji enche e o calor aperta ao meio-dia.",
-  stops:[
-    {time:"08:30", tag:"historia", name:"Templo Senso-ji & Nakamise", jp:"浅草寺",
+    {time:"07:55", tag:"logistica", name:"Haneda → cidade + Suica", jp:"IC card",
+     desc:"Aterras em Haneda de manhã. Trata logo do cartão de transportes: iPhone — Suica na Apple Wallet ou app Welcome Suica Mobile; Android comprado fora do Japão — compra o Welcome Suica físico no balcão. De Haneda à cidade são ~30-45 min (Tokyo Monorail ou Keikyu).",
+     dica:"Carrega ¥3.000-5.000 para começar. Recarregas em qualquer máquina ou loja de conveniência.",
+     q:"Haneda Airport Tokyo Monorail"},
+    {time:"~11:00", tag:"logistica", name:"Largar malas & arrancar", jp:"",
+     desc:"Deixa a bagagem no hotel (ou em cacifos) e sai. Contra o jet lag, o melhor é apanhar luz do dia e aguentar acordado até à noite.",
+     dica:"Ativa os mapas offline do Google Maps e bebe água — vais andar bastante.",
+     q:"Asakusa Station Tokyo"},
+    {time:"14:00", tag:"historia", name:"Templo Senso-ji & Nakamise", jp:"浅草寺",
      desc:"O templo mais antigo de Tóquio (ano 645), com o portão Kaminarimon e a sua lanterna gigante. A rua Nakamise-dori, a caminho, está cheia de bancas de doces e lembranças.",
-     dica:"<b>Chega antes das 9h</b> para fotos sem multidão. Prova um melonpan quente ou um senbei (bolacha de arroz) na Nakamise.",
+     dica:"Prova um melonpan quente ou um senbei na Nakamise. Como anoitece cedo (~16:40), apanhas o templo iluminado sem ficar tarde.",
      q:"Senso-ji Temple Asakusa"},
-    {time:"10:30", tag:"vista", name:"Tokyo Skytree", jp:"東京スカイツリー",
-     desc:"A torre mais alta do Japão (634 m). Atravessa o rio Sumida a pé (~20 min) ou uma estação de Tobu. Miradouros a 350 m e 450 m.",
-     dica:"Compra bilhete antecipado online para evitar fila. A base (Solamachi) tem ar condicionado, lojas e restaurantes — bom refúgio do calor.",
+    {time:"16:30", tag:"vista", name:"Tokyo Skytree", jp:"東京スカイツリー",
+     desc:"A torre mais alta do Japão (634 m). Atravessa o rio Sumida a pé (~20 min) ou uma estação de Tobu. Miradouros a 350 m e 450 m — espetaculares com a cidade já acesa.",
+     dica:"Compra bilhete antecipado para evitar fila. A base (Solamachi) tem lojas e restaurantes para jantar.",
      q:"Tokyo Skytree"},
-    {time:"Transporte", tag:"logistica", name:"→ Ueno", jp:"",
-     desc:"Volta a Asakusa e apanha a linha Ginza (metro laranja) direta até Ueno, ~5 min.",
-     dica:"Tudo pago com o Suica — sem comprar bilhete.",
-     q:"Ueno Station Tokyo"},
-    {time:"13:00", tag:"comida", name:"Mercado Ameyoko", jp:"アメ横",
-     desc:"Mercado de rua vibrante sob a linha de comboio: marisco, espetadas, fruta, takoyaki e pechinchas. Almoço a petiscar.",
-     dica:"Um dos poucos sítios em Tóquio onde regatear é normal. Prova takoyaki (bolinhas de polvo).",
-     q:"Ameyoko Market Ueno"},
-    {time:"15:00", tag:"historia", name:"Parque & Museus de Ueno", jp:"上野公園",
-     desc:"Parque enorme com templos, lago de lótus e o Museu Nacional de Tóquio (a melhor coleção de arte e história japonesa do país).",
-     dica:"Se o calor cansar, o museu é fresco e vale muito a pena. Lago Shinobazu fica lindo ao fim do dia.",
-     q:"Tokyo National Museum Ueno"}
+    {time:"Opcional", tag:"comida", name:"Ueno & Ameyoko (se tiveres energia)", jp:"アメ横",
+     desc:"Se ainda aguentares, o mercado de rua de Ameyoko, junto a Ueno, é ótimo para um jantar a petiscar: takoyaki, espetadas e marisco.",
+     dica:"Cansado da viagem? Salta isto e janta perto do hotel — recuperas para o dia seguinte.",
+     q:"Ameyoko Market Ueno"}
   ],
   eat:[
-    {name:"Ameyoko (bancas)", note:"Marisco e street food — almoço", q:"Ameyoko Market food Ueno"},
     {name:"Asakusa Imahan", note:"Sukiyaki tradicional (mais formal)", q:"Asakusa Imahan"},
-    {name:"Innsyoutei", note:"Bento e teishoku no parque de Ueno", q:"Innsyoutei Ueno Park"}
+    {name:"Ameyoko (bancas)", note:"Street food para um jantar leve", q:"Ameyoko Market food Ueno"}
+  ],
+  notes:[
+    "Chegas de manhã: aproveita, mas sem exageros — o jet lag aperta ao fim do dia.",
+    "Ritmo lento: guardámos Ueno (museu/parque), Palácio e Tsukiji para os próximos dias."
   ]
 },
 {
-  n:2, kanji:"二", date:"31 Ago", day:31, mon:8, dow:"Segunda", trip:false,
-  theme:"Harajuku, Shibuya & Meiji Jingu",
-  why:"Cultura jovem, moda e o santuário-floresta no meio da cidade. Termina no famoso cruzamento ao pôr do sol.",
+  n:2, kanji:"二", date:"2 Nov", day:2, mon:11, dow:"Segunda", trip:false,
+  theme:"Ginza, Estação de Tóquio & Ueno",
+  why:"Dia de cidade elegante e cultura, num ritmo calmo. O Palácio Imperial fica para amanhã (fecha às segundas), por isso hoje é a arquitetura de tijolo da Estação de Tóquio, o luxo de Ginza e a tarde no parque e museus de Ueno.",
+  stay:{name:"Base Este (Asakusa/Ueno)", zone:"Taito-ku — sugestão de zona", nights:"Noite 2 de 4", note:"Segunda noite na base a este. Ueno fica à porta para começar/acabar o dia com calma.", link:""},
   stops:[
-    {time:"09:00", tag:"vista", name:"Santuário Meiji Jingu", jp:"明治神宮",
-     desc:"Santuário xintoísta rodeado por uma floresta de 100.000 árvores, surpreendentemente calmo e fresco. Portões torii imensos em madeira.",
-     dica:"<b>Frescura matinal</b> antes do calor. Podes ver casamentos tradicionais ao fim de semana, mas é tranquilo a meio da semana.",
-     q:"Meiji Jingu Shrine"},
-    {time:"10:45", tag:"compras", name:"Takeshita-dori (Harajuku)", jp:"竹下通り",
-     desc:"Rua pedonal da moda kawaii e doce: crepes gigantes, algodão-doce arco-íris, lojas excêntricas. O coração da cultura jovem de Tóquio.",
-     dica:"Prova um crepe de Harajuku. A rua Omotesando, ao lado, é o oposto — elegante, com arquitetura de luxo.",
-     q:"Takeshita Street Harajuku"},
-    {time:"13:30", tag:"anime", name:"Shibuya — Hachiko & Center Gai", jp:"渋谷",
-     desc:"Estátua do cão fiel Hachiko, ruas de lojas, arcades e a energia pura de Shibuya. Almoço por aqui.",
-     dica:"A Shibuya é prática a partir de Harajuku: uma estação na linha JR Yamanote, ou ~20 min a pé.",
-     q:"Hachiko Statue Shibuya"},
-    {time:"15:00", tag:"vista", name:"Shibuya Hikarie — Sky Lobby", jp:"渋谷ヒカリエ",
-     desc:"No 11º andar do edifício Hikarie, colado à estação, o Sky Lobby tem janelas do chão ao teto com vista panorâmica e gratuita sobre Shibuya — vês o cruzamento e a cidade de cima sem bilhete.",
-     dica:"<b>Grátis.</b> Ótimo plano B se não apanhares o Shibuya Sky, ou para um café com vista a meio da tarde.",
-     q:"Shibuya Hikarie Sky Lobby"},
-    {time:"17:30", tag:"vista", name:"Shibuya Sky", jp:"渋谷スカイ",
-     desc:"Miradouro a céu aberto no topo do Shibuya Scramble Square. Reserva o slot do pôr do sol para a melhor vista da cidade.",
-     dica:"<b>Reserva online com antecedência</b> (~¥2.500) — o slot do pôr do sol esgota. Leva casaco fino: venta lá em cima.",
-     q:"Shibuya Sky"},
-    {time:"19:00", tag:"vista", name:"Cruzamento de Shibuya", jp:"スクランブル交差点",
-     desc:"O cruzamento mais movimentado do mundo, melhor à noite com os néons. Vê de cima do Starbucks do Tsutaya ou da passagem.",
-     dica:"Atravessa-o uma vez no meio da multidão — é uma experiência por si só.",
-     q:"Shibuya Crossing"}
+    {time:"10:00", tag:"historia", name:"Estação de Tóquio & KITTE", jp:"東京駅",
+     desc:"A fachada Marunouchi de 1914 em tijolo vermelho, restaurada ao original. No edifício KITTE em frente, o terraço-jardim do 6º andar tem vista grátis sobre a estação.",
+     dica:"A 'Character Street' subterrânea (Pokémon, Ghibli, One Piece, etc.) é ótima para lembranças e está a coberto.",
+     q:"Tokyo Station Marunouchi"},
+    {time:"12:00", tag:"compras", name:"Ginza", jp:"銀座",
+     desc:"O bairro mais elegante de Tóquio: flagships (Uniqlo, a papelaria Itoya, Ginza Six), galerias de arte e cafés. Almoço e passeio com tempo.",
+     dica:"<b>Ao fim de semana à tarde a avenida Chuo-dori fecha ao trânsito</b> ('paraíso dos peões'). À segunda não, mas continua ótima para passear.",
+     q:"Ginza Chuo-dori Tokyo"},
+    {time:"14:00", tag:"comida", name:"Depachika (cave gourmet)", jp:"デパ地下",
+     desc:"As caves de comida dos grandes armazéns (Mitsukoshi, Matsuya) são um espetáculo: doces perfeitos, bentos, wagashi, queijos. Monta um piquenique para Ueno.",
+     dica:"Compra um bento bonito e come-o mais logo no parque de Ueno.",
+     q:"Mitsukoshi Ginza depachika"},
+    {time:"15:30", tag:"historia", name:"Parque de Ueno & museus", jp:"上野公園",
+     desc:"Parque enorme com vários dos melhores museus do país. O Museu Nacional de Tóquio (arte e história japonesa) é o destaque; há também o de Ciências da Natureza e o de Arte Ocidental.",
+     dica:"<b>Os museus fecham às 17h (última entrada ~16:30) e à 2ª muitos encerram</b> — confirma o dia. Se estiverem fechados, fica o parque, o lago Shinobazu e o santuário Toshogu.",
+     q:"Tokyo National Museum Ueno"},
+    {time:"18:00", tag:"comida", name:"Ameyoko — jantar a petiscar", jp:"アメ横",
+     desc:"Fecha o dia no mercado de rua sob a linha de comboio: izakayas apertadas, marisco grelhado, kebabs e cerveja. Animado e barato.",
+     dica:"Boa zona para um jantar informal a preços simpáticos, perto do hotel.",
+     q:"Ameyoko Market Ueno"}
   ],
   eat:[
-    {name:"Uobei Shibuya", note:"Sushi em tapete rolante, barato e divertido", q:"Uobei Sushi Shibuya"},
-    {name:"Gyukatsu Motomura", note:"Bife panado que grelhas tu — pode ter fila", q:"Gyukatsu Motomura Shibuya"},
-    {name:"Crepe de Harajuku", note:"Marion Crepes / Angels Heart", q:"Marion Crepes Harajuku"}
+    {name:"Depachika de Ginza", note:"Bento gourmet para piquenique em Ueno", q:"Ginza depachika"},
+    {name:"Ameyoko izakaya", note:"Petiscos e cerveja sob os carris", q:"Ameyoko izakaya Ueno"},
+    {name:"Ginza Kagari", note:"Ramen de frango cremoso (pode ter fila)", q:"Ginza Kagari ramen"}
+  ],
+  notes:[
+    "Dia deliberadamente calmo para ainda estares a ajustar ao fuso.",
+    "Palácio Imperial guardado para amanhã (terça), porque fecha às segundas."
   ]
 },
 {
-  n:4, kanji:"四", date:"2 Set", day:2, mon:9, dow:"Quarta", trip:true,
-  theme:"Viagem de dia · Hakone",
-  why:"Montanha, vale vulcânico, lago com vista para o Monte Fuji e onsen. O dia útil ajuda a evitar multidões. Parte cedo de Shinjuku.",
+  n:3, kanji:"三", date:"3 Nov", day:3, mon:11, dow:"Terça", trip:false,
+  theme:"Palácio Imperial + Akihabara",
+  why:"Hoje a história de Edo e o paraíso otaku. Os Jardins do Palácio Imperial abrem à terça; à tarde, Akihabara para anime, retro-gaming e eletrónica. O 3 de novembro é feriado (Dia da Cultura) — ruas animadas e por vezes eventos.",
+  stay:{name:"Base Este (Asakusa/Ueno)", zone:"Taito-ku — sugestão de zona", nights:"Noite 3 de 4", note:"Terceira noite na base a este. Akihabara fica a poucas paragens.", link:""},
+  stops:[
+    {time:"10:00", tag:"historia", name:"Jardins Orientais do Palácio Imperial", jp:"皇居東御苑",
+     desc:"Os jardins do antigo castelo de Edo, com muralhas de pedra, torres e relva imensa. Entrada gratuita e raramente cheios — em novembro com tons de outono.",
+     dica:"<b>Aberto à terça</b> (fecha às 2ªs e 6ªs). Passeio matinal calmo antes de Akihabara.",
+     q:"Imperial Palace East Gardens Tokyo"},
+    {time:"12:30", tag:"comida", name:"Almoço em Kanda / Jimbocho", jp:"神田",
+     desc:"Entre o Palácio e Akihabara, a zona de Kanda/Jimbocho (bairro dos alfarrabistas) tem casas de caril, soba e cafés antigos. Bom almoço tranquilo.",
+     dica:"Jimbocho é o bairro das livrarias em segunda mão — giro para uma passagem se gostares de livros.",
+     q:"Jimbocho Tokyo curry"},
+    {time:"14:00", tag:"anime", name:"Akihabara — Electric Town", jp:"秋葉原",
+     desc:"O bairro otaku: lojas de anime e mangá, eletrónica em arranha-céus (Yodobashi), arcades de vários andares, figuras, retro-gaming e maid cafés.",
+     dica:"Sobe a arcade Taito/GiGO andar a andar. A Yodobashi-Akiba tem de tudo, dos componentes às figuras.",
+     q:"Akihabara Electric Town"},
+    {time:"17:00", tag:"anime", name:"Super Potato & lojas de coleção", jp:"スーパーポテト",
+     desc:"Templo do retro-gaming com consolas e jogos das décadas de 80/90, e no topo uma pequena arcade retro. À volta, mais lojas de figuras (Mandarake, Kotobukiya).",
+     dica:"A Mandarake Complex (8 andares) é imperdível para coleccionadores.",
+     q:"Super Potato Akihabara"},
+    {time:"19:00", tag:"comida", name:"Jantar em Akihabara", jp:"",
+     desc:"Desde ramen a temáticos: a zona tem de tudo. Boa altura para um tazón de ramen ou um katsu antes de recolher.",
+     dica:"Se te apetecer o clássico kitsch, há cafés temáticos; senão, um bom ramen resolve.",
+     q:"Akihabara ramen"}
+  ],
+  eat:[
+    {name:"Kanda Matsuya", note:"Soba histórica perto do Palácio", q:"Kanda Matsuya soba Tokyo"},
+    {name:"CoCo Ichibanya", note:"Caril japonês, rápido entre lojas", q:"CoCo Ichibanya Akihabara"},
+    {name:"Kikanbo", note:"Ramen picante 'karashibi' em Kanda", q:"Kikanbo ramen Kanda"}
+  ],
+  notes:[
+    "3 Nov é feriado nacional (Bunka no Hi) — bom ambiente, mas alguns escritórios/museus podem ter horário especial.",
+    "O Palácio é ao ar livre e gratuito: ideal para uma manhã sem pressas."
+  ]
+},
+{
+  n:4, kanji:"四", date:"4 Nov", day:4, mon:11, dow:"Quarta", trip:false,
+  theme:"Tsukiji, teamLab & Odaiba",
+  why:"Comida de mercado ao pequeno-almoço, arte digital imersiva à tarde e a baía de Tóquio ao anoitecer. Reserva o teamLab com antecedência. Último dia na base a este antes de Hakone.",
+  stay:{name:"Base Este (Asakusa/Ueno)", zone:"Taito-ku — sugestão de zona", nights:"Noite 4 de 4", note:"Última noite na base a este. Amanhã segues para Hakone com mochila leve — deixa a mala grande no hotel ou envia por takkyubin.", link:""},
+  stops:[
+    {time:"08:00", tag:"comida", name:"Mercado exterior de Tsukiji", jp:"築地場外市場",
+     desc:"Bancas e tasquinhas de marisco fresquíssimo: sushi, tamagoyaki em espeto, vieiras grelhadas, uni. O melhor pequeno-almoço da viagem.",
+     dica:"<b>Confirma no calendário oficial (tsukiji.or.jp)</b> — fecha aos domingos e a algumas quartas. Vai cedo (8–9h); as bancas fecham a meio da tarde.",
+     q:"Tsukiji Outer Market"},
+    {time:"11:00", tag:"logistica", name:"→ Toyosu (teamLab)", jp:"",
+     desc:"De Tsukiji até Toyosu é curto. O teamLab Planets fica a 2 min da estação Shin-Toyosu (linha Yurikamome) ou ~10 min a pé de Toyosu.",
+     dica:"Marca o slot no site oficial antes de ires. Podes ver o mercado grossista de Toyosu de manhã, se quiseres.",
+     q:"teamLab Planets Tokyo Toyosu"},
+    {time:"13:00", tag:"arte", name:"teamLab Planets", jp:"チームラボプラネッツ",
+     desc:"Museu de arte digital imersiva onde caminhas descalço pela água e por salas de luz, flores e espelhos infinitos. Expandido em 2026, com mais salas interativas. (~¥3.200)",
+     dica:"<b>Descalço e há água até aos joelhos</b> — leva calções ou calças que enrolem bem. Espelhos no chão: evita saias/vestidos.",
+     q:"teamLab Planets Tokyo"},
+    {time:"15:30", tag:"vista", name:"Odaiba — DiverCity & Gundam", jp:"お台場",
+     desc:"A ilha artificial da baía: a estátua gigante do Gundam em frente ao DiverCity, centros comerciais, a praia de Odaiba e a vista da Rainbow Bridge.",
+     dica:"O Gundam tem pequenas 'animações' a horas certas. A Yurikamome (comboio automático) tem vistas ótimas — senta-te à frente.",
+     q:"Unicorn Gundam Statue Odaiba DiverCity"},
+    {time:"17:30", tag:"vista", name:"Rainbow Bridge & baía ao anoitecer", jp:"レインボーブリッジ",
+     desc:"Ao escurecer, a ponte e a linha de água iluminam-se. Do lado de Odaiba tens a vista clássica da baía com a cidade ao fundo.",
+     dica:"O centro comercial Aqua City e o DECKS têm esplanadas viradas à baía para um jantar com vista.",
+     q:"Odaiba Seaside Park Rainbow Bridge"}
+  ],
+  eat:[
+    {name:"Tsukiji (bancas)", note:"Sushi e marisco grelhado — pequeno-almoço", q:"Tsukiji Outer Market sushi"},
+    {name:"Vegan Ramen UZU", note:"No próprio teamLab Planets, sem reserva", q:"Vegan Ramen UZU teamLab Planets"},
+    {name:"Aqua City Odaiba", note:"Praça de restaurantes com vista da baía", q:"Aqua City Odaiba restaurants"}
+  ],
+  notes:[
+    "Prepara a mochila para Hakone hoje à noite; a mala grande fica em Tóquio ou segue por takkyubin.",
+    "Se Tsukiji estiver fechado nesta quarta, troca por um pequeno-almoço em Toyosu e antecipa o teamLab."
+  ]
+},
+{
+  n:5, kanji:"五", date:"5 Nov", day:5, mon:11, dow:"Quinta", trip:true,
+  theme:"Hakone · circuito + ryokan (noite)",
+  why:"Vais a Hakone dormir num ryokan com onsen. Faz o circuito clássico — vale vulcânico, lago e o torii sobre a água — e fecha o dia com banho termal e jantar kaiseki. Em novembro, com folhagem de outono nas zonas altas.",
+  stay:{name:"Shirayunoyado Yamadaya", zone:"Gora / Sounzan, Hakone (Kanagawa)", nights:"1 noite", note:"Ryokan tradicional a 4 min de Sounzan, com onsen de madeira yosegi-zaiku e jantar/pequeno-almoço kaiseki servidos no quarto. Shuttle gratuito de Gora entre as 15h e as 18h — liga ao chegar à estação. Check-in a partir das 15h, check-out às 10h.", link:"https://www.booking.com/hotel/jp/yamadaya.pt-pt.html?checkin=2026-11-05&checkout=2026-11-06"},
   pass:{title:"Hakone Free Pass (2 dias)",
-    text:"Compra no Odakyu Sightseeing Service Center em Shinjuku. Inclui ida-e-volta Shinjuku–Odawara + uso ilimitado de comboio de montanha, funicular, teleférico, barco-pirata e autocarros, e descontos em ~70 locais.",
+    text:"Compra no Odakyu Sightseeing Service Center em Shinjuku (ou online). Inclui ida-e-volta Shinjuku–Odawara + uso ilimitado de comboio de montanha, funicular, teleférico, barco-pirata e autocarros. Com a noite cá, os 2 dias do passe encaixam na perfeição.",
     price:"¥7.100 (Shinjuku, 2 dias)", extra:"Romancecar (comboio expresso reservado) +¥1.200 por sentido — opcional mas confortável (~85 min direto).",
     link:"https://www.odakyu.jp/english/passes/hakone/"},
   stops:[
-    {time:"07:30", tag:"logistica", name:"Shinjuku → Hakone-Yumoto", jp:"小田急",
-     desc:"Linha Odakyu. Romancecar direto (~85 min, reservado) ou expresso normal (~2h, grátis com o passe, 1 transbordo em Odawara).",
-     dica:"Reserva o Romancecar no balcão Odakyu de Shinjuku ao comprar o passe. Senta-te à frente para as vistas.",
+    {time:"08:00", tag:"logistica", name:"Tóquio → Hakone-Yumoto", jp:"小田急",
+     desc:"Linha Odakyu a partir de Shinjuku. Romancecar direto (~85 min, reservado) ou expresso normal (~2h, grátis com o passe). Viaja leve: mochila só com o essencial da noite.",
+     dica:"<b>Takkyubin:</b> se ainda não enviaste, podes despachar a mala grande do hotel para o alojamento seguinte por ~¥2.000.",
      q:"Odakyu Sightseeing Service Center Shinjuku"},
-    {time:"10:00", tag:"vista", name:"Comboio de montanha → Gora", jp:"箱根登山鉄道",
-     desc:"Comboio panorâmico aos ziguezagues subindo a montanha entre hortênsias, até Gora. Depois o funicular curto até Sounzan.",
-     dica:"Senta-te do lado direito na subida para as melhores vistas do vale.",
-     q:"Hakone Tozan Railway Gora Station"},
-    {time:"11:30", tag:"vista", name:"Teleférico & Owakudani", jp:"大涌谷",
-     desc:"Teleférico sobre o vale vulcânico fumegante de Owakudani — cheiro a enxofre e, em dias limpos, o Monte Fuji ao fundo. Prova o famoso ovo preto cozido nas fontes.",
+    {time:"10:30", tag:"vista", name:"Comboio de montanha → Owakudani", jp:"大涌谷",
+     desc:"Sobe de comboio panorâmico e funicular até Sounzan e, de teleférico, sobre o vale vulcânico fumegante de Owakudani — enxofre e, em dias limpos, o Fuji ao fundo. Prova o ovo preto.",
      dica:"<b>Confirma o estado do teleférico nesse dia</b> — fecha por vezes por atividade vulcânica (há autocarro alternativo).",
      q:"Owakudani Hakone"},
     {time:"13:00", tag:"vista", name:"Barco-pirata no Lago Ashi", jp:"芦ノ湖",
-     desc:"Cruzeiro num galeão pelo lago Ashi até Moto-Hakone, com vista para o Fuji nos dias claros.",
-     dica:"Almoça leve antes ou em Togendai. O convés superior tem as melhores vistas.",
+     desc:"Cruzeiro num galeão pelo lago Ashi até Moto-Hakone, com vista para o Fuji e as encostas a mudar de cor.",
+     dica:"O convés superior tem as melhores vistas. Almoça leve antes ou em Togendai.",
      q:"Lake Ashi Hakone pirate ship"},
     {time:"14:30", tag:"historia", name:"Santuário de Hakone (torii do lago)", jp:"箱根神社",
      desc:"Santuário na floresta com o icónico portão torii vermelho 'da Paz' a flutuar sobre a água — uma das imagens mais fotografadas do Japão.",
      dica:"Há sempre fila para a foto no torii sobre o lago; vai cedo ou aceita a espera.",
      q:"Hakone Shrine torii Lake Ashi"},
-    {time:"16:00", tag:"vista", name:"Onsen open-air — Hakone Yuryo", jp:"箱根湯寮",
-     desc:"Casa de banhos termais com grandes rotenburo (banhos ao ar livre), banhos de cerâmica e sauna, na floresta. A 3 min de Hakone-Yumoto num shuttle gratuito. Levantou as restrições a tatuagens em abril de 2025. Regresso a Shinjuku ao fim da tarde.",
-     dica:"<b>Privacidade total:</b> reserva um dos 19 banhos open-air privados (~¥6.000/sala, toalhas incluídas) — sem qualquer regra de tatuagens. Reserva com antecedência. No comunal: lava-te bem antes de entrar.",
-     q:"Hakone Yuryo"}
+    {time:"16:30", tag:"vista", name:"Check-in no ryokan + onsen + kaiseki", jp:"旅館",
+     desc:"Faz check-in ao fim da tarde, veste o yukata e entra no onsen antes do jantar. O kaiseki — jantar de vários pratos sazonais — é o ponto alto da noite. Dormes em futon, ao som da montanha.",
+     dica:"O Yamadaya tem shuttle gratuito de Gora (15h–18h) — liga ao chegar à estação. Confirma a hora do jantar ao chegar; o kaiseki é servido no quarto.",
+     q:"Shirayunoyado Yamadaya Hakone Gora"}
   ],
   eat:[
-    {name:"Bakery & Table Hakone", note:"Pão e café com os pés no rio quente, junto ao lago", q:"Bakery and Table Hakone"},
+    {name:"Kaiseki do ryokan", note:"Jantar incluído — o destaque da noite", q:"Hakone ryokan kaiseki"},
     {name:"Ovo preto de Owakudani", note:"Diz a lenda que prolonga a vida 7 anos", q:"Owakudani black egg"},
-    {name:"Gora Brewery", note:"Soba e cerveja artesanal perto de Gora", q:"Gora Brewery Hakone"}
+    {name:"Gora Brewery", note:"Soba e cerveja artesanal, se almoçares em Gora", q:"Gora Brewery Hakone"}
   ],
   notes:[
-    "Leva o passe sempre à mão: mostras (ou inseres) em cada meio de transporte.",
-    "Faz o circuito num só sentido (loop) para não repetir caminho.",
-    "Em Agosto pode haver trovoadas à tarde na montanha — leva um impermeável leve."
+    "Leva só uma mochila com o essencial para a noite; a mala grande fica em Tóquio ou segue por takkyubin.",
+    "Início de novembro: folhagem de outono nas zonas altas. Leva casaco — em cima faz frio."
   ]
 },
 {
-  n:5, kanji:"五", date:"3 Set", day:3, mon:9, dow:"Quinta", trip:false,
-  theme:"Tsukiji, Akihabara & teamLab",
-  why:"Comida de mercado de manhã, paraíso anime/tecnologia à tarde e arte digital imersiva à noite. Reserva o teamLab com antecedência.",
+  n:6, kanji:"六", date:"6 Nov", day:6, mon:11, dow:"Sexta", trip:true,
+  theme:"Hakone (onsen) + Nakameguro & Daikanyama",
+  why:"Manhã sem pressa, à maneira tradicional: onsen ao acordar e pequeno-almoço japonês no ryokan. Ao descer, passeio e soba em Hakone-Yumoto, regresso a Tóquio à tarde e uma tarde/noite tranquila em Nakameguro e Daikanyama. A partir de hoje, base a oeste (Shinjuku/Shibuya).",
+  stay:{name:"Base Oeste (Shinjuku/Shibuya)", zone:"Shinjuku ou Shibuya — sugestão de zona", nights:"Noites 1–3", note:"Sugestão: 3 noites numa base a oeste (Shinjuku ou Shibuya), central para Harajuku, Shibuya, Shinjuku e Shimokitazawa e prático para o voo de partida. Opções que tinhas visto: Book and Bed Tokyo Shinjuku (hostel-livraria) ou Shinjuku Kuyakusho-mae Capsule.", link:""},
   stops:[
-    {time:"08:00", tag:"comida", name:"Mercado exterior de Tsukiji", jp:"築地場外市場",
-     desc:"Bancas e tasquinhas de marisco fresquíssimo: sushi, tamagoyaki em espeto, vieiras grelhadas, uni. O melhor pequeno-almoço da viagem.",
-     dica:"<b>Vai cedo</b> (8–9h) — fecha a meio da tarde e está fechado aos domingos e quartas. Quinta está aberto.",
-     q:"Tsukiji Outer Market"},
-    {time:"11:00", tag:"anime", name:"Akihabara — Electric Town", jp:"秋葉原",
-     desc:"O bairro otaku: lojas de anime e mangá, eletrónica em arranha-céus (Yodobashi), arcades de vários andares, figuras, retro-gaming e maid cafés.",
-     dica:"Sobe a arcade Taito/SEGA andar a andar. A Yodobashi-Akiba tem de tudo e ar condicionado para a pausa do calor.",
-     q:"Akihabara Electric Town"},
-    {time:"Transporte", tag:"logistica", name:"→ Toyosu (teamLab)", jp:"",
-     desc:"De Akihabara até Toyosu de metro (~25–30 min). O teamLab Planets fica a 2 min da estação Shin-Toyosu (linha Yurikamome) ou ~10 min a pé de Toyosu.",
-     dica:"Marca o slot da tarde/noite no site oficial antes de ires.",
-     q:"teamLab Planets Tokyo Toyosu"},
-    {time:"17:00", tag:"arte", name:"teamLab Planets", jp:"チームラボプラネッツ",
-     desc:"Museu de arte digital imersiva onde caminhas descalço pela água e por salas de luz, flores e espelhos infinitos. Expandido em 2026, com mais salas interativas. (~¥3.200)",
-     dica:"<b>Descalço e há água até aos joelhos</b> — leva calções ou calças que enrolem bem. Espelhos no chão: evita saias/vestidos.",
-     q:"teamLab Planets Tokyo"},
-    {time:"19:30", tag:"vista", name:"Odaiba & Gundam — opcional", jp:"お台場",
-     desc:"Se sobrar energia, a ilha de Odaiba (perto) tem a estátua gigante do Gundam em DiverCity, beira-mar e vista da Rainbow Bridge.",
-     dica:"O Gundam tem pequenas 'animações' a horas certas à noite.",
-     q:"Unicorn Gundam Statue Odaiba DiverCity"}
+    {time:"Manhã", tag:"vista", name:"Onsen ao acordar + pequeno-almoço", jp:"朝風呂",
+     desc:"O melhor banho é o da manhã, com a montanha calma e poucos hóspedes. Depois, o pequeno-almoço tradicional japonês do ryokan.",
+     dica:"Check-out costuma ser ~10-11h. Sem pressa — é o luxo de dormir cá.",
+     q:"Hakone Yumoto"},
+    {time:"11:00", tag:"comida", name:"Hakone-Yumoto — passeio & soba", jp:"箱根湯本",
+     desc:"Ao descer, passeia pela rua principal de Hakone-Yumoto: lojas tradicionais, doces cozidos no vapor termal e casas de soba centenárias. Almoça uma tigela de soba quente antes de voltar.",
+     dica:"Prova o 'onsen manju' (bolinho cozido no vapor) e leva yu-mochi como lembrança. A Hatsuhana é uma casa de soba muito conceituada.",
+     q:"Hatsuhana soba Hakone Yumoto"},
+    {time:"13:30", tag:"logistica", name:"Regresso a Tóquio", jp:"",
+     desc:"Volta a Hakone-Yumoto e apanha o Odakyu/Romancecar para Shinjuku (~1h30). Faz check-in na base a oeste e larga a mochila.",
+     dica:"Se enviaste a mala por takkyubin, confirma que já chegou ao novo alojamento.",
+     q:"Hakone-Yumoto Station"},
+    {time:"15:30", tag:"compras", name:"Nakameguro — rio & lojas", jp:"中目黒",
+     desc:"Bairro chique e descontraído ao longo do rio Meguro: boutiques, lojas vintage/select e cafés de especialidade. Passeio à beira-rio.",
+     dica:"O Onibus Coffee e o Sidewalk Stand são paragens de café clássicas.",
+     q:"Nakameguro Tokyo"},
+    {time:"16:30", tag:"comida", name:"Starbucks Reserve Roastery", jp:"スタバ リザーブ ロースタリー",
+     desc:"O enorme flagship de torrefação de café em Nakameguro: 4 andares, bar de chá e uma esplanada sobre o rio. Vale a visita mesmo para quem não é fã de Starbucks.",
+     dica:"Sobe ao terraço para a vista do rio. Costuma ter fila ao fim de semana.",
+     q:"Starbucks Reserve Roastery Tokyo Nakameguro"},
+    {time:"18:00", tag:"compras", name:"Daikanyama T-Site", jp:"代官山 蔦屋書店",
+     desc:"A poucos minutos a pé, a livraria-conceito da Tsutaya em Daikanyama é linda ao anoitecer, com cafés e design. Bairro elegante, ótimo para jantar.",
+     dica:"Bairro tranquilo e sofisticado — bons bistrôs e izakayas para terminar o dia.",
+     q:"Daikanyama T-Site"}
   ],
   eat:[
-    {name:"Tsukiji (bancas)", note:"Sushi e marisco grelhado — pequeno-almoço", q:"Tsukiji Outer Market sushi"},
-    {name:"Kanda / Akihabara curry", note:"Almoço rápido entre lojas", q:"CoCo Ichibanya Akihabara"},
-    {name:"Vegan Ramen UZU", note:"No próprio teamLab Planets, sem reserva", q:"Vegan Ramen UZU teamLab Planets"}
-  ]
-},
-{
-  n:7, kanji:"七", date:"5 Set", day:5, mon:9, dow:"Sábado", trip:false,
-  theme:"Palácio Imperial, Tóquio & Ginza",
-  why:"História de Edo, a estação mais bonita do país e o luxo de Ginza — que ao sábado à tarde fecha a avenida aos carros.",
-  stops:[
-    {time:"09:30", tag:"historia", name:"Jardins Orientais do Palácio Imperial", jp:"皇居東御苑",
-     desc:"Os jardins do antigo castelo de Edo, com muralhas de pedra, torres e relva imensa. Entrada gratuita e raramente cheios.",
-     dica:"<b>Aberto ao sábado</b> (fecha às 2ªs e 6ªs). Bom passeio matinal à sombra antes do calor.",
-     q:"Imperial Palace East Gardens Tokyo"},
-    {time:"11:30", tag:"historia", name:"Estação de Tóquio & KITTE", jp:"東京駅",
-     desc:"A fachada Marunouchi de 1914 em tijolo vermelho. No edifício KITTE em frente, o terraço do 6º andar tem vista grátis sobre a estação.",
-     dica:"A 'Character Street' subterrânea (Pokémon, Ghibli, etc.) é ótima para lembranças.",
-     q:"Tokyo Station Marunouchi"},
-    {time:"13:30", tag:"compras", name:"Ginza", jp:"銀座",
-     desc:"O bairro mais elegante: flagships (Uniqlo, Itoya de papelaria, Ginza Six), galerias e cafés. Almoço e tarde a passear.",
-     dica:"<b>Ao fim de semana à tarde</b> a avenida Chuo-dori fecha ao trânsito ('paraíso dos peões') — passeia pelo meio da rua.",
-     q:"Ginza Chuo-dori Tokyo"},
-    {time:"16:00", tag:"comida", name:"Depachika (cave gourmet)", jp:"デパ地下",
-     desc:"As caves de comida dos grandes armazéns (ex.: Mitsukoshi, Matsuya) são um espetáculo: doces, bentos perfeitos, queijos e wagashi.",
-     dica:"Compra um bento bonito e vai comer ao Hibiya Park ao lado.",
-     q:"Mitsukoshi Ginza depachika"},
-    {time:"18:30", tag:"vista", name:"Tokyo Tower — opcional", jp:"東京タワー",
-     desc:"A torre vermelha clássica acende-se à noite. Boa para encerrar o dia, especialmente vista das ruas em redor.",
-     dica:"Os degraus de Shiba Park ou a zona de Azabudai Hills dão ótimas fotos da torre iluminada.",
-     q:"Tokyo Tower"}
-  ],
-  eat:[
-    {name:"Kyubey Ginza", note:"Sushi de balcão de referência (reserva)", q:"Kyubey Ginza"},
-    {name:"Ginza Kagari", note:"Ramen de frango cremoso, pode ter fila", q:"Ginza Kagari ramen"},
-    {name:"Depachika bento", note:"Comer ao ar livre no Hibiya Park", q:"Hibiya Park Tokyo"}
-  ]
-},
-{
-  n:6, kanji:"六", date:"4 Set", day:4, mon:9, dow:"Sexta", trip:true,
-  theme:"Viagem de dia · Kamakura",
-  why:"O Grande Buda, templos junto ao mar e o comboio Enoden à beira da praia. Dia útil = menos multidões no comboio panorâmico.",
-  pass:{title:"Como ir (Suica chega)",
-    text:"De comboio JR: Linha Yokosuka desde a Estação de Tóquio (~1h) ou Shonan-Shinjuku desde Shinjuku (~1h). Pagas tudo com o Suica. Em Kamakura, usa o pequeno comboio Enoden entre os templos e a costa.",
-    price:"~¥940 só ida (Tóquio→Kamakura)", extra:"Alternativa: 'Enoshima–Kamakura Freepass' (Odakyu) se planeares muitas viagens de Enoden.",
-    link:"https://www.japan-guide.com/e/e2165.html"},
-  stops:[
-    {time:"09:00", tag:"historia", name:"Grande Buda de Kamakura", jp:"鎌倉大仏",
-     desc:"Estátua de bronze de 13 m e 750 anos (templo Kotoku-in), ao ar livre desde que um tsunami levou o templo no séc. XV. Podes entrar lá dentro.",
-     dica:"De Kamakura, apanha o Enoden até Hase (~5 min) e sobe a pé. Vai cedo.",
-     q:"Kotoku-in Great Buddha Kamakura"},
-    {time:"10:30", tag:"vista", name:"Templo Hase-dera", jp:"長谷寺",
-     desc:"Templo em socalcos com jardins, milhares de estátuas Jizo e um miradouro sobre a baía de Kamakura. Lindíssimo.",
-     dica:"Fica a poucos minutos a pé do Grande Buda. A gruta de Benten é pequena e fresca.",
-     q:"Hasedera Temple Kamakura"},
-    {time:"12:30", tag:"comida", name:"Komachi-dori", jp:"小町通り",
-     desc:"A rua de comércio e street food a caminho do santuário principal: shirasu (peixinho local), dango, matcha, croquetes. Almoço a petiscar.",
-     dica:"Prova algo com shirasu (lula/peixe branco) — é a especialidade da zona.",
-     q:"Komachi-dori Kamakura"},
-    {time:"13:30", tag:"historia", name:"Santuário Tsurugaoka Hachimangu", jp:"鶴岡八幡宮",
-     desc:"O grande santuário de Kamakura, no topo de uma avenida cerimonial, fundado no séc. XII. Coração espiritual da antiga capital samurai.",
-     dica:"A avenida Dankazura, a aproximar-se, é uma alameda elevada muito bonita.",
-     q:"Tsurugaoka Hachimangu Kamakura"},
-    {time:"15:30", tag:"vista", name:"Enoden até à costa", jp:"江ノ電",
-     desc:"Comboio panorâmico que serpenteia entre casas e a beira-mar até Enoshima. A passagem de Kamakurakōkōmae (do genérico de Slam Dunk) é famosa.",
-     dica:"Senta-te do lado do mar. Sai em Enoshima para o pôr do sol sobre o Pacífico — em dias limpos com o Fuji.",
-     q:"Kamakurakokomae Station Enoden"},
-    {time:"17:30", tag:"vista", name:"Enoshima — opcional", jp:"江の島",
-     desc:"Ilhota com santuário, grutas e farol-miradouro, ligada por uma ponte. Bom para terminar o dia junto ao mar antes de voltar.",
-     dica:"Há escadas rolantes pagas para subir a ilha — poupa pernas no fim do dia.",
-     q:"Enoshima Island"}
-  ],
-  eat:[
-    {name:"Komachi-dori (bancas)", note:"Street food — almoço", q:"Komachi-dori food Kamakura"},
-    {name:"Bills Shichirigahama", note:"Pequeno-almoço/brunch com vista de mar", q:"Bills Shichirigahama"},
-    {name:"Shirasu-don local", note:"Tigela de arroz com peixinho fresco", q:"shirasu don Kamakura"}
+    {name:"Cafés de Nakameguro", note:"Onibus Coffee, Sidewalk Stand", q:"Onibus Coffee Nakameguro"},
+    {name:"Starbucks Roastery", note:"Café e bar Arriviamo sobre o rio", q:"Starbucks Reserve Roastery Tokyo"},
+    {name:"Jantar em Daikanyama", note:"Bistrôs e izakaya elegantes", q:"Daikanyama restaurants"}
   ],
   notes:[
-    "Distâncias curtas mas com escadas e calor — leva água e protetor solar.",
-    "O Enoden enche ao fim do dia; uma viagem em hora de ponta é apertada mas vale pela vista."
+    "O Hakone Free Pass de 2 dias cobre também os transportes da manhã de hoje.",
+    "Anoitece ~16:40 — Nakameguro fica especialmente bonito ao fim da tarde com as luzes a refletir no rio."
   ]
 },
 {
-  n:8, kanji:"八", date:"6 Set", day:6, mon:9, dow:"Domingo", trip:false,
-  theme:"Últimas compras & partida",
-  why:"Ajusta ao horário do voo. Guarda as malas, faz as últimas compras perto da estação e segue para o aeroporto com folga.",
+  n:7, kanji:"七", date:"7 Nov", day:7, mon:11, dow:"Sábado", trip:false,
+  theme:"Harajuku, Omotesando & Shibuya (dia)",
+  why:"Primeiro de dois dias na zona Harajuku/Shibuya/Shinjuku, para a explorar sem pressas. Hoje, a parte diurna e relaxada: santuário-floresta, moda jovem em Takeshita, a elegância de Omotesando e Shibuya de dia. Ao sábado a zona está animada.",
+  stay:{name:"Base Oeste (Shinjuku/Shibuya)", zone:"Shinjuku ou Shibuya — sugestão de zona", nights:"Noite 2 de 3", note:"Segunda noite na base a oeste. Ficas a um passo de tudo o que exploras hoje e amanhã.", link:""},
   stops:[
-    {time:"Manhã", tag:"logistica", name:"Guardar malas", jp:"",
-     desc:"Se já fizeste check-out mas o voo é à tarde, usa cacifos da estação ou a app ecbo Cloak para guardar bagagem em cafés/lojas próximas.",
-     dica:"Os cacifos grandes esgotam cedo — a ecbo Cloak é o plano B fiável.",
-     q:"coin lockers Tokyo Station"},
-    {time:"—", tag:"compras", name:"Últimas lembranças", jp:"",
-     desc:"Character Street e a cave de doces na Estação de Tóquio, ou um Don Quijote para tudo num só sítio (snacks, cosmética, eletrónica, souvenirs).",
-     dica:"KitKats de sabores, Tokyo Banana e doces da depachika são clássicos para levar.",
-     q:"Tokyo Station Character Street"},
-    {time:"Transporte", tag:"logistica", name:"Aeroporto", jp:"",
-     desc:"Narita: Narita Express (N'EX) ou Skyliner (~60 min). Haneda: monocarril ou Keikyu (~30 min). Confirma de qual aeroporto partes e o tempo de viagem.",
-     dica:"<b>Chega 3h antes</b> de voo internacional. O N'EX pode reservar-se na app Welcome Suica Mobile.",
-     q:"Narita Express Tokyo Station"}
+    {time:"09:00", tag:"vista", name:"Santuário Meiji Jingu", jp:"明治神宮",
+     desc:"Santuário xintoísta rodeado por uma floresta de 100.000 árvores, surpreendentemente calmo. Portões torii imensos em madeira.",
+     dica:"Tranquilo logo de manhã. Ao fim de semana é frequente ver casamentos tradicionais a decorrer.",
+     q:"Meiji Jingu Shrine"},
+    {time:"10:45", tag:"compras", name:"Takeshita-dori (Harajuku)", jp:"竹下通り",
+     desc:"Rua pedonal da moda kawaii e doce: crepes gigantes, algodão-doce arco-íris, lojas excêntricas. O coração da cultura jovem de Tóquio.",
+     dica:"Prova um crepe de Harajuku. Ao fim de semana enche — vai mais cedo se preferires com menos gente.",
+     q:"Takeshita Street Harajuku"},
+    {time:"12:00", tag:"compras", name:"Omotesando & Cat Street", jp:"表参道",
+     desc:"A avenida arborizada de luxo, com arquitetura de assinatura (Tod's, Dior, Omotesando Hills), e a paralela Cat Street, mais descontraída, de streetwear e cafés. Almoço por aqui.",
+     dica:"Contraste perfeito com Takeshita: aqui é elegante e espaçoso. Boa zona para um almoço com calma.",
+     q:"Omotesando Tokyo"},
+    {time:"14:30", tag:"anime", name:"Shibuya — Hachiko & Center Gai", jp:"渋谷",
+     desc:"Estátua do cão fiel Hachiko, ruas de lojas, arcades e a energia pura de Shibuya. Tarde a explorar com tempo, já que voltas amanhã.",
+     dica:"De Harajuku é uma estação na linha JR Yamanote, ou ~20 min a pé pela Cat Street.",
+     q:"Hachiko Statue Shibuya"},
+    {time:"16:00", tag:"vista", name:"Shibuya Hikarie — Sky Lobby", jp:"渋谷ヒカリエ",
+     desc:"No 11º andar do edifício Hikarie, colado à estação, o Sky Lobby tem janelas do chão ao teto com vista panorâmica e gratuita sobre Shibuya ao anoitecer.",
+     dica:"<b>Grátis.</b> Guarda o Shibuya Sky pago para amanhã, ao pôr do sol.",
+     q:"Shibuya Hikarie Sky Lobby"},
+    {time:"18:00", tag:"compras", name:"Shibuya — lojas & arcades", jp:"渋谷",
+     desc:"Aproveita a noite para as grandes lojas (Shibuya Parco, Mega Don Quijote, Tower Records) e arcades de vários andares, sem a pressa de tudo num só dia.",
+     dica:"O Shibuya Parco tem o Nintendo Tokyo e o Pokémon Center; a Tower Records de Shibuya é das maiores do mundo.",
+     q:"Shibuya Parco Tokyo"}
   ],
   eat:[
-    {name:"Ekiben", note:"Bento de viagem comprado na estação", q:"ekiben Tokyo Station"}
+    {name:"Uobei Shibuya", note:"Sushi em tapete rolante, barato e divertido", q:"Uobei Sushi Shibuya"},
+    {name:"Gyukatsu Motomura", note:"Bife panado que grelhas tu — pode ter fila", q:"Gyukatsu Motomura Shibuya"},
+    {name:"Afuri Harajuku", note:"Ramen de yuzu, leve e cítrico", q:"Afuri Harajuku ramen"}
+  ],
+  notes:[
+    "Dois dias na mesma zona: hoje a parte diurna e de compras; amanhã o pôr do sol no Shibuya Sky e a noite de néon em Shinjuku.",
+    "Anoitece ~16:40 — Omotesando e Shibuya ficam bonitos com as luzes ao fim da tarde."
+  ]
+},
+{
+  n:8, kanji:"八", date:"8 Nov", day:8, mon:11, dow:"Domingo", trip:false,
+  theme:"Shibuya ao pôr do sol & Shinjuku à noite",
+  why:"Agora o melhor da luz e da noite. Tarde tranquila a rever cantos de Harajuku/Shibuya que faltaram, pôr do sol (~16:40) no Shibuya Sky e, à noite, salto para Shinjuku para o néon e o jantar de beco.",
+  stay:{name:"Base Oeste (Shinjuku/Shibuya)", zone:"Shinjuku ou Shibuya — sugestão de zona", nights:"Noite 3 de 3", note:"Última noite na base a oeste antes do dia mais tranquilo de amanhã e da partida.", link:""},
+  stops:[
+    {time:"11:00", tag:"compras", name:"Omotesando, Cat Street & arredores", jp:"裏原宿",
+     desc:"Manhã sem pressa pelo Ura-Harajuku: lojas vintage e select, galerias e cafés de especialidade que não deste ontem. Almoço descontraído por aqui.",
+     dica:"Zona perfeita para um ritmo lento antes da tarde de miradouros.",
+     q:"Cat Street Harajuku"},
+    {time:"14:00", tag:"compras", name:"Shibuya — rever com calma", jp:"渋谷",
+     desc:"Volta a Shibuya para o que faltou: lojas de discos, Loft, ou só absorver a energia das ruas antes de subir ao miradouro.",
+     dica:"Boa altura para resolver compras antes de subir ao Shibuya Sky.",
+     q:"Shibuya Tokyo"},
+    {time:"16:00", tag:"vista", name:"Shibuya Sky", jp:"渋谷スカイ",
+     desc:"Miradouro a céu aberto no topo do Shibuya Scramble Square. Em novembro o pôr do sol é por volta das 16:40 — reserva um slot ~16:00.",
+     dica:"<b>Reserva online com antecedência</b> (~¥2.500). Leva casaco: lá em cima venta e, em novembro, está frio.",
+     q:"Shibuya Sky"},
+    {time:"17:15", tag:"vista", name:"Cruzamento de Shibuya", jp:"スクランブル交差点",
+     desc:"O cruzamento mais movimentado do mundo, melhor já de noite com os néons. Vê de cima do Starbucks do Tsutaya ou da passagem.",
+     dica:"Atravessa-o uma vez no meio da multidão — é uma experiência por si só.",
+     q:"Shibuya Crossing"},
+    {time:"18:15", tag:"vista", name:"Shinjuku — miradouro do Tochō", jp:"都庁",
+     desc:"Salta para Shinjuku (linha JR, ~5 min). Miradouro grátis a 202 m com a cidade toda acesa; em dias limpos vê-se o Monte Fuji recortado ao longe.",
+     dica:"<b>Grátis</b> e sem filas grandes. Confirma o horário do deck (costuma fechar ~22h).",
+     q:"Tokyo Metropolitan Government Building Observation Deck"},
+    {time:"19:30", tag:"comida", name:"Omoide Yokocho & Kabukicho", jp:"思い出横丁",
+     desc:"Jantar num beco de tasquinhas de yakitori e cerveja, e a seguir o mar de néon de Kabukicho com a cabeça do Godzilla.",
+     dica:"Muitas tasquinhas são minúsculas e só dinheiro. Ignora quem aborda na rua a oferecer bares.",
+     q:"Omoide Yokocho Shinjuku"}
+  ],
+  eat:[
+    {name:"Uobei Shibuya", note:"Sushi em tapete rolante, barato e divertido", q:"Uobei Sushi Shibuya"},
+    {name:"Gyukatsu Motomura", note:"Bife panado que grelhas tu — pode ter fila", q:"Gyukatsu Motomura Shibuya"},
+    {name:"Omoide Yokocho", note:"Yakitori num beco, para o jantar em Shinjuku", q:"Omoide Yokocho Shinjuku"}
+  ]
+},
+{
+  n:9, kanji:"九", date:"9 Nov", day:9, mon:11, dow:"Segunda", trip:false,
+  theme:"Shimokitazawa, Shinjuku Gyoen & compras finais",
+  why:"Último dia inteiro, num ritmo calmo: o bairro boémio de Shimokitazawa (vintage, cafés, discos), o jardim Shinjuku Gyoen para respirar, e a tarde/noite para as últimas compras e lembranças antes da partida amanhã cedo.",
+  stay:{name:"Base Oeste (última noite)", zone:"Perto de Shinjuku — sugestão de zona", nights:"1 noite", note:"Última noite, de preferência perto de Shinjuku para o voo de amanhã de manhã. Opção que tinhas visto: Shinjuku Kuyakusho-mae Capsule, ao lado de Kabukicho. Deixa as malas prontas hoje à noite.", link:""},
+  stops:[
+    {time:"10:00", tag:"compras", name:"Shimokitazawa", jp:"下北沢",
+     desc:"O bairro boémio de Tóquio: lojas vintage e em segunda mão, discos, cafés independentes, teatros pequenos e izakayas. Perfeito para vaguear sem plano.",
+     dica:"É a meca do vintage. A zona à volta da estação (renovada com o Bonus Track e o Reload) está cheia de lojas giras.",
+     q:"Shimokitazawa Tokyo"},
+    {time:"13:00", tag:"comida", name:"Almoço em Shimokitazawa", jp:"",
+     desc:"O bairro tem caril, ramen e cafés descontraídos. Bom para um almoço tranquilo entre as lojas.",
+     dica:"Shimokitazawa é famosa pelas casas de caril japonês — segue o cheiro.",
+     q:"Shimokitazawa curry"},
+    {time:"15:00", tag:"vista", name:"Jardim Shinjuku Gyoen", jp:"新宿御苑",
+     desc:"Um dos jardins mais bonitos de Tóquio, misturando estilos japonês, inglês e francês. Em novembro, os bordos começam a virar vermelhos. Oásis de calma a par de Shinjuku.",
+     dica:"<b>Entrada ~¥500; fecha às segundas... exceto em época de folhagem</b> — confirma no site, pois no outono costuma abrir todos os dias. Última entrada ~16h.",
+     q:"Shinjuku Gyoen National Garden"},
+    {time:"17:00", tag:"compras", name:"Compras finais — Shinjuku", jp:"新宿",
+     desc:"A leste da estação: Don Quijote (24h), Bic Camera/Yodobashi para eletrónica, Kinokuniya para livros, e mil sítios para lembranças e KitKats de sabores.",
+     dica:"Faz as compras grandes hoje — amanhã sais cedo. Guarda espaço e recibos para o tax-free (leva o passaporte).",
+     q:"Don Quijote Shinjuku"},
+    {time:"19:30", tag:"comida", name:"Jantar de despedida", jp:"",
+     desc:"Última noite: escolhe o que mais gostaste — sushi, um bom ramen, yakitori num beco ou um izakaya animado em Shinjuku.",
+     dica:"Se quiseres algo especial, reserva com antecedência. Senão, Omoide Yokocho ou um izakaya de bairro nunca falham.",
+     q:"Shinjuku izakaya"}
+  ],
+  eat:[
+    {name:"Curry em Shimokitazawa", note:"O bairro é conhecido pelas casas de caril", q:"Shimokitazawa curry"},
+    {name:"Kinokuniya / depachika Shinjuku", note:"Lembranças gourmet e livros", q:"Isetan Shinjuku depachika"},
+    {name:"Izakaya de despedida", note:"Última noite em Shinjuku", q:"Shinjuku izakaya"}
+  ],
+  notes:[
+    "Deixa a bagagem pronta esta noite: amanhã o voo é às 09:55 e sais cedo.",
+    "Tax-free: leva o passaporte nas compras e junta os recibos."
+  ]
+},
+{
+  n:10, kanji:"十", date:"10 Nov", day:10, mon:11, dow:"Terça", trip:false,
+  theme:"Partida (voo 09:55)",
+  why:"O voo sai de Haneda às 09:55 — é dia de partida. Como é de manhã, sai do hotel cedo (~06:30); as compras de lembranças já ficaram feitas ontem.",
+  stops:[
+    {time:"06:30", tag:"logistica", name:"Hotel → Haneda", jp:"",
+     desc:"Para um voo às 09:55 em Haneda, sai do hotel por volta das 06:30. Tokyo Monorail ou Keikyu até ao aeroporto (~30-45 min).",
+     dica:"<b>Chega ~3h antes</b> de voo internacional. O teu voo é o SK984 para Copenhaga — confirma o terminal (Haneda tem 3).",
+     q:"Haneda Airport"},
+    {time:"07:00", tag:"comida", name:"Pequeno-almoço em Haneda", jp:"",
+     desc:"Haneda tem boas opções depois da segurança; apanha um último onigiri ou um ekiben para a viagem.",
+     dica:"Aproveita o duty-free para snacks japoneses como prenda.",
+     q:"Haneda Airport restaurants"},
+    {time:"09:55", tag:"logistica", name:"Voo SK984 Haneda → Copenhaga", jp:"",
+     desc:"Partida às 09:55 (chegada a Copenhaga 15:20). Ligação SK2773 no dia seguinte, 11 Nov, de Copenhaga para o Porto (08:35 → 11:05).",
+     dica:"Referência da reserva: XZGOEU. Boa viagem de volta!",
+     q:"Haneda Airport Terminal 3"}
+  ],
+  eat:[
+    {name:"Ekiben", note:"Bento de viagem comprado na estação/aeroporto", q:"ekiben Haneda Airport"}
   ]
 }
 ];
@@ -577,7 +696,7 @@ const APPS = [
    ds:"Reserva sítio para guardar bagagem em lojas/cafés quando os cacifos das estações estiverem cheios.",
    url:"https://cloak.ecbo.io/en"},
   {ini:"NV", cls:"g", name:"NERV", role:"alertas de desastres",
-   ds:"Avisos antecipados de sismos e tufões — importante em Agosto. Notificações rápidas e fiáveis.",
+   ds:"Avisos antecipados de sismos e tufões. Notificações rápidas e fiáveis — útil em qualquer altura.",
    url:"https://nerv.app/"}
 ];
 
@@ -600,13 +719,14 @@ const TIPS = `
 </div>
 
 <div class="acard">
-  <h3><span class="dot"></span>Clima de Agosto — calor & humidade</h3>
+  <h3><span class="dot"></span>Clima de novembro — fresco, seco & cores de outono</h3>
   <div class="tipgrid">
     <ul>
-      <li><b>30–35 °C e muito húmido.</b> Começa os dias cedo e guarda o meio-dia para sítios com ar condicionado (museus, teamLab, lojas).</li>
-      <li>Hidrata-te constantemente — há máquinas de bebidas a cada esquina.</li>
-      <li>Trovoadas e <b>tufões</b> são possíveis: leva guarda-chuva dobrável (vende-se em qualquer loja) e ativa a app NERV.</li>
-      <li>Protetor solar, boné e uma toalha de arrefecimento ajudam muito.</li>
+      <li><b>~10–18 °C, seco e muitas vezes céu limpo.</b> Um dos melhores meses para visitar — e boas hipóteses de ver o Fuji nos dias claros.</li>
+      <li><b>Veste em camadas:</b> de manhã e à noite arrefece (perto dos 10 °C); de dia ao sol está agradável. Leva um casaco, sobretudo para Hakone e miradouros.</li>
+      <li><b>Dias curtos:</b> anoitece por volta das 16:40, por isso começa cedo e planeia as vistas de pôr do sol para ~16:00.</li>
+      <li><b>Folhagem de outono (kōyō):</b> começa nas zonas altas (Hakone) no início de novembro; na cidade fica no auge mais para o fim do mês.</li>
+      <li>Pouca chuva, mas leva um guarda-chuva dobrável por precaução. A app NERV continua útil para alertas.</li>
     </ul>
   </div>
 </div>
@@ -718,6 +838,14 @@ function dayHTML(d){
       ${d.pass.extra?`<p style="font-size:12px;color:#6C7385;margin-bottom:8px">${d.pass.extra}</p>`:""}
       <a class="bbtn" href="${d.pass.link}" target="_blank" rel="noopener">Mais info</a>
     </div>` : "";
+  const stay = d.stay ? `
+    <div class="staycard">
+      <h4>🛏️ Pernoita ${d.stay.nights?`<span class="snights">${d.stay.nights}</span>`:""}</h4>
+      <div class="sname">${d.stay.name}</div>
+      <div class="szone">${d.stay.zone}</div>
+      <p>${d.stay.note}</p>
+      ${d.stay.link?`<a class="bbtn" href="${d.stay.link}" target="_blank" rel="noopener">Ver no Booking</a>`:""}
+    </div>` : "";
   return `
   <section class="day ${d.trip?'trip':''}" id="day${d.n}" data-day="${d.day}">
     <button class="dayhead" aria-expanded="false" onclick="toggleDay(${d.n})">
@@ -730,6 +858,7 @@ function dayHTML(d){
     </button>
     <div class="daybody">
       <div class="why">${d.why}</div>
+      ${stay}
       ${pass}
       <ol class="timeline">${stops}</ol>
       ${eat}
@@ -773,66 +902,66 @@ function renderEssenciais(){
 const DISCOVER = [
 { title:"Em 2ª mão & vintage", intro:"Tóquio é a capital mundial do usado em ótimo estado. Garimpa livros, jogos, roupa de marca e raridades a preços baixos.",
   items:[
-   {name:"Book Off / Super Bazaar", jp:"ブックオフ", area:"Shibuya · Akihabara", day:"Dia 2 / 5", desc:"Cadeia de usados baratos: mangá, livros, jogos, CDs e roupa. As lojas 'Super Bazaar' juntam tudo num só edifício.", tip:"As prateleiras de jogos e mangá a ~¥110 valem a garimpagem.", q:"Book Off Super Bazaar Shinjuku"},
-   {name:"Hard Off + Mode Off", jp:"ハードオフ", area:"Akihabara", day:"Dia 5", desc:"O irmão da eletrónica e instrumentos usados (Hard Off) e da roupa (Mode Off): gadgets, câmaras e consolas retro.", q:"Hard Off Akihabara"},
+   {name:"Book Off / Super Bazaar", jp:"ブックオフ", area:"Shibuya · Akihabara", day:"Dia 2 / 6", desc:"Cadeia de usados baratos: mangá, livros, jogos, CDs e roupa. As lojas 'Super Bazaar' juntam tudo num só edifício.", tip:"As prateleiras de jogos e mangá a ~¥110 valem a garimpagem.", q:"Book Off Super Bazaar Shinjuku"},
+   {name:"Hard Off + Mode Off", jp:"ハードオフ", area:"Akihabara", day:"Dia 2", desc:"O irmão da eletrónica e instrumentos usados (Hard Off) e da roupa (Mode Off): gadgets, câmaras e consolas retro.", q:"Hard Off Akihabara"},
    {name:"2nd Street", jp:"セカンドストリート", area:"Shimokitazawa · Harajuku", day:"Extra", desc:"A maior cadeia de roupa em 2ª mão — de marcas correntes a peças vintage e designer.", q:"2nd Street Shimokitazawa"},
    {name:"Shimokitazawa", jp:"下北沢", area:"Shimokitazawa", day:"Extra", desc:"Um bairro inteiro de vintage, thrift, cafés e lojas indie. A melhor zona de garimpo de roupa da cidade.", tip:"Fica a ~5 min de comboio de Shibuya — ótimo para encaixar numa tarde livre.", q:"Shimokitazawa"},
    {name:"Kōenji", jp:"高円寺", area:"Koenji", day:"Extra", desc:"Vintage mais barato e local, longe das multidões turísticas. Atmosfera boémia e retro.", q:"Koenji Tokyo"},
-   {name:"Cat Street / Ura-Harajuku", jp:"裏原宿", area:"Harajuku", day:"Dia 2", desc:"Streetwear e designer em 2ª mão (RAGTAG, Kindal) nas ruas calmas atrás de Harajuku.", q:"Cat Street Harajuku"}
+   {name:"Cat Street / Ura-Harajuku", jp:"裏原宿", area:"Harajuku", day:"Dia 6", desc:"Streetwear e designer em 2ª mão (RAGTAG, Kindal) nas ruas calmas atrás de Harajuku.", q:"Cat Street Harajuku"}
   ]},
 { title:"Cartas Pokémon & TCG", intro:"Desde lojas oficiais a singles e raridades usadas — Akihabara e Nakano são o coração do TCG.",
   items:[
-   {name:"Pokémon Center Shibuya", jp:"ポケモンセンター", area:"Shibuya", day:"Dia 2", desc:"Loja oficial no Shibuya Parco, com exclusivos e cartas promo. Ao lado ficam a Nintendo Tokyo e a Capcom Store.", q:"Pokemon Center Shibuya"},
+   {name:"Pokémon Center Shibuya", jp:"ポケモンセンター", area:"Shibuya", day:"Dia 6", desc:"Loja oficial no Shibuya Parco, com exclusivos e cartas promo. Ao lado ficam a Nintendo Tokyo e a Capcom Store.", q:"Pokemon Center Shibuya"},
    {name:"Pokémon Center Mega Tokyo", jp:"メガトウキョー", area:"Ikebukuro", day:"Extra", desc:"A maior loja Pokémon da cidade, no Sunshine City.", q:"Pokemon Center Mega Tokyo Ikebukuro"},
    {name:"Pokémon Café", jp:"ポケモンカフェ", area:"Nihonbashi", day:"Extra", desc:"Café temático com pratos e bebidas Pokémon e encontro com o Pikachu.", tip:"<b>Só com reserva</b> online — esgota com semanas de antecedência.", q:"Pokemon Cafe Nihonbashi Tokyo"},
-   {name:"Lojas de cartas de Akihabara", jp:"トレカ", area:"Akihabara", day:"Dia 5", desc:"Hareruya, Card Rush e Yellow Submarine: TCG novo e usado, singles, caixas e torneios.", q:"Hareruya Akihabara"},
-   {name:"Surugaya", jp:"駿河屋", area:"Akihabara · Nakano", day:"Dia 5", desc:"Colecionáveis e cartas usadas a bom preço, em várias lojas especializadas.", q:"Surugaya Akihabara"},
+   {name:"Lojas de cartas de Akihabara", jp:"トレカ", area:"Akihabara", day:"Dia 2", desc:"Hareruya, Card Rush e Yellow Submarine: TCG novo e usado, singles, caixas e torneios.", q:"Hareruya Akihabara"},
+   {name:"Surugaya", jp:"駿河屋", area:"Akihabara · Nakano", day:"Dia 2", desc:"Colecionáveis e cartas usadas a bom preço, em várias lojas especializadas.", q:"Surugaya Akihabara"},
    {name:"Nakano Broadway", jp:"中野ブロードウェイ", area:"Nakano", day:"Extra", desc:"Andares inteiros de cartas, figuras e raridades — menos turístico que Akihabara.", q:"Nakano Broadway"}
   ]},
 { title:"Livros & papelaria",
   items:[
-   {name:"Jimbocho", jp:"神保町", area:"Jimbocho", day:"Extra (perto Dia 7)", desc:"O bairro dos alfarrabistas: dezenas de livrarias de usados, mapas antigos e gravuras ukiyo-e.", tip:"Algumas lojas têm secções de arte e livros em inglês.", q:"Jimbocho Book Town"},
-   {name:"Tsutaya Books Daikanyama", jp:"蔦屋書店", area:"Daikanyama", day:"Extra (perto Dia 2)", desc:"Livraria-café de design lindíssima, perfeita para passar horas a folhear.", q:"Daikanyama Tsutaya Books"},
-   {name:"Village Vanguard", jp:"ヴィレッジヴァンガード", area:"Shibuya · Shimokitazawa", day:"Dia 2", desc:"Livraria-bazar caótica: livros, gadgets, snacks estranhos e cultura pop.", q:"Village Vanguard Shibuya"},
-   {name:"Itoya", jp:"伊東屋", area:"Ginza", day:"Dia 7", desc:"Papelaria icónica de 12 andares: papel washi, canetas e cadernos. Um clássico de Ginza.", q:"Itoya Ginza"},
-   {name:"Kinokuniya", jp:"紀伊國屋書店", area:"Shinjuku", day:"Dia 1", desc:"Livraria enorme com boa secção de livros estrangeiros e revistas.", q:"Kinokuniya Shinjuku"}
+   {name:"Jimbocho", jp:"神保町", area:"Jimbocho", day:"Extra (perto Dia 5)", desc:"O bairro dos alfarrabistas: dezenas de livrarias de usados, mapas antigos e gravuras ukiyo-e.", tip:"Algumas lojas têm secções de arte e livros em inglês.", q:"Jimbocho Book Town"},
+   {name:"Tsutaya Books Daikanyama", jp:"蔦屋書店", area:"Daikanyama", day:"Extra (perto Dia 4)", desc:"Livraria-café de design lindíssima, perfeita para passar horas a folhear.", q:"Daikanyama Tsutaya Books"},
+   {name:"Village Vanguard", jp:"ヴィレッジヴァンガード", area:"Shibuya · Shimokitazawa", day:"Dia 6", desc:"Livraria-bazar caótica: livros, gadgets, snacks estranhos e cultura pop.", q:"Village Vanguard Shibuya"},
+   {name:"Itoya", jp:"伊東屋", area:"Ginza", day:"Extra", desc:"Papelaria icónica de 12 andares: papel washi, canetas e cadernos. Um clássico de Ginza.", q:"Itoya Ginza"},
+   {name:"Kinokuniya", jp:"紀伊國屋書店", area:"Shinjuku", day:"Dia 6", desc:"Livraria enorme com boa secção de livros estrangeiros e revistas.", q:"Kinokuniya Shinjuku"}
   ]},
 { title:"Anime, figuras & retro games",
   items:[
-   {name:"Super Potato", jp:"スーパーポテト", area:"Akihabara", day:"Dia 5", desc:"O templo dos jogos retro, com um arcade vintage jogável no andar de cima.", q:"Super Potato Retro Akihabara"},
-   {name:"Mandarake Complex", jp:"まんだらけ", area:"Akihabara", day:"Dia 5", desc:"Oito andares de mangá, figuras, doujin e raridades usadas.", q:"Mandarake Complex Akihabara"},
+   {name:"Super Potato", jp:"スーパーポテト", area:"Akihabara", day:"Dia 2", desc:"O templo dos jogos retro, com um arcade vintage jogável no andar de cima.", q:"Super Potato Retro Akihabara"},
+   {name:"Mandarake Complex", jp:"まんだらけ", area:"Akihabara", day:"Dia 2", desc:"Oito andares de mangá, figuras, doujin e raridades usadas.", q:"Mandarake Complex Akihabara"},
    {name:"Nakano Broadway", jp:"中野ブロードウェイ", area:"Nakano", day:"Extra", desc:"A alternativa 'old-school' a Akihabara, com a Mandarake original. A 5 min de Shinjuku e cheio de tesouros.", q:"Nakano Broadway"},
-   {name:"Yodobashi Akiba", jp:"ヨドバシ", area:"Akihabara", day:"Dia 5", desc:"Megastore de eletrónica de 9 andares — e ar condicionado para a pausa do calor.", q:"Yodobashi Akiba"},
-   {name:"Salões de gachapon", jp:"ガチャポン", area:"Akihabara · Ikebukuro", day:"Dia 5", desc:"Paredes e paredes de máquinas de cápsulas; o Gashapon Bandai é gigantesco.", tip:"Guarda moedas de ¥100 e ¥500 para a caça às cápsulas.", q:"Gashapon no Mori Akihabara"},
+   {name:"Yodobashi Akiba", jp:"ヨドバシ", area:"Akihabara", day:"Dia 2", desc:"Megastore de eletrónica de 9 andares — e ar condicionado para a pausa do calor.", q:"Yodobashi Akiba"},
+   {name:"Salões de gachapon", jp:"ガチャポン", area:"Akihabara · Ikebukuro", day:"Dia 2", desc:"Paredes e paredes de máquinas de cápsulas; o Gashapon Bandai é gigantesco.", tip:"Guarda moedas de ¥100 e ¥500 para a caça às cápsulas.", q:"Gashapon no Mori Akihabara"},
    {name:"Animate Ikebukuro", jp:"アニメイト", area:"Ikebukuro", day:"Extra", desc:"A maior loja de anime e mangá do mundo, no centro da 'Otome Road'.", q:"Animate Ikebukuro"}
   ]},
 { title:"Comida que não podes perder",
   items:[
-   {name:"Sushi de tapete rolante", jp:"回転寿司", area:"Shibuya", day:"Dia 2", desc:"No Uobei/Genki pedes no ecrã e o prato chega no balcão. Barato, rápido e divertido.", q:"Uobei Sushi Shibuya"},
-   {name:"Gyukatsu", jp:"牛カツ", area:"Shibuya", day:"Dia 2", desc:"Bife panado mal-passado que acabas de grelhar tu numa pedra quente. Viciante.", q:"Gyukatsu Motomura Shibuya"},
-   {name:"Ramen de cabine", jp:"ラーメン", area:"vários", day:"Dia 1", desc:"No Ichiran comes em cabines individuais e personalizas tudo — caldo, picante, textura.", q:"Ichiran Ramen Shinjuku"},
-   {name:"Monjayaki", jp:"もんじゃ焼き", area:"Tsukishima", day:"Extra (perto Dia 5)", desc:"A versão líquida do okonomiyaki, especialidade de Tóquio. Uma rua inteira só de monja.", tip:"Faz-se na chapa da própria mesa — pede ajuda ao staff da 1ª vez.", q:"Tsukishima Monja Street"},
-   {name:"Sukiyaki / unagi", jp:"すき焼き", area:"Asakusa", day:"Dia 3", desc:"O Asakusa Imahan serve sukiyaki tradicional desde o séc. XIX, num cenário clássico.", q:"Asakusa Imahan"},
-   {name:"Depachika", jp:"デパ地下", area:"Ginza · Shinjuku", day:"Dia 7", desc:"As caves gourmet dos armazéns: bentos perfeitos, doces e iguarias. Um festival visual.", q:"Mitsukoshi Ginza depachika"},
+   {name:"Sushi de tapete rolante", jp:"回転寿司", area:"Shibuya", day:"Dia 6", desc:"No Uobei/Genki pedes no ecrã e o prato chega no balcão. Barato, rápido e divertido.", q:"Uobei Sushi Shibuya"},
+   {name:"Gyukatsu", jp:"牛カツ", area:"Shibuya", day:"Dia 6", desc:"Bife panado mal-passado que acabas de grelhar tu numa pedra quente. Viciante.", q:"Gyukatsu Motomura Shibuya"},
+   {name:"Ramen de cabine", jp:"ラーメン", area:"vários", day:"Dia 6", desc:"No Ichiran comes em cabines individuais e personalizas tudo — caldo, picante, textura.", q:"Ichiran Ramen Shinjuku"},
+   {name:"Monjayaki", jp:"もんじゃ焼き", area:"Tsukishima", day:"Extra (perto Dia 2)", desc:"A versão líquida do okonomiyaki, especialidade de Tóquio. Uma rua inteira só de monja.", tip:"Faz-se na chapa da própria mesa — pede ajuda ao staff da 1ª vez.", q:"Tsukishima Monja Street"},
+   {name:"Sukiyaki / unagi", jp:"すき焼き", area:"Asakusa", day:"Dia 1", desc:"O Asakusa Imahan serve sukiyaki tradicional desde o séc. XIX, num cenário clássico.", q:"Asakusa Imahan"},
+   {name:"Depachika", jp:"デパ地下", area:"Ginza · Shinjuku", day:"Extra", desc:"As caves gourmet dos armazéns: bentos perfeitos, doces e iguarias. Um festival visual.", q:"Mitsukoshi Ginza depachika"},
    {name:"Kissaten retro", jp:"喫茶店", area:"Ginza · vários", day:"Extra", desc:"Cafés à moda antiga, com pudim, ovo-sando e café de filtro. Cápsula do tempo da era Showa.", q:"Cafe de l'Ambre Ginza"}
   ]},
 { title:"Snacks, konbini & 100 ienes",
   items:[
-   {name:"Don Quijote (Donki)", jp:"ドンキホーテ", area:"Shibuya · Shinjuku", day:"Dia 1 / 2", desc:"Megastore caótica e 24h: snacks, cosmética, eletrónica e souvenirs num labirinto.", tip:"A parede de KitKats de sabores e o corredor de snacks valem a visita.", q:"Don Quijote Shibuya"},
+   {name:"Don Quijote (Donki)", jp:"ドンキホーテ", area:"Shibuya · Shinjuku", day:"Dia 6", desc:"Megastore caótica e 24h: snacks, cosmética, eletrónica e souvenirs num labirinto.", tip:"A parede de KitKats de sabores e o corredor de snacks valem a visita.", q:"Don Quijote Shibuya"},
    {name:"Konbini", jp:"コンビニ", area:"em todo o lado", day:"todos os dias", desc:"7-Eleven, Lawson e FamilyMart têm refeições surpreendentemente boas a qualquer hora.", tip:"Experimenta o egg sando, o frango karaage do balcão e o famoso frango frito da Lawson.", q:""},
-   {name:"Daiso / lojas de ¥100", jp:"ダイソー", area:"Harajuku", day:"Dia 2", desc:"Quase tudo a ~¥110: utilidades, papelaria e souvenirs baratos e engraçados.", q:"Daiso Harajuku"},
-   {name:"Calbee+", jp:"カルビープラス", area:"Harajuku", day:"Dia 2", desc:"Batatas fritas e snacks acabados de fritar na hora.", q:"Calbee Plus Harajuku"},
-   {name:"Doces de rua", jp:"食べ歩き", area:"Asakusa · Ueno", day:"Dia 3", desc:"Senbei, dango, melonpan e mais nas ruas Nakamise (Asakusa) e Ameyoko (Ueno).", q:"Nakamise-dori Asakusa"}
+   {name:"Daiso / lojas de ¥100", jp:"ダイソー", area:"Harajuku", day:"Dia 6", desc:"Quase tudo a ~¥110: utilidades, papelaria e souvenirs baratos e engraçados.", q:"Daiso Harajuku"},
+   {name:"Calbee+", jp:"カルビープラス", area:"Harajuku", day:"Dia 6", desc:"Batatas fritas e snacks acabados de fritar na hora.", q:"Calbee Plus Harajuku"},
+   {name:"Doces de rua", jp:"食べ歩き", area:"Asakusa · Ueno", day:"Dia 1", desc:"Senbei, dango, melonpan e mais nas ruas Nakamise (Asakusa) e Ameyoko (Ueno).", q:"Nakamise-dori Asakusa"}
   ]},
 { title:"Fora da caixa", intro:"Experiências que não cabem nas listas habituais — o lado mais peculiar e memorável de Tóquio.",
   items:[
-   {name:"Kappabashi", jp:"かっぱ橋", area:"perto de Asakusa", day:"Dia 3", desc:"A rua dos utensílios de cozinha: facas japonesas e os famosos modelos de comida em plástico (sampuru).", tip:"Uma faca de cozinha ou um íman de 'sushi de plástico' dão lembranças únicas.", q:"Kappabashi Kitchen Town"},
-   {name:"Yanaka Ginza", jp:"谷中銀座", area:"Yanaka", day:"Extra (perto Dia 3)", desc:"Bairro velho de becos, lojas tradicionais e gatos. O Tóquio shitamachi que sobreviveu ao tempo.", tip:"Lindíssimo ao fim da tarde, com a 'escadaria do pôr do sol'.", q:"Yanaka Ginza"},
-   {name:"Golden Gai", jp:"ゴールデン街", area:"Shinjuku", day:"Dia 1", desc:"Labirinto de ~200 bares minúsculos, cada um com o seu tema e personalidade.", tip:"Alguns cobram couvert; procura os que dizem 'tourist welcome'.", q:"Golden Gai Shinjuku"},
+   {name:"Kappabashi", jp:"かっぱ橋", area:"perto de Asakusa", day:"Dia 1", desc:"A rua dos utensílios de cozinha: facas japonesas e os famosos modelos de comida em plástico (sampuru).", tip:"Uma faca de cozinha ou um íman de 'sushi de plástico' dão lembranças únicas.", q:"Kappabashi Kitchen Town"},
+   {name:"Yanaka Ginza", jp:"谷中銀座", area:"Yanaka", day:"Extra (perto Dia 1)", desc:"Bairro velho de becos, lojas tradicionais e gatos. O Tóquio shitamachi que sobreviveu ao tempo.", tip:"Lindíssimo ao fim da tarde, com a 'escadaria do pôr do sol'.", q:"Yanaka Ginza"},
+   {name:"Golden Gai", jp:"ゴールデン街", area:"Shinjuku", day:"Dia 6", desc:"Labirinto de ~200 bares minúsculos, cada um com o seu tema e personalidade.", tip:"Alguns cobram couvert; procura os que dizem 'tourist welcome'.", q:"Golden Gai Shinjuku"},
    {name:"Game Center Mikado", jp:"ミカド", area:"Takadanobaba", day:"Extra", desc:"Arcade retro vivo, cheio de máquinas clássicas e de regulares fiéis. Uma viagem ao passado.", q:"Game Center Mikado Takadanobaba"},
-   {name:"Chanko-nabe em Ryogoku", jp:"ちゃんこ鍋", area:"Ryogoku", day:"Extra", desc:"O guisado dos lutadores de sumo, servido no próprio bairro do sumo.", tip:"Nestas datas não há torneio em Tóquio (o de setembro começa a meio do mês), mas dá para comer como um rikishi.", q:"Ryogoku chanko nabe"},
-   {name:"Becos de tasquinhas", jp:"横丁", area:"Shinjuku · Shibuya", day:"Dia 1 / 2", desc:"Omoide Yokocho e Shibuya Yokocho: ruelas de yakitori e cerveja que param o tempo.", q:"Omoide Yokocho Shinjuku"},
-   {name:"teamLab + cápsula", jp:"カプセルホテル", area:"Toyosu", day:"Dia 5", desc:"Arte digital imersiva e, se quiseres a experiência completa, dormir uma noite num hotel-cápsula.", q:"teamLab Planets Tokyo"}
+   {name:"Chanko-nabe em Ryogoku", jp:"ちゃんこ鍋", area:"Ryogoku", day:"Extra", desc:"O guisado dos lutadores de sumo, servido no próprio bairro do sumo.", tip:"Em novembro o grande torneio (Kyushu Basho) é em Fukuoka, não em Tóquio — mas dá para comer como um rikishi.", q:"Ryogoku chanko nabe"},
+   {name:"Becos de tasquinhas", jp:"横丁", area:"Shinjuku · Shibuya", day:"Dia 6", desc:"Omoide Yokocho e Shibuya Yokocho: ruelas de yakitori e cerveja que param o tempo.", q:"Omoide Yokocho Shinjuku"},
+   {name:"teamLab + cápsula", jp:"カプセルホテル", area:"Toyosu", day:"Dia 2", desc:"Arte digital imersiva e, se quiseres a experiência completa, dormir uma noite num hotel-cápsula.", q:"teamLab Planets Tokyo"}
   ]}
 ];
 
@@ -890,6 +1019,140 @@ function toggleCat(i){
   el.querySelector(".cathead").setAttribute("aria-expanded", open);
 }
 
+/* =========================================================
+   ESTAÇÕES — ligações e transbordos
+   ========================================================= */
+const STATIONS = [
+{ title:"Aeroporto ⇄ cidade", intro:"Chegas e partes por Haneda (HND). O Suica paga tudo.",
+  legs:[
+   {label:"Haneda → cidade — chegada (1 nov)", line:"Tokyo Monorail + JR Yamanote", color:"#0080C6", time:"~30 min · ~¥500",
+    desc:"Monorail até Hamamatsucho e troca para a JR Yamanote (verde) até à tua zona."},
+   {label:"Haneda → cidade — alternativa", line:"Keikyu Line", color:"#D6001C", time:"~15-30 min",
+    desc:"Direto para Shinagawa/Sengakuji; liga à linha Asakusa se ficares a leste."},
+   {label:"Hotel → Haneda — partida (10 nov)", line:"Monorail / Keikyu", color:"#0080C6", time:"~30-45 min",
+    desc:"Sai do hotel ~06:30 para o voo das 09:55. Chega ~3h antes; confirma o terminal (HND tem 3)."}
+  ]},
+{ title:"Hakone — ida, circuito & volta", intro:"Tudo coberto pelo Hakone Free Pass (2 dias).",
+  legs:[
+   {label:"Shinjuku → Hakone-Yumoto", line:"Odakyu Romancecar", color:"#0085CD", time:"~85 min",
+    desc:"Expresso reservado, direto. Hakone-Yumoto é o terminus — não te enganas."},
+   {label:"Hakone-Yumoto → Gora", line:"Hakone Tozan (comboio de montanha)", color:"#A0522D", time:"~40 min",
+    desc:"Mudas em Yumoto; segue as placas 'Hakone Tozan Line'. Senta-te à direita na subida. Gora = onde dormes."},
+   {label:"Gora → Owakudani", line:"Funicular + Teleférico", color:"#6a3fa0", time:"~30 min",
+    desc:"Funicular (Cable Car) até Sounzan e teleférico (Ropeway) sobre o vale vulcânico até Owakudani."},
+   {label:"Owakudani → Moto-Hakone", line:"Teleférico + Barco-pirata", color:"#2F7E8C", time:"~50 min",
+    desc:"Teleférico até Togendai e o galeão pelo Lago Ashi até Moto-Hakone (santuário do torii)."},
+   {label:"Moto-Hakone → Hakone-Yumoto", line:"Hakone Tozan Bus", color:"#1f6b5c", time:"~40 min",
+    desc:"Autocarro de volta — fecha o 'loop' sem repetir caminho."},
+   {label:"Gora → Shinjuku — volta (6 nov)", line:"Tozan + Romancecar", color:"#0085CD", time:"~2h",
+    desc:"Desce a Hakone-Yumoto e apanha o Romancecar de volta a Shinjuku."}
+  ]},
+{ title:"Linhas que vais usar mais", intro:"As linhas-chave para saltar entre zonas.",
+  legs:[
+   {label:"JR Yamanote", line:"linha circular", color:"#9ACD32", time:"",
+    desc:"Liga Tóquio, Ueno, Akihabara, Shinjuku, Harajuku, Shibuya e Shinagawa. A tua linha-mãe."},
+   {label:"Linha Ginza", line:"metro", color:"#FF9500", time:"",
+    desc:"Asakusa ↔ Ueno ↔ Ginza ↔ Shibuya. Útil nos Dias 1, 2 e 3."},
+   {label:"Linha Hibiya", line:"metro", color:"#9CA0A6", time:"",
+    desc:"Akihabara ↔ Tsukiji ↔ Ginza ↔ Naka-meguro. Útil nos Dias 3, 4 e 6."},
+   {label:"Tokyu Toyoko", line:"privada", color:"#DA0442", time:"",
+    desc:"Shibuya ↔ Daikanyama ↔ Naka-meguro. ~2 min Shibuya→Nakameguro (Dia 6)."},
+   {label:"Yurikamome", line:"automático", color:"#0098D8", time:"",
+    desc:"Toyosu/Shin-Toyosu (teamLab) e Odaiba (Gundam). Dia 4."}
+  ]},
+{ title:"Ligações por dia", intro:"Os transbordos principais de cada dia em Tóquio.",
+  legs:[
+   {label:"Dia 1 · Asakusa & Skytree", line:"Ginza / Tobu", color:"#FF9500", time:"",
+    desc:"Asakusa (linha Ginza/Asakusa). Skytree: ~20 min a pé pelo rio Sumida ou 1 paragem na Tobu."},
+   {label:"Dia 2 · Ginza, Estação & Ueno", line:"Marunouchi / Ginza", color:"#F62E36", time:"",
+    desc:"Estação de Tóquio e Ginza (Marunouchi/Ginza). Ueno pela Yamanote ou linha Ginza."},
+   {label:"Dia 3 · Palácio → Akihabara", line:"Marunouchi / Yamanote", color:"#FF9500", time:"",
+    desc:"Jardins do Palácio: est. Ōtemachi/Tokyo. Akihabara a 1–2 paragens (Yamanote/Hibiya)."},
+   {label:"Dia 4 · Tsukiji → teamLab → Odaiba", line:"Hibiya + Yurikamome", color:"#9CA0A6", time:"",
+    desc:"Tsukiji (Hibiya). Depois metro até Toyosu e Yurikamome até Shin-Toyosu (teamLab) e Odaiba."},
+   {label:"Dia 6 · Regresso Hakone → Nakameguro", line:"Romancecar + Toyoko", color:"#DA0442", time:"",
+    desc:"Romancecar até Shinjuku. De Shibuya, Toyoko ~2 min até Nakameguro; Daikanyama a 1 paragem."},
+   {label:"Dia 7 · Harajuku → Omotesando → Shibuya", line:"JR Yamanote", color:"#9ACD32", time:"",
+    desc:"Meiji Jingu (est. Harajuku). Takeshita/Omotesando a pé. Shibuya: 1 paragem na Yamanote ou ~20 min a pé pela Cat Street."},
+   {label:"Dia 8 · Shibuya (pôr do sol) → Shinjuku", line:"JR Yamanote", color:"#9ACD32", time:"",
+    desc:"Tarde em Shibuya e Shibuya Sky. Shibuya→Shinjuku ~5 min na linha verde para o Tochō e Omoide Yokocho."},
+   {label:"Dia 9 · Shimokitazawa → Shinjuku", line:"Odakyu / Keio", color:"#0085CD", time:"",
+    desc:"Shimokitazawa a ~5 min de Shinjuku pela Odakyu. Shinjuku Gyoen e compras a pé/1 paragem."}
+  ]}
+];
+
+function legHTML(g){
+  const arrow = g.label.indexOf("→")>=0 ? g.label.replace(/→/g,'<span class="arr">→</span>') : g.label;
+  return `
+   <div class="leg">
+     <div class="legtop">${arrow}</div>
+     <div class="legrow">
+       <span class="legline" style="background:${g.color}">${g.line}</span>
+       ${g.time?`<span class="legtime">${g.time}</span>`:""}
+     </div>
+     ${g.desc?`<div class="legnote">${g.desc}</div>`:""}
+   </div>`;
+}
+
+function renderEstadias(){
+  const top = `<div class="intro">Onde dormes em cada etapa da viagem, por ordem. Toca em "Ver no Booking" para abrir a reserva.</div>`;
+  // Agrupa noites consecutivas no mesmo alojamento
+  const groups = [];
+  ordered().forEach(d=>{
+    if(!d.stay) return;
+    const last = groups[groups.length-1];
+    if(last && last.name===d.stay.name){
+      last.days.push(d);
+    } else {
+      groups.push({name:d.stay.name, stay:d.stay, days:[d]});
+    }
+  });
+  const cards = groups.map(g=>{
+    const first = g.days[0], lastD = g.days[g.days.length-1];
+    const range = g.days.length>1
+      ? `${first.date} – ${lastD.date}`
+      : `${first.date}`;
+    const dias = g.days.length>1
+      ? `Dias ${first.n}–${lastD.n}`
+      : `Dia ${first.n}`;
+    const nights = g.days.length;
+    return `
+    <div class="staycard">
+      <h4>🛏️ ${dias} · ${first.dow}${g.days.length>1?` → ${lastD.dow}`:""}
+        <span class="snights">${nights} ${nights>1?"noites":"noite"}</span></h4>
+      <div class="sname">${g.stay.name}</div>
+      <div class="szone">${g.stay.zone} · ${range}</div>
+      <p>${g.stay.note}</p>
+      ${g.stay.link?`<a class="bbtn" href="${g.stay.link}" target="_blank" rel="noopener">Ver no Booking</a>`:""}
+    </div>`;
+  }).join("");
+  document.getElementById("panel-estadias").innerHTML = top + cards;
+}
+
+function renderEstacoes(){
+  const top = `<div class="intro">As ligações e transbordos que vais apanhando. Toca numa secção para abrir. Tudo se paga com o Suica (exceto o circuito de Hakone, que vai no Free Pass).</div>`;
+  const sections = STATIONS.map((sec,i)=>`
+    <div class="acard cat" id="est${i}">
+      <button class="cathead" aria-expanded="false" onclick="toggleEst(${i})">
+        <span class="dot"></span>
+        <span class="cattitle">${sec.title}</span>
+        <span class="catcount">${sec.legs.length}</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="catbody">
+        ${sec.intro?`<div class="intro">${sec.intro}</div>`:""}
+        ${sec.legs.map(legHTML).join("")}
+      </div>
+    </div>`).join("");
+  document.getElementById("panel-estacoes").innerHTML = top + sections;
+}
+
+function toggleEst(i){
+  const el = document.getElementById("est"+i);
+  const open = el.classList.toggle("open");
+  el.querySelector(".cathead").setAttribute("aria-expanded", open);
+}
+
 function toggle(id, val){
   if(val) done[id]=1; else delete done[id];
   save();
@@ -924,7 +1187,7 @@ function syncPills(){
   });
 }
 
-const TAB_IDS = ["roteiro","achados","essenciais"];
+const TAB_IDS = ["roteiro","estadias","achados","estacoes","essenciais"];
 function showTab(which){
   TAB_IDS.forEach(t=>{
     const on = t===which;
@@ -949,7 +1212,9 @@ function markToday(){
 
 // init
 renderDays();
+renderEstadias();
 renderAchados();
+renderEstacoes();
 renderEssenciais();
 const todayN = markToday();
 toggleDay(todayN || 1);
