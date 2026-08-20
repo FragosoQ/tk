@@ -80,6 +80,14 @@ header.top{
 .daymeta{flex:1;min-width:0}
 .daymeta .dt{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
 .daymeta .th{font-size:17px;font-weight:800;margin:1px 0 0;line-height:1.25}
+.daymeta .zones{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.zpill{font-size:10.5px;font-weight:700;color:var(--indigo);background:#e7ebf3;
+  border:1px solid #d3daea;padding:1.5px 7px;border-radius:20px;line-height:1.5;white-space:nowrap}
+.day.trip .zpill{color:var(--shu);background:#fdeae5;border-color:#f6cdc1}
+.walkbadge{display:inline-block;font-size:10.5px;font-weight:800;color:#2e7d55;background:#e3f2e9;
+  border:1px solid #c4e2d1;padding:1px 7px;border-radius:20px;margin-left:8px;letter-spacing:0;
+  text-transform:none;vertical-align:1px;white-space:nowrap}
+.walkbadge .tr{font-weight:600;opacity:0.85}
 .tripbadge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.06em;color:#fff;
   background:var(--shu);padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:1px;text-transform:uppercase}
 .chev{flex:0 0 auto;color:var(--muted);transition:transform .2s}
@@ -109,6 +117,34 @@ header.top{
   font-weight:700;padding:2px 8px;border-radius:20px;margin-left:auto}
 .staycard a.bbtn{display:inline-block;background:var(--indigo);color:#fff;text-decoration:none;
   font-size:12px;font-weight:700;padding:7px 12px;border-radius:9px}
+
+/* ---------- MAPA DO DIA ---------- */
+.daymap{margin:4px 0 16px;border:1.5px solid #d5ddd5;border-radius:13px;overflow:hidden;background:#eef3ee}
+.daymap summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;
+  padding:11px 14px;font-size:13.5px;font-weight:700;color:var(--indigo);user-select:none}
+.daymap summary::-webkit-details-marker{display:none}
+.daymap .mapico{font-size:15px}
+.daymap .mapchev{margin-left:auto;transition:transform .2s;color:var(--muted)}
+.daymap[open] .mapchev{transform:rotate(180deg)}
+.daymap-body{padding:0 12px 12px}
+.daymap-hint{font-size:11px;color:var(--muted);margin:0 2px 8px;text-align:center;font-style:italic}
+.daymapsvg{width:100%;height:auto;display:block;border-radius:11px}
+.daymap-legend{list-style:none;margin:12px 2px 2px;padding:0;display:grid;
+  grid-template-columns:1fr 1fr;gap:5px 14px}
+.daymap-legend li{display:flex;align-items:flex-start;gap:7px;font-size:12.5px;color:var(--ink);line-height:1.3}
+.daymap-legend .mnum{flex:none;width:19px;height:19px;border-radius:50%;background:var(--shu);color:#fff;
+  font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.daymap-legend .mzone{color:var(--muted);font-style:normal;font-weight:600;font-size:11.5px}
+@media(max-width:560px){ .daymap-legend{grid-template-columns:1fr} }
+
+/* ---------- MAPA GLOBAL (aba) ---------- */
+.gmap-wrap{margin-top:6px}
+.gmap-hint{font-size:12px;color:var(--muted);margin:0 2px 10px;font-style:italic;line-height:1.4}
+.globalmapsvg{width:100%;height:auto;display:block;border-radius:16px}
+.gmap-days{display:flex;flex-wrap:wrap;gap:7px 12px;margin:14px 2px 4px}
+.gday{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink)}
+.gday .gdot{width:20px;height:20px;border-radius:50%;color:#fff;font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex:none}
 
 /* ---------- TIMELINE / STOPS ---------- */
 .timeline{position:relative;margin:0;padding:0;list-style:none}
@@ -260,6 +296,7 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 1
   <div class="tabs" role="tablist">
     <button class="tab" id="tab-roteiro" role="tab" aria-selected="true" onclick="showTab('roteiro')">Roteiro</button>
     <button class="tab" id="tab-estadias" role="tab" aria-selected="false" onclick="showTab('estadias')">Estadias</button>
+    <button class="tab" id="tab-mapa" role="tab" aria-selected="false" onclick="showTab('mapa')">Mapa</button>
     <button class="tab" id="tab-achados" role="tab" aria-selected="false" onclick="showTab('achados')">Achados</button>
     <button class="tab" id="tab-estacoes" role="tab" aria-selected="false" onclick="showTab('estacoes')">Estações</button>
     <button class="tab" id="tab-essenciais" role="tab" aria-selected="false" onclick="showTab('essenciais')">Essenciais</button>
@@ -273,6 +310,8 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 1
 
   <!-- ACHADOS -->
   <div class="panel" id="panel-estadias"></div>
+
+  <div class="panel" id="panel-mapa"></div>
 
   <div class="panel" id="panel-achados"></div>
 
@@ -296,6 +335,273 @@ const TRIP_YEAR = 2026, TRIP_MONTH = 11; // Novembro
 
 function mapsLink(q){
   return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+}
+
+// ===== Coordenadas dos pontos (lat,lng) para os mini-mapas =====
+const COORDS = {
+  "Haneda Airport Tokyo Monorail":[35.5494,139.7798],
+  "Asakusa Station Tokyo":[35.7107,139.7980],
+  "Senso-ji Temple Asakusa":[35.7148,139.7967],
+  "Tokyo Skytree":[35.7101,139.8107],
+  "Ameyoko Market Ueno":[35.7089,139.7745],
+  "Tokyo Station Marunouchi":[35.6812,139.7671],
+  "Ginza Chuo-dori Tokyo":[35.6717,139.7650],
+  "Mitsukoshi Ginza depachika":[35.6717,139.7658],
+  "Tokyo National Museum Ueno":[35.7188,139.7766],
+  "Imperial Palace East Gardens Tokyo":[35.6852,139.7590],
+  "Jimbocho Tokyo curry":[35.6957,139.7576],
+  "Akihabara Electric Town":[35.6984,139.7731],
+  "Super Potato Akihabara":[35.7003,139.7715],
+  "Akihabara ramen":[35.6990,139.7730],
+  "Tsukiji Outer Market":[35.6654,139.7707],
+  "teamLab Planets Tokyo Toyosu":[35.6497,139.7900],
+  "teamLab Planets Tokyo":[35.6497,139.7900],
+  "Unicorn Gundam Statue Odaiba DiverCity":[35.6255,139.7756],
+  "Odaiba Seaside Park Rainbow Bridge":[35.6297,139.7736],
+  "Odakyu Sightseeing Service Center Shinjuku":[35.6910,139.7004],
+  "Owakudani Hakone":[35.2445,139.0197],
+  "Lake Ashi Hakone pirate ship":[35.2020,139.0244],
+  "Hakone Shrine torii Lake Ashi":[35.2044,139.0250],
+  "Shirayunoyado Yamadaya Hakone Gora":[35.2470,139.0510],
+  "Hakone Yumoto":[35.2323,139.1050],
+  "Hatsuhana soba Hakone Yumoto":[35.2330,139.1060],
+  "Hakone-Yumoto Station":[35.2323,139.1050],
+  "Nakameguro Tokyo":[35.6440,139.6989],
+  "Starbucks Reserve Roastery Tokyo Nakameguro":[35.6470,139.6995],
+  "Daikanyama T-Site":[35.6488,139.6955],
+  "Meiji Jingu Shrine":[35.6764,139.6993],
+  "Takeshita Street Harajuku":[35.6716,139.7050],
+  "Omotesando Tokyo":[35.6657,139.7126],
+  "Hachiko Statue Shibuya":[35.6590,139.7005],
+  "Shibuya Hikarie Sky Lobby":[35.6591,139.7036],
+  "Shibuya Parco Tokyo":[35.6624,139.6982],
+  "Cat Street Harajuku":[35.6690,139.7060],
+  "Shibuya Tokyo":[35.6595,139.7004],
+  "Shibuya Sky":[35.6580,139.7016],
+  "Shibuya Crossing":[35.6595,139.7005],
+  "Tokyo Metropolitan Government Building Observation Deck":[35.6896,139.6917],
+  "Omoide Yokocho Shinjuku":[35.6934,139.6992],
+  "Shimokitazawa Tokyo":[35.6613,139.6680],
+  "Shimokitazawa curry":[35.6613,139.6680],
+  "Shinjuku Gyoen National Garden":[35.6852,139.7100],
+  "Don Quijote Shinjuku":[35.6942,139.7030],
+  "Shinjuku izakaya":[35.6938,139.7005],
+  "Haneda Airport":[35.5494,139.7798],
+  "Haneda Airport restaurants":[35.5494,139.7798],
+  "Haneda Airport Terminal 3":[35.5494,139.7798]
+};
+
+// Zona/bairro de cada ponto (para os rótulos de fundo do mapa)
+const ZONE = {
+  "Haneda Airport Tokyo Monorail":"Haneda","Haneda Airport":"Haneda",
+  "Haneda Airport restaurants":"Haneda","Haneda Airport Terminal 3":"Haneda",
+  "Asakusa Station Tokyo":"Asakusa","Senso-ji Temple Asakusa":"Asakusa","Tokyo Skytree":"Skytree",
+  "Ameyoko Market Ueno":"Ueno","Tokyo National Museum Ueno":"Ueno",
+  "Tokyo Station Marunouchi":"Estação de Tóquio","Ginza Chuo-dori Tokyo":"Ginza","Mitsukoshi Ginza depachika":"Ginza",
+  "Imperial Palace East Gardens Tokyo":"Palácio Imperial","Jimbocho Tokyo curry":"Jimbocho",
+  "Akihabara Electric Town":"Akihabara","Super Potato Akihabara":"Akihabara","Akihabara ramen":"Akihabara",
+  "Tsukiji Outer Market":"Tsukiji","teamLab Planets Tokyo Toyosu":"Toyosu","teamLab Planets Tokyo":"Toyosu",
+  "Unicorn Gundam Statue Odaiba DiverCity":"Odaiba","Odaiba Seaside Park Rainbow Bridge":"Odaiba",
+  "Odakyu Sightseeing Service Center Shinjuku":"Shinjuku","Owakudani Hakone":"Owakudani",
+  "Lake Ashi Hakone pirate ship":"Lago Ashi","Hakone Shrine torii Lake Ashi":"Lago Ashi",
+  "Shirayunoyado Yamadaya Hakone Gora":"Gora","Hakone Yumoto":"Hakone-Yumoto",
+  "Hatsuhana soba Hakone Yumoto":"Hakone-Yumoto","Hakone-Yumoto Station":"Hakone-Yumoto",
+  "Nakameguro Tokyo":"Nakameguro","Starbucks Reserve Roastery Tokyo Nakameguro":"Nakameguro","Daikanyama T-Site":"Daikanyama",
+  "Meiji Jingu Shrine":"Harajuku","Takeshita Street Harajuku":"Harajuku","Omotesando Tokyo":"Omotesando",
+  "Hachiko Statue Shibuya":"Shibuya","Shibuya Hikarie Sky Lobby":"Shibuya","Shibuya Parco Tokyo":"Shibuya",
+  "Cat Street Harajuku":"Harajuku","Shibuya Tokyo":"Shibuya","Shibuya Sky":"Shibuya","Shibuya Crossing":"Shibuya",
+  "Tokyo Metropolitan Government Building Observation Deck":"Shinjuku","Omoide Yokocho Shinjuku":"Shinjuku",
+  "Shimokitazawa Tokyo":"Shimokitazawa","Shimokitazawa curry":"Shimokitazawa",
+  "Shinjuku Gyoen National Garden":"Shinjuku Gyoen","Don Quijote Shinjuku":"Shinjuku","Shinjuku izakaya":"Shinjuku"
+};
+
+function dayMapSVG(d){
+  const seen={}, pts=[];
+  d.stops.forEach(s=>{
+    const c=COORDS[s.q]; if(!c) return;
+    const k=c[0].toFixed(4)+","+c[1].toFixed(4);
+    if(seen[k]!==undefined) return;
+    seen[k]=1; pts.push({name:s.name,lat:c[0],lng:c[1],zone:ZONE[s.q]||""});
+  });
+  if(pts.length<2) return "";
+  const W=700,H=300,pad=46;
+  const lats=pts.map(p=>p.lat),lngs=pts.map(p=>p.lng);
+  const minLat=Math.min(...lats),maxLat=Math.max(...lats);
+  const minLng=Math.min(...lngs),maxLng=Math.max(...lngs);
+  const cosLat=Math.cos((minLat+maxLat)/2*Math.PI/180);
+  const spanX=(maxLng-minLng)*cosLat||0.0005;
+  const spanY=(maxLat-minLat)||0.0005;
+  const scale=Math.min((W-2*pad)/spanX,(H-2*pad)/spanY);
+  const drawW=spanX*scale,drawH=spanY*scale;
+  const offX=(W-drawW)/2,offY=(H-drawH)/2;
+  const proj=(lat,lng)=>[offX+((lng-minLng)*cosLat)*scale, offY+((maxLat-lat))*scale];
+  let XY=pts.map(p=>proj(p.lat,p.lng));
+  const R=30;
+  for(let it=0;it<80;it++){
+    for(let i=0;i<XY.length;i++)for(let j=i+1;j<XY.length;j++){
+      let dx=XY[j][0]-XY[i][0],dy=XY[j][1]-XY[i][1],dist=Math.hypot(dx,dy)||0.01;
+      if(dist<R){const push=(R-dist)/2,ux=dx/dist,uy=dy/dist;
+        XY[i][0]-=ux*push;XY[i][1]-=uy*push;XY[j][0]+=ux*push;XY[j][1]+=uy*push;}
+    }
+  }
+  XY=XY.map(p=>[Math.max(24,Math.min(W-24,p[0])),Math.max(24,Math.min(H-24,p[1]))]);
+
+  // Rótulos de zona: posicionados acima (ou abaixo) do cluster de cada zona, sem tapar marcadores
+  const zg={};
+  pts.forEach((p,i)=>{ if(!p.zone) return; (zg[p.zone]=zg[p.zone]||[]).push(XY[i]); });
+  const zlabels=[];
+  Object.keys(zg).forEach(zn=>{
+    const g=zg[zn];
+    const cx=g.reduce((a,b)=>a+b[0],0)/g.length;
+    const topY=Math.min(...g.map(p=>p[1]));
+    const botY=Math.max(...g.map(p=>p[1]));
+    let ty = topY-24;
+    if(ty<18) ty = botY+32;
+    if(ty>H-10) ty = topY-24;
+    const halfw = Math.max(30, zn.length*4.6);
+    let tx = Math.max(halfw+6, Math.min(W-halfw-6, cx));
+    zlabels.push({zn,tx,ty,halfw});
+  });
+  // des-colisão entre rótulos (afasta na vertical os que se sobrepõem)
+  for(let it=0; it<40; it++){
+    for(let a=0;a<zlabels.length;a++)for(let b=a+1;b<zlabels.length;b++){
+      const A=zlabels[a],B=zlabels[b];
+      if(Math.abs(A.tx-B.tx) < (A.halfw+B.halfw) && Math.abs(A.ty-B.ty) < 18){
+        const dir = A.ty<=B.ty ? 1 : -1;
+        A.ty -= dir*3; B.ty += dir*3;
+        A.ty=Math.max(14,Math.min(H-8,A.ty)); B.ty=Math.max(14,Math.min(H-8,B.ty));
+      }
+    }
+  }
+  let zones="";
+  zlabels.forEach(L=>{
+    const esc2=L.zn.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+    zones+='<text x="'+L.tx.toFixed(1)+'" y="'+L.ty.toFixed(1)+'" text-anchor="middle" '
+      +'font-size="14.5" font-weight="800" letter-spacing="0.4" fill="var(--indigo)" opacity="0.34" '
+      +'style="text-transform:uppercase">'+esc2+'</text>';
+  });
+
+  let path="";XY.forEach((p,i)=>{path+=(i?" L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1);});
+  let marks="";XY.forEach((p,i)=>{
+    marks+='<g><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="14" fill="var(--shu)" stroke="#fff" stroke-width="2.5"/>'
+      +'<text x="'+p[0].toFixed(1)+'" y="'+(p[1]+4.7).toFixed(1)+'" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">'+(i+1)+'</text></g>';
+  });
+  const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  const svg='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" class="daymapsvg" role="img" aria-label="Mapa esquemático do dia '+d.n+'">'
+    +'<rect x="0.5" y="0.5" width="'+(W-1)+'" height="'+(H-1)+'" rx="14" fill="#e9efe9" stroke="#d5ddd5"/>'
+    +zones
+    +'<path d="'+path+'" fill="none" stroke="var(--shu)" stroke-width="2.5" stroke-dasharray="7 5" opacity="0.5"/>'
+    +marks+'</svg>';
+  const legend=pts.map((p,i)=>'<li><span class="mnum">'+(i+1)+'</span><span>'+esc(p.name)+(p.zone?' <em class="mzone">· '+esc(p.zone)+'</em>':'')+'</span></li>').join("");
+  return '<details class="daymap"><summary><span class="mapico">🗺️</span>Mapa do dia<span class="mapchev">▾</span></summary>'
+    +'<div class="daymap-body"><div class="daymap-hint">Mapa aproximado — pontos pela ordem do dia</div>'
+    +svg+'<ol class="daymap-legend">'+legend+'</ol></div></details>';
+}
+
+function globalMapSVG(){
+  const PAL=["#E4572E","#F3A712","#2E9E5B","#3A86C8","#6A4C93","#D81E5B","#00A5A8","#8A6D3B","#E85D9E","#4A4E69"];
+  const items=[];
+  DAYS.forEach(d=>{
+    const zs={};
+    d.stops.forEach(s=>{
+      const c=COORDS[s.q]; if(!c) return;
+      const z=ZONE[s.q]||s.name; if(zs[z]) return; zs[z]=1;
+      items.push({day:d.n, zone:z, lat:c[0], lng:c[1], region:(c[0]<35.4?'hakone':'tokyo')});
+    });
+  });
+  const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+  function panel(list, x0,y0,pw,ph, showZoneLabels){
+    if(!list.length) return "";
+    const pad=30;
+    const lats=list.map(i=>i.lat), lngs=list.map(i=>i.lng);
+    const minLat=Math.min(...lats),maxLat=Math.max(...lats);
+    const minLng=Math.min(...lngs),maxLng=Math.max(...lngs);
+    const cosLat=Math.cos((minLat+maxLat)/2*Math.PI/180);
+    const spanX=(maxLng-minLng)*cosLat||0.0005, spanY=(maxLat-minLat)||0.0005;
+    const scale=Math.min((pw-2*pad)/spanX,(ph-2*pad)/spanY);
+    const dW=spanX*scale,dH=spanY*scale;
+    const offX=x0+(pw-dW)/2, offY=y0+(ph-dH)/2;
+    const proj=(lat,lng)=>[offX+((lng-minLng)*cosLat)*scale, offY+((maxLat-lat))*scale];
+    let XY=list.map(i=>proj(i.lat,i.lng));
+    // des-colisão de marcadores
+    const R=30;
+    for(let it=0;it<120;it++){
+      for(let a=0;a<XY.length;a++)for(let b=a+1;b<XY.length;b++){
+        let dx=XY[b][0]-XY[a][0],dy=XY[b][1]-XY[a][1],dist=Math.hypot(dx,dy)||0.01;
+        if(dist<R){const push=(R-dist)/2,ux=dx/dist,uy=dy/dist;
+          XY[a][0]-=ux*push;XY[a][1]-=uy*push;XY[b][0]+=ux*push;XY[b][1]+=uy*push;}
+      }
+    }
+    XY=XY.map(p=>[Math.max(x0+16,Math.min(x0+pw-16,p[0])),Math.max(y0+16,Math.min(y0+ph-16,p[1]))]);
+
+    // rótulos de zona (nome único por zona; posição = média das ocorrências)
+    let labels="";
+    if(showZoneLabels){
+      const zpos={};
+      list.forEach((it2,i)=>{ (zpos[it2.zone]=zpos[it2.zone]||[]).push(XY[i]); });
+      const L=[];
+      Object.keys(zpos).forEach(zn=>{
+        const g=zpos[zn]; const cx=g.reduce((a,b)=>a+b[0],0)/g.length;
+        const topY=Math.min(...g.map(p=>p[1]));
+        let ty=topY-17; if(ty<y0+14) ty=Math.max(...g.map(p=>p[1]))+22;
+        const halfw=Math.max(24,zn.length*4.2);
+        let tx=Math.max(x0+halfw+4,Math.min(x0+pw-halfw-4,cx));
+        L.push({zn,tx,ty,halfw});
+      });
+      for(let it=0;it<50;it++)for(let a=0;a<L.length;a++)for(let b=a+1;b<L.length;b++){
+        const A=L[a],B=L[b];
+        if(Math.abs(A.tx-B.tx)<(A.halfw+B.halfw)&&Math.abs(A.ty-B.ty)<15){
+          const dir=A.ty<=B.ty?1:-1; A.ty-=dir*2.5;B.ty+=dir*2.5;
+          A.ty=Math.max(y0+11,Math.min(y0+ph-6,A.ty));B.ty=Math.max(y0+11,Math.min(y0+ph-6,B.ty));
+        }
+      }
+      L.forEach(l=>{ labels+='<text x="'+l.tx.toFixed(1)+'" y="'+l.ty.toFixed(1)+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3a4a63" opacity="0.5">'+esc(l.zn)+'</text>'; });
+    }
+    // marcadores (cor = dia)
+    let marks="";
+    list.forEach((it2,i)=>{
+      const col=PAL[(it2.day-1)%PAL.length];
+      marks+='<g><circle cx="'+XY[i][0].toFixed(1)+'" cy="'+XY[i][1].toFixed(1)+'" r="11" fill="'+col+'" stroke="#fff" stroke-width="2"/>'
+        +'<text x="'+XY[i][0].toFixed(1)+'" y="'+(XY[i][1]+3.8).toFixed(1)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">'+it2.day+'</text></g>';
+    });
+    return {labels, marks};
+  }
+
+  const W=760, H=560;
+  const tokyo=items.filter(i=>i.region==='tokyo');
+  const hak=items.filter(i=>i.region==='hakone');
+
+  // painel principal Tóquio
+  const main=panel(tokyo, 8, 8, W-16, H-16, true);
+  // inset Hakone (canto inferior esquerdo)
+  const iw=260, ih=200, ix=16, iy=H-ih-16;
+  const inset=panel(hak, ix, iy, iw, ih, true);
+
+  let svg='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" class="globalmapsvg" role="img" aria-label="Mapa de todos os pontos do roteiro">';
+  svg+='<rect x="0.5" y="0.5" width="'+(W-1)+'" height="'+(H-1)+'" rx="16" fill="#e9efe9" stroke="#d5ddd5"/>';
+  // título Tóquio
+  svg+='<text x="'+(W-20)+'" y="34" text-anchor="end" font-size="15" font-weight="800" fill="#2E4A78" opacity="0.5" letter-spacing="1">GRANDE TÓQUIO</text>';
+  svg+=main.labels+main.marks;
+  // inset box
+  if(hak.length){
+    svg+='<rect x="'+ix+'" y="'+iy+'" width="'+iw+'" height="'+ih+'" rx="12" fill="#dfe8ea" stroke="#b9ccce" stroke-width="1.5"/>';
+    svg+='<text x="'+(ix+12)+'" y="'+(iy+22)+'" font-size="13" font-weight="800" fill="#2F7E8C" letter-spacing="0.5">HAKONE · ~80 km SO</text>';
+    svg+=inset.labels+inset.marks;
+  }
+  svg+='</svg>';
+
+  // legenda de dias
+  let leg='<div class="gmap-days">';
+  DAYS.forEach(d=>{
+    const has=items.some(i=>i.day===d.n);
+    if(!has) return;
+    const col=PAL[(d.n-1)%PAL.length];
+    leg+='<span class="gday"><span class="gdot" style="background:'+col+'">'+d.n+'</span>'+d.date+'</span>';
+  });
+  leg+='</div>';
+
+  return '<div class="gmap-wrap"><div class="gmap-hint">Cada cor é um dia · Hakone mostrado à parte (fica ~80 km a sudoeste)</div>'+svg+leg+'</div>';
 }
 
 const DAYS = [
@@ -819,6 +1125,38 @@ function stopHTML(d, i, s){
   </li>`;
 }
 
+function dayZones(d){
+  const seen={}, out=[];
+  d.stops.forEach(s=>{
+    const z = ZONE[s.q];
+    if(!z || seen[z]) return;
+    seen[z]=1; out.push(z);
+  });
+  return out;
+}
+
+function dayWalk(d){
+  // pontos únicos pela ordem do roteiro
+  const seen={}, pts=[];
+  d.stops.forEach(s=>{
+    const c=COORDS[s.q]; if(!c) return;
+    const k=c[0].toFixed(4)+","+c[1].toFixed(4);
+    if(seen[k]) return; seen[k]=1; pts.push(c);
+  });
+  const hav=(a,b)=>{const R=6371,dLat=(b[0]-a[0])*Math.PI/180,dLng=(b[1]-a[1])*Math.PI/180;
+    const s=Math.sin(dLat/2)**2+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dLng/2)**2;
+    return 2*R*Math.asin(Math.sqrt(s));};
+  const ROUTE=1.3, WALK_MAX=2.5; // >2.5 km em linha reta = comboio/metro/barco, não conta como a pé
+  let km=0, transit=0;
+  for(let i=1;i<pts.length;i++){
+    const dkm=hav(pts[i-1],pts[i]);
+    if(dkm>WALK_MAX){ transit++; continue; }
+    km += dkm*ROUTE;
+  }
+  const rounded = km<1 ? Math.round(km*10)/10 : Math.round(km*2)/2;
+  return {km:rounded, transit};
+}
+
 function dayHTML(d){
   const stops = d.stops.map((s,i)=>stopHTML(d,i,s)).join("");
   const eat = d.eat ? `
@@ -851,8 +1189,9 @@ function dayHTML(d){
     <button class="dayhead" aria-expanded="false" onclick="toggleDay(${d.n})">
       <span class="daynum"><span class="k">${d.kanji}</span><span class="n">DIA ${d.n}</span></span>
       <span class="daymeta">
-        <span class="dt">${d.date} · ${d.dow}</span>
+        <span class="dt">${d.date} · ${d.dow}${(()=>{const w=dayWalk(d);return w.km>0?' <span class="walkbadge">🚶 ~'+w.km+' km'+(w.transit?' <span class="tr">+🚃</span>':'')+'</span>':'';})()}</span>
         <span class="th">${d.theme}${d.trip?'<span class="tripbadge">excursão</span>':''}</span>
+        ${(()=>{const zs=dayZones(d);return zs.length?'<span class="zones">'+zs.map(z=>'<span class="zpill">'+z+'</span>').join('')+'</span>':'';})()}
       </span>
       <span class="chev">▾</span>
     </button>
@@ -861,6 +1200,7 @@ function dayHTML(d){
       ${stay}
       ${pass}
       <ol class="timeline">${stops}</ol>
+      ${dayMapSVG(d)}
       ${eat}
       ${notes}
     </div>
@@ -911,8 +1251,8 @@ const DISCOVER = [
   ]},
 { title:"Cartas Pokémon & TCG", intro:"Desde lojas oficiais a singles e raridades usadas — Akihabara e Nakano são o coração do TCG.",
   items:[
-   {name:"Pokémon Center Shibuya", jp:"ポケモンセンター", area:"Shibuya", day:"Dia 6", desc:"Loja oficial no Shibuya Parco, com exclusivos e cartas promo. Ao lado ficam a Nintendo Tokyo e a Capcom Store.", q:"Pokemon Center Shibuya"},
-   {name:"Pokémon Center Mega Tokyo", jp:"メガトウキョー", area:"Ikebukuro", day:"Extra", desc:"A maior loja Pokémon da cidade, no Sunshine City.", q:"Pokemon Center Mega Tokyo Ikebukuro"},
+   {name:"Pokémon Center Shibuya", jp:"ポケモンセンター", area:"Shibuya", day:"Dia 7", desc:"Loja oficial no Shibuya Parco, com exclusivos e cartas promo. Ao lado ficam a Nintendo Tokyo e a Capcom Store.", q:"Pokemon Center Shibuya"},
+   {name:"Pokémon Center Tokyo DX", jp:"トウキョーDX", area:"Nihonbashi", day:"Dia 2", desc:"No 5º piso do Nihonbashi Takashimaya, a par do Pokémon Café. Tem o Pikachu de smoking e exclusivos DX. A um passo da Estação de Tóquio.", q:"Pokemon Center Tokyo DX Nihonbashi"},
    {name:"Pokémon Café", jp:"ポケモンカフェ", area:"Nihonbashi", day:"Extra", desc:"Café temático com pratos e bebidas Pokémon e encontro com o Pikachu.", tip:"<b>Só com reserva</b> online — esgota com semanas de antecedência.", q:"Pokemon Cafe Nihonbashi Tokyo"},
    {name:"Lojas de cartas de Akihabara", jp:"トレカ", area:"Akihabara", day:"Dia 2", desc:"Hareruya, Card Rush e Yellow Submarine: TCG novo e usado, singles, caixas e torneios.", q:"Hareruya Akihabara"},
    {name:"Surugaya", jp:"駿河屋", area:"Akihabara · Nakano", day:"Dia 2", desc:"Colecionáveis e cartas usadas a bom preço, em várias lojas especializadas.", q:"Surugaya Akihabara"},
@@ -1129,6 +1469,11 @@ function renderEstadias(){
   document.getElementById("panel-estadias").innerHTML = top + cards;
 }
 
+function renderMapa(){
+  const intro = '<div class="intro">Todos os pontos do roteiro num só mapa, para veres onde andas em cada dia. Cada cor é um dia. Hakone aparece à parte (fica ~80 km a sudoeste de Tóquio).</div>';
+  document.getElementById("panel-mapa").innerHTML = intro + globalMapSVG();
+}
+
 function renderEstacoes(){
   const top = `<div class="intro">As ligações e transbordos que vais apanhando. Toca numa secção para abrir. Tudo se paga com o Suica (exceto o circuito de Hakone, que vai no Free Pass).</div>`;
   const sections = STATIONS.map((sec,i)=>`
@@ -1187,7 +1532,7 @@ function syncPills(){
   });
 }
 
-const TAB_IDS = ["roteiro","estadias","achados","estacoes","essenciais"];
+const TAB_IDS = ["roteiro","estadias","mapa","achados","estacoes","essenciais"];
 function showTab(which){
   TAB_IDS.forEach(t=>{
     const on = t===which;
@@ -1213,6 +1558,7 @@ function markToday(){
 // init
 renderDays();
 renderEstadias();
+renderMapa();
 renderAchados();
 renderEstacoes();
 renderEssenciais();
