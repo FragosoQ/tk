@@ -118,6 +118,42 @@ header.top{
 .staycard a.bbtn{display:inline-block;background:var(--indigo);color:#fff;text-decoration:none;
   font-size:12px;font-weight:700;padding:7px 12px;border-radius:9px}
 
+/* ---------- PLANO DO DIA (botão + modal) ---------- */
+.planbtn{display:flex;align-items:center;gap:9px;width:100%;margin:0 0 16px;padding:12px 14px;
+  border:1.5px solid var(--shu);border-radius:13px;background:linear-gradient(135deg,#fff,#fdeee9);
+  color:var(--shu);font-size:14px;font-weight:800;cursor:pointer;transition:.15s;font-family:inherit}
+.planbtn:hover{background:var(--shu);color:#fff}
+.planbtn .planico{font-size:16px}
+.planbtn .planarrow{margin-left:auto;font-size:16px;transition:transform .15s}
+.planbtn:hover .planarrow{transform:translateX(3px)}
+.planoverlay{position:fixed;inset:0;z-index:100;display:none;align-items:flex-start;justify-content:center;
+  background:rgba(22,33,58,0.55);backdrop-filter:blur(3px);padding:24px 14px;overflow-y:auto}
+.planoverlay.show{display:flex}
+.planmodal{position:relative;background:var(--paper);border-radius:18px;max-width:560px;width:100%;
+  margin:auto;padding:22px 20px 24px;box-shadow:0 20px 60px rgba(0,0,0,.35);
+  animation:planpop .22s ease}
+@keyframes planpop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.planclose{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:none;
+  background:#e8e6df;color:var(--ink);font-size:15px;font-weight:800;cursor:pointer;line-height:1}
+.planclose:hover{background:var(--shu);color:#fff}
+.planhead{margin:0 34px 16px 0;padding-bottom:14px;border-bottom:2px solid #e0ddd4}
+.planhead h3{margin:0 0 4px;font-size:20px;font-weight:800;color:var(--ink);line-height:1.2}
+.planhead p{margin:0;font-size:13px;color:var(--muted);font-weight:600}
+.plansec{margin:0 0 16px}
+.plansec h4{margin:0 0 8px;font-size:14.5px;font-weight:800;color:var(--indigo)}
+.plansec ul{margin:0;padding:0;list-style:none}
+.plansec li{position:relative;padding:0 0 7px 16px;font-size:13.5px;line-height:1.5;color:var(--ink)}
+.plansec li::before{content:"";position:absolute;left:2px;top:8px;width:5px;height:5px;border-radius:50%;
+  background:var(--shu)}
+.plansec li b{font-weight:800}
+.pinrow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pinrow .pinarrow{color:var(--muted);font-weight:800;font-size:13px}
+.planpin2{display:inline-flex;align-items:center;gap:4px;text-decoration:none;font-size:11.5px;
+  font-weight:700;color:var(--shu);background:#fdeae5;border:1px solid #f6cdc1;
+  padding:3px 9px;border-radius:20px;line-height:1.4;transition:.15s;white-space:nowrap}
+.planpin2:hover{background:var(--shu);color:#fff;border-color:var(--shu)}
+.day.trip .planbtn{border-color:var(--shu)}
+
 /* ---------- MAPA DO DIA ---------- */
 .daymap{margin:4px 0 16px;border:1.5px solid #d5ddd5;border-radius:13px;overflow:hidden;background:#eef3ee}
 .daymap summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;
@@ -327,6 +363,13 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 1
   </footer>
 </div>
 
+<div class="planoverlay" id="planoverlay" onclick="if(event.target===this)closePlan()" aria-hidden="true">
+  <div class="planmodal" role="dialog" aria-modal="true" aria-labelledby="plantitle">
+    <button class="planclose" onclick="closePlan()" aria-label="Fechar">✕</button>
+    <div id="plancontent"></div>
+  </div>
+</div>
+
 <script>
 /* =========================================================
    DADOS DO ROTEIRO
@@ -362,10 +405,11 @@ const COORDS = {
   "Owakudani Hakone":[35.2445,139.0197],
   "Lake Ashi Hakone pirate ship":[35.2020,139.0244],
   "Hakone Shrine torii Lake Ashi":[35.2044,139.0250],
-  "Shirayunoyado Yamadaya Hakone Gora":[35.2470,139.0510],
+  "Shiunso Ryokan Hakone Tonosawa":[35.2280,139.1010],
   "Hakone Yumoto":[35.2323,139.1050],
   "Hatsuhana soba Hakone Yumoto":[35.2330,139.1060],
   "Hakone-Yumoto Station":[35.2323,139.1050],
+  "Gotemba Premium Outlets Mount Fuji":[35.3103,138.9350],
   "Nakameguro Tokyo":[35.6440,139.6989],
   "Starbucks Reserve Roastery Tokyo Nakameguro":[35.6470,139.6995],
   "Daikanyama T-Site":[35.6488,139.6955],
@@ -404,7 +448,8 @@ const ZONE = {
   "Unicorn Gundam Statue Odaiba DiverCity":"Odaiba","Odaiba Seaside Park Rainbow Bridge":"Odaiba",
   "Odakyu Sightseeing Service Center Shinjuku":"Shinjuku","Owakudani Hakone":"Owakudani",
   "Lake Ashi Hakone pirate ship":"Lago Ashi","Hakone Shrine torii Lake Ashi":"Lago Ashi",
-  "Shirayunoyado Yamadaya Hakone Gora":"Gora","Hakone Yumoto":"Hakone-Yumoto",
+  "Shiunso Ryokan Hakone Tonosawa":"Tonosawa","Hakone Yumoto":"Hakone-Yumoto",
+  "Gotemba Premium Outlets Mount Fuji":"Gotemba",
   "Hatsuhana soba Hakone Yumoto":"Hakone-Yumoto","Hakone-Yumoto Station":"Hakone-Yumoto",
   "Nakameguro Tokyo":"Nakameguro","Starbucks Reserve Roastery Tokyo Nakameguro":"Nakameguro","Daikanyama T-Site":"Daikanyama",
   "Meiji Jingu Shrine":"Harajuku","Takeshita Street Harajuku":"Harajuku","Omotesando Tokyo":"Omotesando",
@@ -756,7 +801,7 @@ const DAYS = [
   n:5, kanji:"五", date:"5 Nov", day:5, mon:11, dow:"Quinta", trip:true,
   theme:"Hakone · circuito + ryokan (noite)",
   why:"Vais a Hakone dormir num ryokan com onsen. Faz o circuito clássico — vale vulcânico, lago e o torii sobre a água — e fecha o dia com banho termal e jantar kaiseki. Em novembro, com folhagem de outono nas zonas altas.",
-  stay:{name:"Shirayunoyado Yamadaya", zone:"Gora / Sounzan, Hakone (Kanagawa)", nights:"1 noite", note:"Ryokan tradicional a 4 min de Sounzan, com onsen de madeira yosegi-zaiku e jantar/pequeno-almoço kaiseki servidos no quarto. Shuttle gratuito de Gora entre as 15h e as 18h — liga ao chegar à estação. Check-in a partir das 15h, check-out às 10h.", link:"https://www.booking.com/hotel/jp/yamadaya.pt-pt.html?checkin=2026-11-05&checkout=2026-11-06"},
+  stay:{name:"Shiunso", zone:"Tonosawa Onsen, Hakone-Yumoto (Kanagawa)", nights:"1 noite", note:"Ryokan tradicional à beira do rio Hayakawa, em Tonosawa. Banhos termais 100% kakenagashi (água nunca reciclada), incluindo banho privado gratuito, e jantar/pequeno-almoço kaiseki servidos no quarto. A 5 min de autocarro de Hakone-Yumoto (ou a pé de Tonosawa). Check-in a partir das 15h, check-out às 10h.", link:"https://shiunso.hotelshakone.com/en/"},
   pass:{title:"Hakone Free Pass (2 dias)",
     text:"Compra no Odakyu Sightseeing Service Center em Shinjuku (ou online). Inclui ida-e-volta Shinjuku–Odawara + uso ilimitado de comboio de montanha, funicular, teleférico, barco-pirata e autocarros. Com a noite cá, os 2 dias do passe encaixam na perfeição.",
     price:"¥7.100 (Shinjuku, 2 dias)", extra:"Romancecar (comboio expresso reservado) +¥1.200 por sentido — opcional mas confortável (~85 min direto).",
@@ -766,22 +811,22 @@ const DAYS = [
      desc:"Linha Odakyu a partir de Shinjuku. Romancecar direto (~85 min, reservado) ou expresso normal (~2h, grátis com o passe). Viaja leve: mochila só com o essencial da noite.",
      dica:"<b>Takkyubin:</b> se ainda não enviaste, podes despachar a mala grande do hotel para o alojamento seguinte por ~¥2.000.",
      q:"Odakyu Sightseeing Service Center Shinjuku"},
-    {time:"10:30", tag:"vista", name:"Comboio de montanha → Owakudani", jp:"大涌谷",
-     desc:"Sobe de comboio panorâmico e funicular até Sounzan e, de teleférico, sobre o vale vulcânico fumegante de Owakudani — enxofre e, em dias limpos, o Fuji ao fundo. Prova o ovo preto.",
-     dica:"<b>Confirma o estado do teleférico nesse dia</b> — fecha por vezes por atividade vulcânica (há autocarro alternativo).",
+    {time:"10:30", tag:"vista", name:"Subir a Owakudani (comboio → funicular → teleférico)", jp:"大涌谷",
+     desc:"Encadeias três meios, todos no Hakone Free Pass: o comboio de montanha Hakone Tozan até Gōra (~40 min, com as inversões em ziguezague), o funicular (cable car) até Sōunzan e o teleférico (ropeway) sobre o vale vulcânico fumegante de Owakudani — enxofre e, em dias limpos, o Fuji ao fundo. Prova o ovo preto.",
+     dica:"<b>Confirma o estado do teleférico nesse dia</b> — fecha por vezes por atividade vulcânica (há autocarro alternativo, também no passe).",
      q:"Owakudani Hakone"},
-    {time:"13:00", tag:"vista", name:"Barco-pirata no Lago Ashi", jp:"芦ノ湖",
-     desc:"Cruzeiro num galeão pelo lago Ashi até Moto-Hakone, com vista para o Fuji e as encostas a mudar de cor.",
-     dica:"O convés superior tem as melhores vistas. Almoça leve antes ou em Togendai.",
+    {time:"13:00", tag:"logistica", name:"Atravessar o Lago Ashi até Moto-Hakone", jp:"芦ノ湖",
+     desc:"Do teleférico sais em Tōgendai, na margem do lago. Para chegar ao Templo Hakone, que fica na margem oposta, atravessas o Lago Ashi no barco (~30-40 min) até ao cais de Moto-Hakone — com vista para o Fuji e as encostas de outono pelo caminho.",
+     dica:"O convés superior tem as melhores vistas. Podes almoçar leve em Tōgendai antes de embarcar.",
      q:"Lake Ashi Hakone pirate ship"},
-    {time:"14:30", tag:"historia", name:"Santuário de Hakone (torii do lago)", jp:"箱根神社",
-     desc:"Santuário na floresta com o icónico portão torii vermelho 'da Paz' a flutuar sobre a água — uma das imagens mais fotografadas do Japão.",
-     dica:"Há sempre fila para a foto no torii sobre o lago; vai cedo ou aceita a espera.",
+    {time:"14:30", tag:"historia", name:"Templo Hakone (Hakone-jinja) & torii do lago", jp:"箱根神社",
+     desc:"Santuário xintoísta com mais de 1200 anos, escondido na floresta de cedros à beira do Lago Ashi. Sobe a escadaria de pedra ladeada de lanternas até ao pavilhão principal e desce ao icónico torii vermelho 'da Paz' (Heiwa no Torii), que flutua sobre a água — uma das imagens mais fotografadas do Japão.",
+     dica:"Do cais de Moto-Hakone são poucos minutos a pé até ao santuário. Há sempre fila para a foto no torii sobre o lago; vai cedo ou aceita a espera. O trilho de cedros é lindíssimo no outono.",
      q:"Hakone Shrine torii Lake Ashi"},
     {time:"16:30", tag:"vista", name:"Check-in no ryokan + onsen + kaiseki", jp:"旅館",
-     desc:"Faz check-in ao fim da tarde, veste o yukata e entra no onsen antes do jantar. O kaiseki — jantar de vários pratos sazonais — é o ponto alto da noite. Dormes em futon, ao som da montanha.",
-     dica:"O Yamadaya tem shuttle gratuito de Gora (15h–18h) — liga ao chegar à estação. Confirma a hora do jantar ao chegar; o kaiseki é servido no quarto.",
-     q:"Shirayunoyado Yamadaya Hakone Gora"}
+     desc:"Fecha o circuito e desce até Tonosawa (junto a Hakone-Yumoto) para o Shiunso. Veste o yukata e entra no onsen antes do jantar — o kaiseki, de vários pratos sazonais servido no quarto, é o ponto alto da noite. Dormes em futon, ao som do rio.",
+     dica:"Do Lago Ashi, autocarro Hakone Tozan até Yumoto/Tonosawa. Reserva já o banho privado gratuito e confirma a hora do jantar ao chegar.",
+     q:"Shiunso Ryokan Hakone Tonosawa"}
   ],
   eat:[
     {name:"Kaiseki do ryokan", note:"Jantar incluído — o destaque da noite", q:"Hakone ryokan kaiseki"},
@@ -795,43 +840,40 @@ const DAYS = [
 },
 {
   n:6, kanji:"六", date:"6 Nov", day:6, mon:11, dow:"Sexta", trip:true,
-  theme:"Hakone (onsen) + Nakameguro & Daikanyama",
-  why:"Manhã sem pressa, à maneira tradicional: onsen ao acordar e pequeno-almoço japonês no ryokan. Ao descer, passeio e soba em Hakone-Yumoto, regresso a Tóquio à tarde e uma tarde/noite tranquila em Nakameguro e Daikanyama. A partir de hoje, base a oeste (Shinjuku/Shibuya).",
+  theme:"Hakone (onsen) + Gotemba & Monte Fuji",
+  why:"Manhã sem pressa, à maneira tradicional: onsen ao acordar e pequeno-almoço japonês no ryokan. A caminho de Tóquio, desvio por Gotemba, ao pé do Monte Fuji — o outlet gigante com a vista mais fotografada do Fuji e mais de 290 lojas. Regresso a Tóquio ao fim do dia e uma noite tranquila. A partir de hoje, base a oeste (Shinjuku/Shibuya).",
   stay:{name:"Base Oeste (Shinjuku/Shibuya)", zone:"Shinjuku ou Shibuya — sugestão de zona", nights:"Noites 1–3", note:"Sugestão: 3 noites numa base a oeste (Shinjuku ou Shibuya), central para Harajuku, Shibuya, Shinjuku e Shimokitazawa e prático para o voo de partida. Opções que tinhas visto: Book and Bed Tokyo Shinjuku (hostel-livraria) ou Shinjuku Kuyakusho-mae Capsule.", link:""},
   stops:[
     {time:"Manhã", tag:"vista", name:"Onsen ao acordar + pequeno-almoço", jp:"朝風呂",
-     desc:"O melhor banho é o da manhã, com a montanha calma e poucos hóspedes. Depois, o pequeno-almoço tradicional japonês do ryokan.",
-     dica:"Check-out costuma ser ~10-11h. Sem pressa — é o luxo de dormir cá.",
-     q:"Hakone Yumoto"},
-    {time:"11:00", tag:"comida", name:"Hakone-Yumoto — passeio & soba", jp:"箱根湯本",
-     desc:"Ao descer, passeia pela rua principal de Hakone-Yumoto: lojas tradicionais, doces cozidos no vapor termal e casas de soba centenárias. Almoça uma tigela de soba quente antes de voltar.",
-     dica:"Prova o 'onsen manju' (bolinho cozido no vapor) e leva yu-mochi como lembrança. A Hatsuhana é uma casa de soba muito conceituada.",
-     q:"Hatsuhana soba Hakone Yumoto"},
-    {time:"13:30", tag:"logistica", name:"Regresso a Tóquio", jp:"",
-     desc:"Volta a Hakone-Yumoto e apanha o Odakyu/Romancecar para Shinjuku (~1h30). Faz check-in na base a oeste e larga a mochila.",
-     dica:"Se enviaste a mala por takkyubin, confirma que já chegou ao novo alojamento.",
-     q:"Hakone-Yumoto Station"},
-    {time:"15:30", tag:"compras", name:"Nakameguro — rio & lojas", jp:"中目黒",
-     desc:"Bairro chique e descontraído ao longo do rio Meguro: boutiques, lojas vintage/select e cafés de especialidade. Passeio à beira-rio.",
-     dica:"O Onibus Coffee e o Sidewalk Stand são paragens de café clássicas.",
-     q:"Nakameguro Tokyo"},
-    {time:"16:30", tag:"comida", name:"Starbucks Reserve Roastery", jp:"スタバ リザーブ ロースタリー",
-     desc:"O enorme flagship de torrefação de café em Nakameguro: 4 andares, bar de chá e uma esplanada sobre o rio. Vale a visita mesmo para quem não é fã de Starbucks.",
-     dica:"Sobe ao terraço para a vista do rio. Costuma ter fila ao fim de semana.",
-     q:"Starbucks Reserve Roastery Tokyo Nakameguro"},
-    {time:"18:00", tag:"compras", name:"Daikanyama T-Site", jp:"代官山 蔦屋書店",
-     desc:"A poucos minutos a pé, a livraria-conceito da Tsutaya em Daikanyama é linda ao anoitecer, com cafés e design. Bairro elegante, ótimo para jantar.",
-     dica:"Bairro tranquilo e sofisticado — bons bistrôs e izakayas para terminar o dia.",
-     q:"Daikanyama T-Site"}
+     desc:"O melhor banho é o da manhã, com o rio calmo e poucos hóspedes. Depois, o pequeno-almoço tradicional japonês do ryokan.",
+     dica:"Check-out às 10h. Aproveita o banho privado antes de sair e prepara a mochila para seguir viagem.",
+     q:"Shiunso Ryokan Hakone Tonosawa"},
+    {time:"10:30", tag:"logistica", name:"Hakone-Yumoto → Gotemba", jp:"御殿場",
+     desc:"Do terminal em frente à estação de Hakone-Yumoto (plataforma 2), apanha o Hakone Tozan Bus (linha L) direto para os Gotemba Premium Outlets (~60 min). Vais subindo com o Fuji a aparecer à frente.",
+     dica:"<b>Coberto pelo Hakone Free Pass.</b> Confirma o horário do autocarro na véspera — não são muito frequentes.",
+     q:"Hakone Yumoto Station bus"},
+    {time:"12:00", tag:"vista", name:"Gotemba Premium Outlets + Monte Fuji", jp:"御殿場プレミアム・アウトレット",
+     desc:"O maior outlet do Japão (~290 lojas) mesmo à base do Fuji. A vista clássica é da ponte que liga as zonas este e oeste — em dia limpo, o Fuji recortado ao fundo é de tirar o fôlego. Almoça na praça de restaurantes e aproveita as marcas a preço de saldo.",
+     dica:"Mostra o passaporte no Welcome Center para o livro de cupões de desconto. Escolhe um dia limpo para o Fuji — a manhã costuma ter melhor visibilidade.",
+     q:"Gotemba Premium Outlets Mount Fuji"},
+    {time:"16:00", tag:"logistica", name:"Gotemba → Tóquio (Shinjuku)", jp:"",
+     desc:"Do próprio outlet há autocarro expresso direto para o Shinjuku Expressway Bus Terminal (~1h40), ou shuttle grátis até à estação JR Gotemba e comboio. Faz check-in na base a oeste e larga a mochila.",
+     dica:"O autocarro direto do outlet é o mais cómodo com sacos de compras. Reserva online se possível (Odakyu Highway Bus).",
+     q:"Shinjuku Expressway Bus Terminal"},
+    {time:"Noite", tag:"comida", name:"Jantar tranquilo em Shinjuku / Nakameguro", jp:"",
+     desc:"Chegada a Tóquio ao início da noite. Se ainda tiveres energia, Nakameguro (à beira-rio, com o Starbucks Roastery e Daikanyama ao lado) é um fecho de dia elegante; senão, um jantar simples perto do alojamento.",
+     dica:"Dia puxado de viagem — sem culpa se preferires recolher cedo para os próximos dias em Tóquio.",
+     q:"Nakameguro Tokyo"}
   ],
   eat:[
-    {name:"Cafés de Nakameguro", note:"Onibus Coffee, Sidewalk Stand", q:"Onibus Coffee Nakameguro"},
-    {name:"Starbucks Roastery", note:"Café e bar Arriviamo sobre o rio", q:"Starbucks Reserve Roastery Tokyo"},
-    {name:"Jantar em Daikanyama", note:"Bistrôs e izakaya elegantes", q:"Daikanyama restaurants"}
+    {name:"Praça de restaurantes de Gotemba", note:"Muitas opções, com vista para o Fuji", q:"Gotemba Premium Outlets food court"},
+    {name:"Soba em Hakone-Yumoto", note:"Se almoçares antes de sair (Hatsuhana)", q:"Hatsuhana soba Hakone Yumoto"},
+    {name:"Nakameguro / Daikanyama", note:"Bistrôs elegantes, se fechares o dia em Tóquio", q:"Daikanyama restaurants"}
   ],
   notes:[
-    "O Hakone Free Pass de 2 dias cobre também os transportes da manhã de hoje.",
-    "Anoitece ~16:40 — Nakameguro fica especialmente bonito ao fim da tarde com as luzes a refletir no rio."
+    "O Hakone Free Pass de 2 dias cobre o autocarro até Gotemba — confirma antes de partir.",
+    "Gotemba depende do tempo: se o dia estiver encoberto, o Fuji não aparece. Plano B: descer direto a Tóquio e ganhar a tarde em Nakameguro/Daikanyama.",
+    "Os autocarros Yumoto↔Gotemba não são frequentes — anota os horários de ida e volta logo de manhã."
   ]
 },
 {
@@ -1125,6 +1167,74 @@ function stopHTML(d, i, s){
   </li>`;
 }
 
+// Planeamento específico (modal) — só para dias com logística mais exigente
+const DAYPLAN = {
+  5: {
+    title: "Plano do Dia 5 · Subir a Hakone",
+    subtitle: "5 Nov · Quinta — Tóquio → circuito de Hakone → ryokan em Tonosawa",
+    sections: [
+      { h:"🎫 Antes de partir", items:[
+        "Compra o <b>Hakone Free Pass (2 dias)</b> no Odakyu Sightseeing Center em Shinjuku — cobre ida-volta + comboio de montanha, funicular, teleférico, barco e autocarros.",
+        "Opcional: reserva lugar no <b>Romancecar</b> (+¥1.200/sentido) para ir sentado e direto (~85 min).",
+        "Viaja com <b>mochila leve</b> só para 1 noite. A mala grande fica em Tóquio ou segue por takkyubin para o alojamento seguinte."
+      ]},
+      { h:"🚡 Como chegar (passo a passo)", items:[
+        {txt:"<b>1. Chegas a Hakone-Yumoto</b> (de Shinjuku, Romancecar Odakyu).", from:"Odakyu Shinjuku Station", to:"Hakone-Yumoto Station"},
+        {txt:"<b>2. Comboio de montanha</b> — <i>Hakone Tozan Railway</i>: Hakone-Yumoto → <b>Gōra</b> (~40 min, faz 3 inversões em ziguezague).", from:"Hakone-Yumoto Station", to:"Gora Station Hakone"},
+        {txt:"<b>3. Funicular</b> — <i>Hakone Tozan Cable Car</i>: Gōra → <b>Sōunzan</b> (~10 min, sobe a direito pela encosta).", from:"Gora Station Hakone", to:"Sounzan Station Hakone"},
+        {txt:"<b>4. Teleférico</b> — <i>Hakone Ropeway</i>: Sōunzan → <b>Owakudani</b> (as fumarolas e o ovo preto). Mudas de cabina em Owakudani e continuas até <b>Tōgendai</b>, na margem do lago.", from:"Sounzan Station Hakone", to:"Owakudani Station Hakone Ropeway"},
+        {txt:"<b>5. Barco pelo Lago Ashi</b>: Tōgendai → <b>Moto-Hakone</b> (~30-40 min). É a forma de atravessar o lago — o Templo fica na margem oposta.", from:"Togendai Port Lake Ashi", to:"Motohakone Port Lake Ashi"},
+        {txt:"<b>6. Templo Hakone</b>: a poucos minutos a pé do cais de Moto-Hakone.", from:"Motohakone Port Lake Ashi", to:"Hakone Shrine"},
+        {txt:"<b>Volta:</b> de Moto-Hakone, autocarro <i>Hakone Tozan Bus</i> direto até Yumoto/Tonosawa (~40 min).", from:"Motohakone-ko bus stop", to:"Hakone-Yumoto Station"},
+        "Tudo isto está <b>coberto pelo Hakone Free Pass</b> — não compras bilhetes a cada troço."
+      ]},
+      { h:"🕐 Horário sugerido", items:[
+        "<b>08:00</b> — Shinjuku → Hakone-Yumoto (Romancecar)",
+        "<b>10:30</b> — Comboio Tozan até Gōra → funicular até Sōunzan → teleférico até Owakudani (ovo preto!)",
+        "<b>13:00</b> — Teleférico até Tōgendai e barco a atravessar o lago até Moto-Hakone",
+        "<b>14:30</b> — Templo Hakone (Hakone-jinja) e torii sobre o lago",
+        "<b>16:30</b> — Autocarro de Moto-Hakone para Tonosawa/Yumoto e check-in no Shiunso"
+      ]},
+      { h:"⚠️ A confirmar no dia", items:[
+        "<b>Teleférico (Ropeway)</b>: fecha por vezes por atividade vulcânica — se estiver fechado, há autocarro alternativo entre Sōunzan e o lago (também no passe).",
+        "Reserva o <b>banho privado gratuito</b> do Shiunso à chegada e confirma a hora do jantar kaiseki.",
+        "O torii do lago tem sempre fila para foto — vai cedo ou aceita a espera."
+      ]},
+      { h:"🎒 Levar contigo", items:[
+        "Casaco quente — nas zonas altas (Owakudani, lago) faz frio e vento.",
+        "Dinheiro em numerário para pequenas compras e o ovo preto.",
+        "Passaporte e o Hakone Free Pass sempre à mão."
+      ]}
+    ]
+  },
+  6: {
+    title: "Plano do Dia 6 · Fuji em Gotemba & volta",
+    subtitle: "6 Nov · Sexta — onsen matinal → Gotemba (Monte Fuji) → Tóquio",
+    sections: [
+      { h:"🌅 Manhã no ryokan", items:[
+        "Onsen ao acordar (o melhor momento, com o rio calmo) e pequeno-almoço japonês.",
+        {txt:"<b>Check-out às 10h.</b> Deixa a mochila pronta para seguir viagem — não voltas a Tonosawa.", pin:"Shiunso Hakone Tonosawa"}
+      ]},
+      { h:"🗻 Gotemba & Monte Fuji", items:[
+        {txt:"<b>Autocarro direto</b> Hakone-Yumoto (plataforma 2) → Gotemba Premium Outlets, Hakone Tozan Bus linha L (~60 min). <b>Coberto pelo Hakone Free Pass.</b>", from:"Hakone-Yumoto Station", to:"Gotemba Premium Outlets"},
+        {txt:"A vista clássica do Fuji é da <b>ponte entre as zonas este e oeste</b> do outlet.", pin:"Gotemba Premium Outlets"},
+        "Mostra o <b>passaporte no Welcome Center</b> para o livro de cupões de desconto.",
+        "~290 lojas + praça de restaurantes para almoçar com vista."
+      ]},
+      { h:"🚌 Regresso a Tóquio", items:[
+        {txt:"<b>Autocarro expresso direto</b> do outlet → Shinjuku Expressway Bus Terminal (~1h40). O mais cómodo com sacos de compras.", from:"Gotemba Premium Outlets", to:"Shinjuku Expressway Bus Terminal"},
+        "Alternativa: shuttle grátis até à estação JR Gotemba + comboio.",
+        "Reserva o autocarro online se possível (Odakyu Highway Bus)."
+      ]},
+      { h:"⚠️ Depende do tempo", items:[
+        "<b>Gotemba só compensa em dia limpo</b> — se estiver encoberto, o Fuji não aparece.",
+        "<b>Plano B:</b> descer direto a Tóquio (Romancecar de Yumoto) e ganhar a tarde em Nakameguro/Daikanyama.",
+        "Os autocarros Yumoto↔Gotemba <b>não são frequentes</b> — anota os horários de ida e volta logo de manhã."
+      ]}
+    ]
+  }
+};
+
 function dayZones(d){
   const seen={}, out=[];
   d.stops.forEach(s=>{
@@ -1197,6 +1307,7 @@ function dayHTML(d){
     </button>
     <div class="daybody">
       <div class="why">${d.why}</div>
+      ${DAYPLAN[d.n]?`<button class="planbtn" onclick="openPlan(${d.n})"><span class="planico">📋</span>Plano do dia<span class="planarrow">→</span></button>`:''}
       ${stay}
       ${pass}
       <ol class="timeline">${stops}</ol>
@@ -1377,15 +1488,15 @@ const STATIONS = [
    {label:"Shinjuku → Hakone-Yumoto", line:"Odakyu Romancecar", color:"#0085CD", time:"~85 min",
     desc:"Expresso reservado, direto. Hakone-Yumoto é o terminus — não te enganas."},
    {label:"Hakone-Yumoto → Gora", line:"Hakone Tozan (comboio de montanha)", color:"#A0522D", time:"~40 min",
-    desc:"Mudas em Yumoto; segue as placas 'Hakone Tozan Line'. Senta-te à direita na subida. Gora = onde dormes."},
+    desc:"Mudas em Yumoto; segue as placas 'Hakone Tozan Line'. Senta-te à direita na subida para as melhores vistas."},
    {label:"Gora → Owakudani", line:"Funicular + Teleférico", color:"#6a3fa0", time:"~30 min",
     desc:"Funicular (Cable Car) até Sounzan e teleférico (Ropeway) sobre o vale vulcânico até Owakudani."},
    {label:"Owakudani → Moto-Hakone", line:"Teleférico + Barco-pirata", color:"#2F7E8C", time:"~50 min",
     desc:"Teleférico até Togendai e o galeão pelo Lago Ashi até Moto-Hakone (santuário do torii)."},
-   {label:"Moto-Hakone → Hakone-Yumoto", line:"Hakone Tozan Bus", color:"#1f6b5c", time:"~40 min",
-    desc:"Autocarro de volta — fecha o 'loop' sem repetir caminho."},
-   {label:"Gora → Shinjuku — volta (6 nov)", line:"Tozan + Romancecar", color:"#0085CD", time:"~2h",
-    desc:"Desce a Hakone-Yumoto e apanha o Romancecar de volta a Shinjuku."}
+   {label:"Moto-Hakone → Tonosawa/Yumoto", line:"Hakone Tozan Bus", color:"#1f6b5c", time:"~40 min",
+    desc:"Autocarro de volta a Yumoto/Tonosawa — fecha o 'loop' e deixa-te junto ao ryokan (Shiunso)."},
+   {label:"Yumoto → Shinjuku — volta (6 nov)", line:"Odakyu Romancecar", color:"#0085CD", time:"~85 min",
+    desc:"De Tonosawa a Hakone-Yumoto (autocarro/curto) e Romancecar direto de volta a Shinjuku."}
   ]},
 { title:"Linhas que vais usar mais", intro:"As linhas-chave para saltar entre zonas.",
   legs:[
@@ -1506,6 +1617,41 @@ function toggle(id, val){
 }
 
 let openDay = null;
+function openPlan(n){
+  const p = DAYPLAN[n];
+  if(!p) return;
+  const body = p.sections.map(s=>
+    '<div class="plansec"><h4>'+s.h+'</h4><ul>'+
+    s.items.map(it=>{
+      if(typeof it === "string") return '<li>'+it+'</li>';
+      const pinLink=(q,label)=>'<a class="planpin2" href="'+mapsLink(q)+'" target="_blank" rel="noopener" title="Abrir no Google Maps">📍 '+label+'</a>';
+      if(it.from && it.to){
+        const row='<div class="pinrow">'+pinLink(it.from,"Partida")+'<span class="pinarrow">→</span>'+pinLink(it.to,"Chegada")+'</div>';
+        return '<li>'+it.txt+row+'</li>';
+      }
+      if(it.pin){
+        const single='<div class="pinrow">'+pinLink(it.pin,"Ver no mapa")+'</div>';
+        return '<li>'+it.txt+single+'</li>';
+      }
+      return '<li>'+it.txt+'</li>';
+    }).join('')+
+    '</ul></div>'
+  ).join('');
+  document.getElementById("plancontent").innerHTML =
+    '<div class="planhead"><h3 id="plantitle">'+p.title+'</h3><p>'+p.subtitle+'</p></div>'+body;
+  const ov = document.getElementById("planoverlay");
+  ov.classList.add("show");
+  ov.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+}
+function closePlan(){
+  const ov = document.getElementById("planoverlay");
+  ov.classList.remove("show");
+  ov.setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+}
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closePlan(); });
+
 function toggleDay(n){
   const sec = document.getElementById("day"+n);
   const wasOpen = sec.classList.contains("open");
