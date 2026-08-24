@@ -117,6 +117,9 @@ header.top{
   font-weight:700;padding:2px 8px;border-radius:20px;margin-left:auto}
 .staycard a.bbtn{display:inline-block;background:var(--indigo);color:#fff;text-decoration:none;
   font-size:12px;font-weight:700;padding:7px 12px;border-radius:9px}
+.stayactions{display:flex;flex-wrap:wrap;gap:8px}
+.staycard a.bbtn.ghost{background:transparent;color:var(--indigo);border:1.5px solid var(--indigo)}
+.staycard a.bbtn.ghost:hover{background:var(--indigo);color:#fff}
 
 /* ---------- PLANO DO DIA (botão + modal) ---------- */
 .planbtn{display:flex;align-items:center;gap:9px;width:100%;margin:0 0 16px;padding:12px 14px;
@@ -654,7 +657,7 @@ const DAYS = [
   n:1, kanji:"一", date:"1 Nov", day:1, mon:11, dow:"Domingo", trip:false,
   theme:"Chegada + Asakusa & Skytree",
   why:"Aterras de manhã (07:55) em Haneda. Trata do Suica, larga as malas e mergulha no Tóquio antigo — Senso-ji e a Skytree ficam lindíssimos iluminados ao anoitecer (cedo em novembro). Com dez dias pela frente, mantém hoje leve para vencer o jet lag.",
-  stay:{name:"Base Este (Asakusa/Ueno)", zone:"Taito-ku — sugestão de zona", nights:"Noites 1–4", note:"Sugestão: fica 4 noites numa base a este (Asakusa ou Ueno), central para Senso-ji, Skytree, Akihabara, Ueno e o mercado de Tsukiji. Nada está reservado — é só uma zona recomendada para minimizar mudanças de mala nos primeiros dias.", link:""},
+  stay:{name:"HOTEL TAVINOS Asakusa", zone:"Asakusa, Taito-ku", nights:"Noites 1–4", note:"Hotel de design manga (tema de festival japonês), a poucos minutos a pé do Senso-ji e Kaminarimon, com o Skytree à vista de alguns quartos altos. Base central para os quatro primeiros dias — Asakusa, Ueno, Akihabara e Tsukiji ficam perto. Check-in 15h / check-out 11h, self-check-in.", link:"https://hoteltavinos.com/en/asakusa/", map:"HOTEL TAVINOS Asakusa"},
   stops:[
     {time:"07:55", tag:"logistica", name:"Haneda → cidade + Suica", jp:"IC card",
      desc:"Aterras em Haneda de manhã. Trata logo do cartão de transportes: iPhone — Suica na Apple Wallet ou app Welcome Suica Mobile; Android comprado fora do Japão — compra o Welcome Suica físico no balcão. De Haneda à cidade são ~30-45 min (Tokyo Monorail ou Keikyu).",
@@ -690,7 +693,7 @@ const DAYS = [
   n:2, kanji:"二", date:"2 Nov", day:2, mon:11, dow:"Segunda", trip:false,
   theme:"Ginza, Estação de Tóquio & Ueno",
   why:"Dia de cidade elegante e cultura, num ritmo calmo. O Palácio Imperial fica para amanhã (fecha às segundas), por isso hoje é a arquitetura de tijolo da Estação de Tóquio, o luxo de Ginza e a tarde no parque e museus de Ueno.",
-  stay:{name:"Base Este (Asakusa/Ueno)", zone:"Taito-ku — sugestão de zona", nights:"Noite 2 de 4", note:"Segunda noite na base a este. Ueno fica à porta para começar/acabar o dia com calma.", link:""},
+  stay:{name:"HOTEL TAVINOS Asakusa", zone:"Asakusa, Taito-ku", nights:"Noite 2 de 4", note:"Segunda noite no Tavinos Asakusa. Ueno fica a poucas paragens para começar/acabar o dia com calma.", link:"https://hoteltavinos.com/en/asakusa/", map:"HOTEL TAVINOS Asakusa"},
   stops:[
     {time:"10:00", tag:"historia", name:"Estação de Tóquio & KITTE", jp:"東京駅",
      desc:"A fachada Marunouchi de 1914 em tijolo vermelho, restaurada ao original. No edifício KITTE em frente, o terraço-jardim do 6º andar tem vista grátis sobre a estação.",
@@ -727,7 +730,7 @@ const DAYS = [
   n:3, kanji:"三", date:"3 Nov", day:3, mon:11, dow:"Terça", trip:false,
   theme:"Palácio Imperial + Akihabara",
   why:"Hoje a história de Edo e o paraíso otaku. Os Jardins do Palácio Imperial abrem à terça; à tarde, Akihabara para anime, retro-gaming e eletrónica. O 3 de novembro é feriado (Dia da Cultura) — ruas animadas e por vezes eventos.",
-  stay:{name:"Base Este (Asakusa/Ueno)", zone:"Taito-ku — sugestão de zona", nights:"Noite 3 de 4", note:"Terceira noite na base a este. Akihabara fica a poucas paragens.", link:""},
+  stay:{name:"HOTEL TAVINOS Asakusa", zone:"Asakusa, Taito-ku", nights:"Noite 3 de 4", note:"Terceira noite no Tavinos Asakusa. Akihabara fica a poucas paragens.", link:"https://hoteltavinos.com/en/asakusa/", map:"HOTEL TAVINOS Asakusa"},
   stops:[
     {time:"10:00", tag:"historia", name:"Jardins Orientais do Palácio Imperial", jp:"皇居東御苑",
      desc:"Os jardins do antigo castelo de Edo, com muralhas de pedra, torres e relva imensa. Entrada gratuita e raramente cheios — em novembro com tons de outono.",
@@ -764,7 +767,7 @@ const DAYS = [
   n:4, kanji:"四", date:"4 Nov", day:4, mon:11, dow:"Quarta", trip:false,
   theme:"Tsukiji, teamLab & Odaiba",
   why:"Comida de mercado ao pequeno-almoço, arte digital imersiva à tarde e a baía de Tóquio ao anoitecer. Reserva o teamLab com antecedência. Último dia na base a este antes de Hakone.",
-  stay:{name:"Base Este (Asakusa/Ueno)", zone:"Taito-ku — sugestão de zona", nights:"Noite 4 de 4", note:"Última noite na base a este. Amanhã segues para Hakone com mochila leve — deixa a mala grande no hotel ou envia por takkyubin.", link:""},
+  stay:{name:"HOTEL TAVINOS Asakusa", zone:"Asakusa, Taito-ku", nights:"Noite 4 de 4", note:"Última noite no Tavinos Asakusa. Amanhã segues para Hakone com mochila leve — deixa a mala grande no hotel ou envia por takkyubin.", link:"https://hoteltavinos.com/en/asakusa/", map:"HOTEL TAVINOS Asakusa"},
   stops:[
     {time:"08:00", tag:"comida", name:"Mercado exterior de Tsukiji", jp:"築地場外市場",
      desc:"Bancas e tasquinhas de marisco fresquíssimo: sushi, tamagoyaki em espeto, vieiras grelhadas, uni. O melhor pequeno-almoço da viagem.",
@@ -801,7 +804,7 @@ const DAYS = [
   n:5, kanji:"五", date:"5 Nov", day:5, mon:11, dow:"Quinta", trip:true,
   theme:"Hakone · circuito + ryokan (noite)",
   why:"Vais a Hakone dormir num ryokan com onsen. Faz o circuito clássico — vale vulcânico, lago e o torii sobre a água — e fecha o dia com banho termal e jantar kaiseki. Em novembro, com folhagem de outono nas zonas altas.",
-  stay:{name:"Shiunso", zone:"Tonosawa Onsen, Hakone-Yumoto (Kanagawa)", nights:"1 noite", note:"Ryokan tradicional à beira do rio Hayakawa, em Tonosawa. Banhos termais 100% kakenagashi (água nunca reciclada), incluindo banho privado gratuito, e jantar/pequeno-almoço kaiseki servidos no quarto. A 5 min de autocarro de Hakone-Yumoto (ou a pé de Tonosawa). Check-in a partir das 15h, check-out às 10h.", link:"https://shiunso.hotelshakone.com/en/"},
+  stay:{name:"Shiunso", zone:"Tonosawa Onsen, Hakone-Yumoto (Kanagawa)", nights:"1 noite", note:"Ryokan tradicional à beira do rio Hayakawa, em Tonosawa. Banhos termais 100% kakenagashi (água nunca reciclada), incluindo banho privado gratuito, e jantar/pequeno-almoço kaiseki servidos no quarto. A 5 min de autocarro de Hakone-Yumoto (ou a pé de Tonosawa). Check-in a partir das 15h, check-out às 10h.", link:"https://shiunso.hotelshakone.com/en/", map:"Shiunso Hakone Tonosawa"},
   pass:{title:"Hakone Free Pass (2 dias)",
     text:"Compra no Odakyu Sightseeing Service Center em Shinjuku (ou online). Inclui ida-e-volta Shinjuku–Odawara + uso ilimitado de comboio de montanha, funicular, teleférico, barco-pirata e autocarros. Com a noite cá, os 2 dias do passe encaixam na perfeição.",
     price:"¥7.100 (Shinjuku, 2 dias)", extra:"Romancecar (comboio expresso reservado) +¥1.200 por sentido — opcional mas confortável (~85 min direto).",
@@ -1292,7 +1295,10 @@ function dayHTML(d){
       <div class="sname">${d.stay.name}</div>
       <div class="szone">${d.stay.zone}</div>
       <p>${d.stay.note}</p>
-      ${d.stay.link?`<a class="bbtn" href="${d.stay.link}" target="_blank" rel="noopener">Ver no Booking</a>`:""}
+      <div class="stayactions">
+        ${d.stay.link?`<a class="bbtn" href="${d.stay.link}" target="_blank" rel="noopener">Ver alojamento</a>`:""}
+        ${d.stay.map?`<a class="bbtn ghost" href="${mapsLink(d.stay.map)}" target="_blank" rel="noopener">📍 Ver no mapa</a>`:""}
+      </div>
     </div>` : "";
   return `
   <section class="day ${d.trip?'trip':''}" id="day${d.n}" data-day="${d.day}">
@@ -1546,7 +1552,7 @@ function legHTML(g){
 }
 
 function renderEstadias(){
-  const top = `<div class="intro">Onde dormes em cada etapa da viagem, por ordem. Toca em "Ver no Booking" para abrir a reserva.</div>`;
+  const top = `<div class="intro">Onde dormes em cada etapa da viagem, por ordem. Toca em "Ver alojamento" para abrir o site do hotel.</div>`;
   // Agrupa noites consecutivas no mesmo alojamento
   const groups = [];
   ordered().forEach(d=>{
@@ -1574,7 +1580,10 @@ function renderEstadias(){
       <div class="sname">${g.stay.name}</div>
       <div class="szone">${g.stay.zone} · ${range}</div>
       <p>${g.stay.note}</p>
-      ${g.stay.link?`<a class="bbtn" href="${g.stay.link}" target="_blank" rel="noopener">Ver no Booking</a>`:""}
+      <div class="stayactions">
+        ${g.stay.link?`<a class="bbtn" href="${g.stay.link}" target="_blank" rel="noopener">Ver alojamento</a>`:""}
+        ${g.stay.map?`<a class="bbtn ghost" href="${mapsLink(g.stay.map)}" target="_blank" rel="noopener">📍 Ver no mapa</a>`:""}
+      </div>
     </div>`;
   }).join("");
   document.getElementById("panel-estadias").innerHTML = top + cards;
