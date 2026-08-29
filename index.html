@@ -41,6 +41,13 @@ header.top{
 .brand .latin{font-size:30px;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
 .brand .latin small{display:block;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--muted);margin-top:4px}
 .brand .latin small b{color:var(--indigo);font-weight:700}
+.mymapbtn{display:inline-flex;align-items:center;gap:9px;margin-top:14px;padding:11px 16px;
+  background:linear-gradient(135deg,#1a73e8,#1667d0);color:#fff;text-decoration:none;
+  border-radius:12px;font-size:14px;font-weight:800;box-shadow:0 3px 10px rgba(26,115,232,.28);
+  transition:.15s}
+.mymapbtn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(26,115,232,.38)}
+.mymapbtn .mmicon{font-size:16px}
+.mymapbtn .mmarrow{font-size:14px;opacity:.85}
 
 /* ---------- TABS ---------- */
 .tabs{display:flex;gap:5px;margin:18px 0 4px;position:sticky;top:0;z-index:30;
@@ -330,6 +337,11 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 1
         <small>1 – 10 Nov <b>2026</b> · 9 noites · noite em Hakone</small>
       </span>
     </div>
+    <a class="mymapbtn" href="https://maps.app.goo.gl/BvyrQpPBJKSoWq13A" target="_blank" rel="noopener">
+      <span class="mmicon">🗺️</span>
+      <span class="mmtxt">O nosso mapa do Google</span>
+      <span class="mmarrow">↗</span>
+    </a>
   </header>
 
   <div class="tabs" role="tablist">
