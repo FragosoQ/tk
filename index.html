@@ -559,8 +559,31 @@ function globalMapSVG(){
   });
   const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
 
+  // Distritos principais de Tóquio (coordenadas reais) para desenhar como fundo de contexto
+  const DISTRICTS=[
+    {n:"ASAKUSA", lat:35.7148, lng:139.7967},
+    {n:"UENO", lat:35.7138, lng:139.7770},
+    {n:"AKIHABARA", lat:35.6984, lng:139.7731},
+    {n:"MARUNOUCHI", lat:35.6812, lng:139.7671},
+    {n:"GINZA", lat:35.6717, lng:139.7650},
+    {n:"SHINJUKU", lat:35.6905, lng:139.6995},
+    {n:"SHIBUYA", lat:35.6595, lng:139.7005},
+    {n:"HARAJUKU", lat:35.6702, lng:139.7027},
+    {n:"SHINSEN", lat:35.6560, lng:139.6930},
+    {n:"NAKAMEGURO", lat:35.6440, lng:139.6989},
+    {n:"ODAIBA", lat:35.6270, lng:139.7745},
+    {n:"TOYOSU", lat:35.6550, lng:139.7960}
+  ];
+  // Anel aproximado da linha Yamanote (arco norte/oeste, onde estão os pontos) para referência
+  const YAMANOTE=[
+    [35.6580,139.7016],[35.6702,139.7027],[35.6805,139.7020],[35.6905,139.6995], // Shibuya→Harajuku→Yoyogi→Shinjuku
+    [35.7013,139.7007],[35.7141,139.7070],[35.7281,139.7100],[35.7386,139.7280], // →Shin-Okubo→Ikebukuro→Sugamo→Tabata
+    [35.7327,139.7660],[35.7205,139.7745],[35.7138,139.7770],[35.6983,139.7740], // →Nishi-Nippori→Uguisudani→Ueno→Akihabara
+    [35.6900,139.7708],[35.6812,139.7671],[35.6749,139.7630],[35.6658,139.7574]  // →Kanda→Tokyo→Yurakucho→Shimbashi
+  ];
+
   function panel(list, x0,y0,pw,ph, showZoneLabels){
-    if(!list.length) return "";
+    if(!list.length) return {labels:"",marks:"",proj:null};
     const pad=30;
     const lats=list.map(i=>i.lat), lngs=list.map(i=>i.lng);
     const minLat=Math.min(...lats),maxLat=Math.max(...lats);
@@ -613,7 +636,7 @@ function globalMapSVG(){
       marks+='<g><circle cx="'+XY[i][0].toFixed(1)+'" cy="'+XY[i][1].toFixed(1)+'" r="11" fill="'+col+'" stroke="#fff" stroke-width="2"/>'
         +'<text x="'+XY[i][0].toFixed(1)+'" y="'+(XY[i][1]+3.8).toFixed(1)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">'+it2.day+'</text></g>';
     });
-    return {labels, marks};
+    return {labels, marks, proj, bounds:{x0,y0,pw,ph}};
   }
 
   const W=760, H=560;
@@ -626,8 +649,45 @@ function globalMapSVG(){
   const iw=260, ih=200, ix=16, iy=H-ih-16;
   const inset=panel(hak, ix, iy, iw, ih, true);
 
+  // ---- Camadas de contexto geográfico (usam a projeção do painel de Tóquio) ----
+  let geo="";
+  if(main.proj){
+    const P=main.proj, b=main.bounds;
+    const inside=(p)=> p[0]>b.x0+6 && p[0]<b.x0+b.pw-6 && p[1]>b.y0+6 && p[1]<b.y0+b.ph-6;
+    // Baía de Tóquio (polígono suave a partir de alguns pontos costeiros aproximados)
+    const bayPts=[[35.660,139.760],[35.640,139.775],[35.610,139.790],[35.590,139.800],
+                  [35.560,139.800],[35.545,139.785],[35.600,139.762],[35.630,139.755]];
+    let bayPath="";
+    bayPts.forEach((c,i)=>{ const p=P(c[0],c[1]); bayPath+=(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)+" "; });
+    bayPath+="Z";
+    geo+='<path d="'+bayPath+'" fill="#cfe0e8" opacity="0.55"/>';
+    // etiqueta da baía
+    const bp=P(35.605,139.782);
+    if(inside(bp)) geo+='<text x="'+bp[0].toFixed(1)+'" y="'+bp[1].toFixed(1)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#4a7a8c" opacity="0.7" font-style="italic">Baía de Tóquio</text>';
+    // Linha Yamanote (arco de referência, curva suave)
+    let line="";
+    YAMANOTE.forEach((c,i)=>{ const p=P(c[0],c[1]); line+=(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)+" "; });
+    geo+='<path d="'+line+'" fill="none" stroke="#9fb04f" stroke-width="3" opacity="0.3" stroke-linejoin="round" stroke-linecap="round"/>';
+    const yl=P(35.732,139.740);
+    if(inside(yl)) geo+='<text x="'+yl[0].toFixed(1)+'" y="'+yl[1].toFixed(1)+'" text-anchor="middle" font-size="9.5" font-weight="700" fill="#7d8c34" opacity="0.65">↑ linha Yamanote (anel)</text>';
+    // Rótulos de distrito (grandes, fundo) — salta os que já são zona rotulada pelos pontos
+    const zonasVisiveis={};
+    tokyo.forEach(it2=>{ zonasVisiveis[it2.zone.toUpperCase()]=1; });
+    DISTRICTS.forEach(d=>{
+      if(zonasVisiveis[d.n]) return; // evita duplicar rótulo já mostrado pelos pontos
+      const p=P(d.lat,d.lng);
+      if(!inside(p)) return;
+      geo+='<text x="'+p[0].toFixed(1)+'" y="'+p[1].toFixed(1)+'" text-anchor="middle" font-size="12.5" font-weight="800" fill="#2E4A78" opacity="0.16" letter-spacing="1">'+d.n+'</text>';
+    });
+  }
+
   let svg='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" class="globalmapsvg" role="img" aria-label="Mapa de todos os pontos do roteiro">';
-  svg+='<rect x="0.5" y="0.5" width="'+(W-1)+'" height="'+(H-1)+'" rx="16" fill="#e9efe9" stroke="#d5ddd5"/>';
+  svg+='<rect x="0.5" y="0.5" width="'+(W-1)+'" height="'+(H-1)+'" rx="16" fill="#eaf1ea" stroke="#d5ddd5"/>';
+  svg+=geo;
+  // bússola (norte)
+  svg+='<g opacity="0.5"><circle cx="'+(W-34)+'" cy="70" r="15" fill="#fff" stroke="#c4ccd6"/>'
+     +'<path d="M'+(W-34)+' 58 L'+(W-30)+' 72 L'+(W-34)+' 68 L'+(W-38)+' 72 Z" fill="#E4572E"/>'
+     +'<text x="'+(W-34)+'" y="82" text-anchor="middle" font-size="8" font-weight="800" fill="#666">N</text></g>';
   // título Tóquio
   svg+='<text x="'+(W-20)+'" y="34" text-anchor="end" font-size="15" font-weight="800" fill="#2E4A78" opacity="0.5" letter-spacing="1">GRANDE TÓQUIO</text>';
   svg+=main.labels+main.marks;
@@ -649,7 +709,7 @@ function globalMapSVG(){
   });
   leg+='</div>';
 
-  return '<div class="gmap-wrap"><div class="gmap-hint">Cada cor é um dia · Hakone mostrado à parte (fica ~80 km a sudoeste)</div>'+svg+leg+'</div>';
+  return '<div class="gmap-wrap"><div class="gmap-hint">Cada cor é um dia · nomes esbatidos = distritos · linha verde = Yamanote · Hakone à parte (~80 km SO)</div>'+svg+leg+'</div>';
 }
 
 const DAYS = [
