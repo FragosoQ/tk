@@ -408,6 +408,8 @@ const COORDS = {
   "Tokyo National Museum Ueno":[35.7188,139.7766],
   "Imperial Palace East Gardens Tokyo":[35.6852,139.7590],
   "Jimbocho Tokyo curry":[35.6957,139.7576],
+  "Tokyo International Forum":[35.6773,139.7644],
+  "Yurakucho Gado-shita":[35.6738,139.7622],
   "Akihabara Electric Town":[35.6984,139.7731],
   "Super Potato Akihabara":[35.7003,139.7715],
   "Akihabara ramen":[35.6990,139.7730],
@@ -458,6 +460,7 @@ const ZONE = {
   "Ameyoko Market Ueno":"Ueno","Tokyo National Museum Ueno":"Ueno",
   "Tokyo Station Marunouchi":"Estação de Tóquio","Ginza Chuo-dori Tokyo":"Ginza","Mitsukoshi Ginza depachika":"Ginza",
   "Imperial Palace East Gardens Tokyo":"Palácio Imperial","Jimbocho Tokyo curry":"Jimbocho",
+  "Tokyo International Forum":"Yurakucho","Yurakucho Gado-shita":"Yurakucho",
   "Akihabara Electric Town":"Akihabara","Super Potato Akihabara":"Akihabara","Akihabara ramen":"Akihabara",
   "Tsukiji Outer Market":"Tsukiji","teamLab Planets Tokyo Toyosu":"Toyosu","teamLab Planets Tokyo":"Toyosu",
   "Unicorn Gundam Statue Odaiba DiverCity":"Odaiba","Odaiba Seaside Park Rainbow Bridge":"Odaiba",
@@ -800,39 +803,44 @@ const DAYS = [
 },
 {
   n:3, kanji:"三", date:"3 Nov", day:3, mon:11, dow:"Terça", trip:false,
-  theme:"Palácio Imperial + Akihabara",
-  why:"Hoje a história de Edo e o paraíso otaku. Os Jardins do Palácio Imperial abrem à terça; à tarde, Akihabara para anime, retro-gaming e eletrónica. O 3 de novembro é feriado (Dia da Cultura) — ruas animadas e por vezes eventos.",
+  theme:"Palácio Imperial, MAPPA EXPO & Akihabara",
+  why:"Hoje a história de Edo e um dia em cheio de anime. Os Jardins do Palácio Imperial abrem à terça; às 11h30 entras na MAPPA EXPO (Chainsaw Man, Attack on Titan, Jujutsu Kaisen) no Yurakucho Museum, mesmo a sul do Palácio; à tarde, Akihabara para anime, retro-gaming e eletrónica. O 3 de novembro é feriado (Dia da Cultura) — ruas animadas e por vezes eventos.",
   stay:{name:"HOTEL TAVINOS Asakusa", zone:"Asakusa, Taito-ku", nights:"Noite 3 de 4", note:"Terceira noite no Tavinos Asakusa. Akihabara fica a poucas paragens.", link:"https://hoteltavinos.com/en/asakusa/", map:"HOTEL TAVINOS Asakusa"},
   stops:[
-    {time:"10:00", tag:"historia", name:"Jardins Orientais do Palácio Imperial", jp:"皇居東御苑",
+    {time:"09:00", tag:"historia", name:"Jardins Orientais do Palácio Imperial", jp:"皇居東御苑",
      desc:"Os jardins do antigo castelo de Edo, com muralhas de pedra, torres e relva imensa. Entrada gratuita e raramente cheios — em novembro com tons de outono.",
-     dica:"<b>Aberto à terça</b> (fecha às 2ªs e 6ªs). Passeio matinal calmo antes de Akihabara.",
+     dica:"<b>Aberto à terça</b> (fecha às 2ªs e 6ªs), a partir das 9h. Sai por volta das 10:45 — o Tokyo International Forum fica a ~20 min a pé para sul.",
      q:"Imperial Palace East Gardens Tokyo"},
-    {time:"12:30", tag:"comida", name:"Almoço em Kanda / Jimbocho", jp:"神田",
-     desc:"Entre o Palácio e Akihabara, a zona de Kanda/Jimbocho (bairro dos alfarrabistas) tem casas de caril, soba e cafés antigos. Bom almoço tranquilo.",
-     dica:"Jimbocho é o bairro das livrarias em segunda mão — giro para uma passagem se gostares de livros.",
-     q:"Jimbocho Tokyo curry"},
-    {time:"14:00", tag:"anime", name:"Akihabara — Electric Town", jp:"秋葉原",
+    {time:"11:30", tag:"anime", name:"MAPPA EXPO 15th Anniversary", jp:"有楽町",
+     desc:"A exposição dos 15 anos do estúdio MAPPA, no Yurakucho Museum (dentro do Tokyo International Forum, Marunouchi). Áreas especiais: <b>Chainsaw Man – The Movie: Reze Arc</b> (desenhos de produção e figura em tamanho real da Bomb), <b>Attack on Titan Final Season</b> (instalação em grande escala do Rumbling e do Doomsday Titan) e <b>JUJUTSU KAISEN</b> (interior de comboio imersivo e figura em tamanho real do Yuji Itadori).",
+     dica:"<b>Entrada a partir das 11h30</b> — chega uns minutos antes e leva os bilhetes à mão. Do Palácio são ~20 min a pé, ou uma paragem de metro até Yurakucho. Site oficial: <a href=\"https://expo.mappa.co.jp/en\" target=\"_blank\" rel=\"noopener\">expo.mappa.co.jp</a>.",
+     q:"Tokyo International Forum", map:"https://maps.app.goo.gl/QxX8QSJWx2XVkuwi6"},
+    {time:"14:00", tag:"comida", name:"Almoço em Yurakucho", jp:"有楽町ガード下",
+     desc:"Depois da exposição, almoça ali mesmo: sob os arcos da linha de comboio (gado-shita) há yakitori, izakayas e ramen, e Ginza fica a dois passos.",
+     dica:"A hora depende de quanto tempo ficares na exposição — se te demorares, petisca qualquer coisa antes de entrar. Daqui, a JR Yamanote leva-te a Akihabara em ~5 min.",
+     q:"Yurakucho Gado-shita"},
+    {time:"15:00", tag:"anime", name:"Akihabara — Electric Town", jp:"秋葉原",
      desc:"O bairro otaku: lojas de anime e mangá, eletrónica em arranha-céus (Yodobashi), arcades de vários andares, figuras, retro-gaming e maid cafés.",
      dica:"Sobe a arcade Taito/GiGO andar a andar. A Yodobashi-Akiba tem de tudo, dos componentes às figuras.",
      q:"Akihabara Electric Town"},
-    {time:"17:00", tag:"anime", name:"Super Potato & lojas de coleção", jp:"スーパーポテト",
+    {time:"17:30", tag:"anime", name:"Super Potato & lojas de coleção", jp:"スーパーポテト",
      desc:"Templo do retro-gaming com consolas e jogos das décadas de 80/90, e no topo uma pequena arcade retro. À volta, mais lojas de figuras (Mandarake, Kotobukiya).",
      dica:"A Mandarake Complex (8 andares) é imperdível para coleccionadores.",
      q:"Super Potato Akihabara"},
-    {time:"19:00", tag:"comida", name:"Jantar em Akihabara", jp:"",
+    {time:"19:30", tag:"comida", name:"Jantar em Akihabara", jp:"",
      desc:"Desde ramen a temáticos: a zona tem de tudo. Boa altura para um tazón de ramen ou um katsu antes de recolher.",
      dica:"Se te apetecer o clássico kitsch, há cafés temáticos; senão, um bom ramen resolve.",
      q:"Akihabara ramen"}
   ],
   eat:[
-    {name:"Kanda Matsuya", note:"Soba histórica perto do Palácio", q:"Kanda Matsuya soba Tokyo"},
+    {name:"Yurakucho Gado-shita", note:"Yakitori e izakayas sob os carris, à saída da MAPPA EXPO", q:"Yurakucho Gado-shita"},
     {name:"CoCo Ichibanya", note:"Caril japonês, rápido entre lojas", q:"CoCo Ichibanya Akihabara"},
     {name:"Kikanbo", note:"Ramen picante 'karashibi' em Kanda", q:"Kikanbo ramen Kanda"}
   ],
   notes:[
     "3 Nov é feriado nacional (Bunka no Hi) — bom ambiente, mas alguns escritórios/museus podem ter horário especial.",
-    "O Palácio é ao ar livre e gratuito: ideal para uma manhã sem pressas."
+    "<b>MAPPA EXPO no Yurakucho Museum (Tokyo International Forum): entrada a partir das 11h30.</b> O resto do dia está montado à volta dessa hora.",
+    "O Palácio é ao ar livre e gratuito — começa às 9h para não chegares à pressa à exposição."
   ]
 },
 {
@@ -1235,7 +1243,7 @@ function stopHTML(d, i, s){
       <p class="d">${s.desc}</p>
       ${s.dica?`<div class="dica"><b>Dica ·</b> ${s.dica}</div>`:""}
       <div class="actions">
-        <a class="mapbtn" href="${mapsLink(s.q)}" target="_blank" rel="noopener">📍 Mapa</a>
+        <a class="mapbtn" href="${s.map||mapsLink(s.q)}" target="_blank" rel="noopener">📍 Mapa</a>
         <label class="chk"><input type="checkbox" ${isDone?"checked":""} onchange="toggle('${id}',this.checked)"> visitado</label>
       </div>
     </div>`}
@@ -1595,8 +1603,8 @@ const STATIONS = [
     desc:"Asakusa (linha Ginza/Asakusa). Skytree: ~20 min a pé pelo rio Sumida ou 1 paragem na Tobu."},
    {label:"Dia 2 · Ginza, Estação & Ueno", line:"Marunouchi / Ginza", color:"#F62E36", time:"",
     desc:"Estação de Tóquio e Ginza (Marunouchi/Ginza). Ueno pela Yamanote ou linha Ginza."},
-   {label:"Dia 3 · Palácio → Akihabara", line:"Marunouchi / Yamanote", color:"#FF9500", time:"",
-    desc:"Jardins do Palácio: est. Ōtemachi/Tokyo. Akihabara a 1–2 paragens (Yamanote/Hibiya)."},
+   {label:"Dia 3 · Palácio → MAPPA EXPO → Akihabara", line:"Marunouchi / Yamanote", color:"#FF9500", time:"",
+    desc:"Jardins do Palácio: est. Ōtemachi/Tokyo. Tokyo International Forum (Yurakucho) a ~20 min a pé para sul. Depois, Akihabara a 3 paragens na JR Yamanote."},
    {label:"Dia 4 · Tsukiji → teamLab → Odaiba", line:"Hibiya + Yurikamome", color:"#9CA0A6", time:"",
     desc:"Tsukiji (Hibiya). Depois metro até Toyosu e Yurikamome até Shin-Toyosu (teamLab) e Odaiba."},
    {label:"Dia 6 · Regresso Hakone → Nakameguro", line:"Romancecar + Toyoko", color:"#DA0442", time:"",
