@@ -401,6 +401,8 @@ const COORDS = {
   "Asakusa Station Tokyo":[35.7107,139.7980],
   "Senso-ji Temple Asakusa":[35.7148,139.7967],
   "Tokyo Skytree":[35.7101,139.8107],
+  "Tokyo Solamachi restaurants":[35.7100,139.8100],
+  "Tokyo Tower":[35.6586,139.7454],
   "Ameyoko Market Ueno":[35.7089,139.7745],
   "Tokyo Station Marunouchi":[35.6812,139.7671],
   "Ginza Chuo-dori Tokyo":[35.6717,139.7650],
@@ -456,7 +458,7 @@ const COORDS = {
 const ZONE = {
   "Haneda Airport Tokyo Monorail":"Haneda","Haneda Airport":"Haneda",
   "Haneda Airport restaurants":"Haneda","Haneda Airport Terminal 3":"Haneda",
-  "Asakusa Station Tokyo":"Asakusa","Senso-ji Temple Asakusa":"Asakusa","Tokyo Skytree":"Skytree",
+  "Asakusa Station Tokyo":"Asakusa","Senso-ji Temple Asakusa":"Asakusa","Tokyo Skytree":"Skytree","Tokyo Solamachi restaurants":"Skytree","Tokyo Tower":"Shiba",
   "Ameyoko Market Ueno":"Ueno","Tokyo National Museum Ueno":"Ueno",
   "Tokyo Station Marunouchi":"Estação de Tóquio","Ginza Chuo-dori Tokyo":"Ginza","Mitsukoshi Ginza depachika":"Ginza",
   "Imperial Palace East Gardens Tokyo":"Palácio Imperial","Jimbocho Tokyo curry":"Jimbocho",
@@ -730,8 +732,8 @@ function globalMapSVG(){
 const DAYS = [
 {
   n:1, kanji:"一", date:"1 Nov", day:1, mon:11, dow:"Domingo", trip:false,
-  theme:"Chegada + Asakusa & Skytree",
-  why:"Aterras de manhã (07:55) em Haneda. Trata do Suica, larga as malas e mergulha no Tóquio antigo — Senso-ji e a Skytree ficam lindíssimos iluminados ao anoitecer (cedo em novembro). Com dez dias pela frente, mantém hoje leve para vencer o jet lag.",
+  theme:"Chegada, Asakusa, Skytree & Torre de Tóquio",
+  why:"Aterras de manhã (07:55) em Haneda. Trata do Suica, larga as malas e mergulha no Tóquio antigo — Senso-ji à tarde, a Skytree às 17h30 com a cidade já iluminada e, depois de jantar, a Torre de Tóquio acesa (bilhetes já comprados para as duas). Dia longo: descansa bem no avião.",
   stay:{name:"HOTEL TAVINOS Asakusa", zone:"Asakusa, Taito-ku", nights:"Noites 1–4", note:"Hotel de design manga (tema de festival japonês), a poucos minutos a pé do Senso-ji e Kaminarimon, com o Skytree à vista de alguns quartos altos. Base central para os quatro primeiros dias — Asakusa, Ueno, Akihabara e Tsukiji ficam perto. Check-in 15h / check-out 11h, self-check-in.", link:"https://hoteltavinos.com/en/asakusa/", map:"HOTEL TAVINOS Asakusa"},
   stops:[
     {time:"07:55", tag:"logistica", name:"Haneda → cidade + Suica", jp:"IC card",
@@ -746,21 +748,26 @@ const DAYS = [
      desc:"O templo mais antigo de Tóquio (ano 645), com o portão Kaminarimon e a sua lanterna gigante. A rua Nakamise-dori, a caminho, está cheia de bancas de doces e lembranças.",
      dica:"Prova um melonpan quente ou um senbei na Nakamise. Como anoitece cedo (~16:40), apanhas o templo iluminado sem ficar tarde.",
      q:"Senso-ji Temple Asakusa"},
-    {time:"16:30", tag:"vista", name:"Tokyo Skytree", jp:"東京スカイツリー",
-     desc:"A torre mais alta do Japão (634 m). Atravessa o rio Sumida a pé (~20 min) ou uma estação de Tobu. Miradouros a 350 m e 450 m — espetaculares com a cidade já acesa.",
-     dica:"Compra bilhete antecipado para evitar fila. A base (Solamachi) tem lojas e restaurantes para jantar.",
+    {time:"17:30", tag:"vista", name:"Tokyo Skytree — Tembo Deck (350 m)", jp:"東京スカイツリー",
+     desc:"A torre mais alta do Japão (634 m). Atravessa o rio Sumida a pé (~20 min) ou uma estação de Tobu. Às 17h30 já escureceu — o Tembo Deck a 350 m mostra Tóquio inteira acesa.",
+     dica:"<b>Bilhetes comprados: Tembo Deck, 1 Nov, 2 adultos, entrada às 17:30.</b> Chega uns minutos antes. A base (Solamachi) tem lojas e restaurantes para jantar a seguir.",
      q:"Tokyo Skytree"},
-    {time:"Opcional", tag:"comida", name:"Ueno & Ameyoko (se tiveres energia)", jp:"アメ横",
-     desc:"Se ainda aguentares, o mercado de rua de Ameyoko, junto a Ueno, é ótimo para um jantar a petiscar: takoyaki, espetadas e marisco.",
-     dica:"Cansado da viagem? Salta isto e janta perto do hotel — recuperas para o dia seguinte.",
-     q:"Ameyoko Market Ueno"}
+    {time:"19:00", tag:"comida", name:"Jantar no Tokyo Solamachi", jp:"東京ソラマチ",
+     desc:"Na base da Skytree: praça de restaurantes com ramen, sushi, okonomiyaki e monjayaki, sem sair do edifício.",
+     dica:"Jantar rápido e perto — a seguir apanhas o metro mesmo ali, em Oshiage.",
+     q:"Tokyo Solamachi restaurants"},
+    {time:"20:30", tag:"vista", name:"Torre de Tóquio — Main Deck (150 m)", jp:"東京タワー",
+     desc:"A torre vermelha e branca de 1958, ícone clássico da cidade, toda iluminada à noite. O Main Deck a 150 m tem vista de 360° sobre Minato, a baía e a Rainbow Bridge. De Oshiage, a linha Toei Asakusa vai direta até Daimon (~25 min), a ~10 min a pé da torre.",
+     dica:"<b>Bilhetes comprados: Main Deck, 1 Nov, 2 adultos — válidos das 09:00 às 23:00</b> (última entrada costuma ser ~22:30). No regresso, a Toei Asakusa leva-te de Daimon direto a Asakusa. Se o jet lag apertar, entra mais cedo ou encurta.",
+     q:"Tokyo Tower"}
   ],
   eat:[
     {name:"Asakusa Imahan", note:"Sukiyaki tradicional (mais formal)", q:"Asakusa Imahan"},
-    {name:"Ameyoko (bancas)", note:"Street food para um jantar leve", q:"Ameyoko Market food Ueno"}
+    {name:"Tokyo Solamachi", note:"Jantar na base da Skytree, antes da Torre de Tóquio", q:"Tokyo Solamachi restaurants"}
   ],
   notes:[
     "Chegas de manhã: aproveita, mas sem exageros — o jet lag aperta ao fim do dia.",
+    "<b>Bilhetes já comprados (2 adultos):</b> Skytree Tembo Deck às 17:30 e Torre de Tóquio Main Deck (válido das 09:00 às 23:00).",
     "Ritmo lento: guardámos Ueno (museu/parque), Palácio e Tsukiji para os próximos dias."
   ]
 },
@@ -845,39 +852,44 @@ const DAYS = [
 },
 {
   n:4, kanji:"四", date:"4 Nov", day:4, mon:11, dow:"Quarta", trip:false,
-  theme:"Tsukiji, teamLab & Odaiba",
-  why:"Comida de mercado ao pequeno-almoço, arte digital imersiva à tarde e a baía de Tóquio ao anoitecer. Reserva o teamLab com antecedência. Último dia na base a este antes de Hakone.",
+  theme:"Tsukiji, Odaiba & teamLab",
+  why:"Comida de mercado ao pequeno-almoço, a baía de Tóquio em Odaiba ao fim da manhã e arte digital imersiva no teamLab às 16:00 (bilhetes já comprados). Último dia na base a este antes de Hakone.",
   stay:{name:"HOTEL TAVINOS Asakusa", zone:"Asakusa, Taito-ku", nights:"Noite 4 de 4", note:"Última noite no Tavinos Asakusa. Amanhã segues para Hakone com mochila leve — deixa a mala grande no hotel ou envia por takkyubin.", link:"https://hoteltavinos.com/en/asakusa/", map:"HOTEL TAVINOS Asakusa"},
   stops:[
     {time:"08:00", tag:"comida", name:"Mercado exterior de Tsukiji", jp:"築地場外市場",
      desc:"Bancas e tasquinhas de marisco fresquíssimo: sushi, tamagoyaki em espeto, vieiras grelhadas, uni. O melhor pequeno-almoço da viagem.",
      dica:"<b>Confirma no calendário oficial (tsukiji.or.jp)</b> — fecha aos domingos e a algumas quartas. Vai cedo (8–9h); as bancas fecham a meio da tarde.",
      q:"Tsukiji Outer Market"},
-    {time:"11:00", tag:"logistica", name:"→ Toyosu (teamLab)", jp:"",
-     desc:"De Tsukiji até Toyosu é curto. O teamLab Planets fica a 2 min da estação Shin-Toyosu (linha Yurikamome) ou ~10 min a pé de Toyosu.",
-     dica:"Marca o slot no site oficial antes de ires. Podes ver o mercado grossista de Toyosu de manhã, se quiseres.",
-     q:"teamLab Planets Tokyo Toyosu"},
-    {time:"13:00", tag:"arte", name:"teamLab Planets", jp:"チームラボプラネッツ",
-     desc:"Museu de arte digital imersiva onde caminhas descalço pela água e por salas de luz, flores e espelhos infinitos. Expandido em 2026, com mais salas interativas. (~¥3.200)",
-     dica:"<b>Descalço e há água até aos joelhos</b> — leva calções ou calças que enrolem bem. Espelhos no chão: evita saias/vestidos.",
-     q:"teamLab Planets Tokyo"},
-    {time:"15:30", tag:"vista", name:"Odaiba — DiverCity & Gundam", jp:"お台場",
-     desc:"A ilha artificial da baía: a estátua gigante do Gundam em frente ao DiverCity, centros comerciais, a praia de Odaiba e a vista da Rainbow Bridge.",
-     dica:"O Gundam tem pequenas 'animações' a horas certas. A Yurikamome (comboio automático) tem vistas ótimas — senta-te à frente.",
+    {time:"11:00", tag:"logistica", name:"→ Odaiba", jp:"",
+     desc:"De Tsukiji, metro até Shimbashi e Yurikamome até Odaiba (~25 min). A Yurikamome passa por cima da Rainbow Bridge — senta-te à frente para a vista.",
+     dica:"A Yurikamome liga Odaiba a Shin-Toyosu (teamLab) em ~15 min — perfeito para a tarde.",
      q:"Unicorn Gundam Statue Odaiba DiverCity"},
-    {time:"17:30", tag:"vista", name:"Rainbow Bridge & baía ao anoitecer", jp:"レインボーブリッジ",
-     desc:"Ao escurecer, a ponte e a linha de água iluminam-se. Do lado de Odaiba tens a vista clássica da baía com a cidade ao fundo.",
-     dica:"O centro comercial Aqua City e o DECKS têm esplanadas viradas à baía para um jantar com vista.",
-     q:"Odaiba Seaside Park Rainbow Bridge"}
+    {time:"11:30", tag:"vista", name:"Odaiba — DiverCity & Gundam", jp:"お台場",
+     desc:"A ilha artificial da baía: a estátua gigante do Gundam em frente ao DiverCity, centros comerciais, a praia de Odaiba e a vista da Rainbow Bridge. Almoça por aqui.",
+     dica:"O Gundam tem pequenas 'animações' a horas certas. O Aqua City e o DECKS têm esplanadas viradas à baía.",
+     q:"Unicorn Gundam Statue Odaiba DiverCity"},
+    {time:"14:00", tag:"vista", name:"Rainbow Bridge & Odaiba Seaside Park", jp:"レインボーブリッジ",
+     desc:"Passeio à beira-água com a ponte e a cidade ao fundo. Às 15:15 apanha a Yurikamome em Odaiba-kaihinkoen até Shin-Toyosu.",
+     dica:"Sai com folga: o teamLab fica a 2 min da estação Shin-Toyosu, e convém estar lá ~10 min antes das 16:00.",
+     q:"Odaiba Seaside Park Rainbow Bridge"},
+    {time:"16:00", tag:"arte", name:"teamLab Planets", jp:"チームラボプラネッツ",
+     desc:"Museu de arte digital imersiva onde caminhas descalço pela água e por salas de luz, flores e espelhos infinitos. Expandido em 2026, com mais salas interativas. Conta ~2 h lá dentro.",
+     dica:"<b>Bilhetes comprados: Admission Ticket, 4 Nov, 2 adultos, entrada às 16:00.</b> Descalço e há água até aos joelhos — leva calções ou calças que enrolem bem. Espelhos no chão: evita saias/vestidos.",
+     q:"teamLab Planets Tokyo"},
+    {time:"18:15", tag:"comida", name:"Jantar em Toyosu & regresso", jp:"豊洲",
+     desc:"À saída, o Vegan Ramen UZU fica no próprio teamLab; o LaLaport Toyosu, a 10 min a pé, tem praça de restaurantes com vista para a baía iluminada. De Toyosu, a linha Yurakucho e um transbordo levam-te a Asakusa.",
+     dica:"Se ainda te apetecer a baía à noite, Odaiba está a poucas paragens de Yurikamome.",
+     q:"teamLab Planets Tokyo Toyosu"}
   ],
   eat:[
     {name:"Tsukiji (bancas)", note:"Sushi e marisco grelhado — pequeno-almoço", q:"Tsukiji Outer Market sushi"},
     {name:"Vegan Ramen UZU", note:"No próprio teamLab Planets, sem reserva", q:"Vegan Ramen UZU teamLab Planets"},
-    {name:"Aqua City Odaiba", note:"Praça de restaurantes com vista da baía", q:"Aqua City Odaiba restaurants"}
+    {name:"Aqua City Odaiba", note:"Almoço com vista da baía", q:"Aqua City Odaiba restaurants"}
   ],
   notes:[
     "Prepara a mochila para Hakone hoje à noite; a mala grande fica em Tóquio ou segue por takkyubin.",
-    "Se Tsukiji estiver fechado nesta quarta, troca por um pequeno-almoço em Toyosu e antecipa o teamLab."
+    "<b>teamLab Planets: bilhetes comprados para as 16:00 (2 adultos).</b> O dia está montado à volta dessa hora.",
+    "Se Tsukiji estiver fechado nesta quarta, troca por um pequeno-almoço no mercado de Toyosu e segue para Odaiba."
   ]
 },
 {
@@ -1599,14 +1611,14 @@ const STATIONS = [
   ]},
 { title:"Ligações por dia", intro:"Os transbordos principais de cada dia em Tóquio.",
   legs:[
-   {label:"Dia 1 · Asakusa & Skytree", line:"Ginza / Tobu", color:"#FF9500", time:"",
-    desc:"Asakusa (linha Ginza/Asakusa). Skytree: ~20 min a pé pelo rio Sumida ou 1 paragem na Tobu."},
+   {label:"Dia 1 · Asakusa → Skytree → Torre de Tóquio", line:"Ginza / Tobu / Toei Asakusa", color:"#FF9500", time:"",
+    desc:"Asakusa (linha Ginza/Asakusa). Skytree: ~20 min a pé pelo rio Sumida ou 1 paragem na Tobu. À noite, Toei Asakusa de Oshiage até Daimon (Torre de Tóquio) e regresso direto a Asakusa."},
    {label:"Dia 2 · Ginza, Estação & Ueno", line:"Marunouchi / Ginza", color:"#F62E36", time:"",
     desc:"Estação de Tóquio e Ginza (Marunouchi/Ginza). Ueno pela Yamanote ou linha Ginza."},
    {label:"Dia 3 · Palácio → MAPPA EXPO → Akihabara", line:"Marunouchi / Yamanote", color:"#FF9500", time:"",
     desc:"Jardins do Palácio: est. Ōtemachi/Tokyo. Tokyo International Forum (Yurakucho) a ~20 min a pé para sul. Depois, Akihabara a 3 paragens na JR Yamanote."},
-   {label:"Dia 4 · Tsukiji → teamLab → Odaiba", line:"Hibiya + Yurikamome", color:"#9CA0A6", time:"",
-    desc:"Tsukiji (Hibiya). Depois metro até Toyosu e Yurikamome até Shin-Toyosu (teamLab) e Odaiba."},
+   {label:"Dia 4 · Tsukiji → Odaiba → teamLab", line:"Hibiya + Yurikamome", color:"#9CA0A6", time:"",
+    desc:"Tsukiji (Hibiya). Depois Shimbashi e Yurikamome até Odaiba; à tarde Yurikamome até Shin-Toyosu (teamLab). Regresso pela linha Yurakucho desde Toyosu."},
    {label:"Dia 6 · Regresso Hakone → Nakameguro", line:"Romancecar + Toyoko", color:"#DA0442", time:"",
     desc:"Romancecar até Shinjuku. De Shibuya, Toyoko ~2 min até Nakameguro; Daikanyama a 1 paragem."},
    {label:"Dia 7 · Harajuku → Omotesando → Shibuya", line:"JR Yamanote", color:"#9ACD32", time:"",
