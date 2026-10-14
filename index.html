@@ -182,12 +182,49 @@ header.top{
   font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
 .daymap-legend .mzone{color:var(--muted);font-style:normal;font-weight:600;font-size:11.5px}
 @media(max-width:560px){ .daymap-legend{grid-template-columns:1fr} }
+.nearby{background:#fbf7ec;border-color:#eadfbf}
+.nearby .ncount{font-size:11px;font-weight:800;color:#8a6d1f;background:#f3e6bf;border-radius:20px;padding:1px 8px}
+.nearlist{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.nearlist li{display:flex;gap:9px;align-items:flex-start;background:#fff;border:1px solid var(--line);
+  border-radius:11px;padding:9px 11px}
+.nearlist .en{font-weight:700;font-size:13.5px}
+.nearlist .ed{font-size:12.5px;color:var(--ink);margin-top:2px}
+.nearlist .enote{font-size:11.5px;color:var(--muted);margin-top:1px}
+.mytag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.02em;border-radius:20px;
+  padding:1px 8px;margin:0 6px 3px 0;vertical-align:1px;background:#eef1f5;color:#3a4a63;white-space:nowrap}
+.mytag.t-animais{background:#fde9d9;color:#9a4a12}
+.mytag.t-cafe{background:#efe4d8;color:#6b4423}
+.mytag.t-doce{background:#fbe3ec;color:#a02a5a}
+.mytag.t-comida{background:#fde5df;color:#b33a1e}
+.mytag.t-bar{background:#e8e3f5;color:#4d3a8c}
+.mytag.t-compras{background:#e0eefa;color:#1f5f99}
+.mytag.t-experiencia{background:#dff3ea;color:#1d7a4f}
+.mytag.t-visita{background:#fff2c9;color:#7a5b00}
+.mytag.t-pratico{background:#eceef1;color:#555d6b}
+.nearlist a{margin-left:auto;flex:0 0 auto;text-decoration:none;font-size:18px}
 
 /* ---------- MAPA GLOBAL (aba) ---------- */
 .gmap-wrap{margin-top:6px}
 .gmap-hint{font-size:12px;color:var(--muted);margin:0 2px 10px;font-style:italic;line-height:1.4}
 .globalmapsvg{width:100%;height:auto;display:block;border-radius:16px}
 .gmap-days{display:flex;flex-wrap:wrap;gap:7px 12px;margin:14px 2px 4px}
+.gmap-wrap:not(.show-mine) .mylayer{display:none}
+.gmine{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:12px 2px 4px;
+  padding-top:12px;border-top:1px dashed var(--line)}
+.gmine-btn{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:12.5px;font-weight:700;
+  color:var(--ink);background:#fff;border:1.5px solid #eadfbf;border-radius:20px;padding:5px 12px;cursor:pointer}
+.gmine-btn[aria-pressed="false"]{opacity:.55}
+.gmine-dot{width:11px;height:11px;border-radius:50%;background:#fff;border:1.3px solid #d9b54a}
+.gmine-btn[aria-pressed="false"] .gmine-dot{background:#ccc}
+.gmine-link{font-size:12px;font-weight:700;color:var(--shu);text-decoration:none}
+.gmine-cats{flex-basis:100%;display:flex;flex-wrap:wrap;gap:6px}
+.gcat{font:inherit;font-size:12px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);
+  border-radius:20px;padding:4px 10px;cursor:pointer}
+.gcat b{color:var(--muted);font-weight:700;margin-left:2px}
+.gcat[aria-pressed="false"]{opacity:.4;text-decoration:line-through}
+.gmap-wrap:not(.show-mine) .gmine-cats{opacity:.4;pointer-events:none}
+.gmine-out{flex-basis:100%;font-size:11.5px;color:var(--muted);line-height:1.5}
+.gmine-out a{color:var(--muted)}
 .gday{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink)}
 .gday .gdot{width:20px;height:20px;border-radius:50%;color:#fff;font-size:11px;font-weight:800;
   display:flex;align-items:center;justify-content:center;flex:none}
@@ -428,7 +465,7 @@ const COORDS = {
   "Hakone Yumoto":[35.2323,139.1050],
   "Hatsuhana soba Hakone Yumoto":[35.2330,139.1060],
   "Hakone-Yumoto Station":[35.2323,139.1050],
-  "Gotemba Premium Outlets Mount Fuji":[35.3103,138.9350],
+  "Gotemba Premium Outlets Mount Fuji":[35.3073,138.9657],
   "Nakameguro Tokyo":[35.6440,139.6989],
   "Starbucks Reserve Roastery Tokyo Nakameguro":[35.6470,139.6995],
   "Daikanyama T-Site":[35.6488,139.6955],
@@ -479,6 +516,132 @@ const ZONE = {
   "Shimokitazawa Tokyo":"Shimokitazawa","Shimokitazawa curry":"Shimokitazawa",
   "Shinjuku Gyoen National Garden":"Shinjuku Gyoen","Don Quijote Shinjuku":"Shinjuku","Shinjuku izakaya":"Shinjuku"
 };
+
+/* =========================================================
+   A MINHA LISTA — pontos guardados no Google Maps (lista "Japan")
+   Extraído de https://maps.app.goo.gl/E2EyoUrh5X2PDrLZ6 — volta a gerar se a lista mudar
+   ========================================================= */
+const MYLIST_URL = "https://maps.app.goo.gl/E2EyoUrh5X2PDrLZ6";
+const MYLIST = [
+  {"n":"HARRY Asakusa","t":"animais","d":"Café de ouriços","lat":35.71111,"lng":139.79761,"cid":"14492895674696385701"},
+  {"n":"Capy Neko Cafe Kichijoji","t":"animais","d":"Café de capivaras e gatos","lat":35.70255,"lng":139.57894,"cid":"9832638455825702046"},
+  {"n":"HARRY HARAJUKU terrace otter cafe","t":"animais","d":"Café de lontras e ouriços","lat":35.66919,"lng":139.70801,"cid":"14628484819179930682"},
+  {"n":"コートダジュール","t":"experiencia","d":"Karaoke (Côte d'Azur)","lat":35.72341,"lng":139.79568,"cid":"16239708380194811339"},
+  {"n":"Akabanebashi Station","t":"visita","d":"Estação com vista da Torre de Tóquio","lat":35.65498,"lng":139.744,"cid":"12484555743163845786"},
+  {"n":"Higashiazabu","t":"visita","d":"Ruas com a Torre de Tóquio ao fundo — foto","lat":35.65607,"lng":139.74157,"cid":"6799732190046712345"},
+  {"n":"Tōfu-ya Ukai SAGINUMA","t":"comida","d":"Kaiseki de tofu num jardim tradicional","lat":35.57768,"lng":139.57133,"cid":"9675890932780058435"},
+  {"n":"Shimokitazawa","t":"compras","d":"Bairro de vintage e lojas indie","lat":35.66579,"lng":139.66986,"cid":"3688041400833590402"},
+  {"n":"Age.3 ASAKUSA","t":"comida","d":"Sandes fritas (street food)","lat":35.71516,"lng":139.79446,"cid":"11424241562872171484"},
+  {"n":"Menchirashi","t":"comida","d":"Udon caseiro","lat":35.6665,"lng":139.70509,"cid":"6906870575870610827"},
+  {"n":"Flipper's Shibuya","t":"doce","d":"Panquecas soufflé","lat":35.66355,"lng":139.69955,"cid":"7607061285523302708"},
+  {"n":"Cha Cafe do","t":"cafe","d":"Café de chá","lat":35.66143,"lng":139.7116,"cid":"4599486864775761759"},
+  {"n":"Seafood Buffet Dining Ginza Happo","t":"comida","d":"Buffet de marisco","lat":35.66721,"lng":139.76182,"cid":"9370142363858403150"},
+  {"n":"Tonkatsu Marushichi Ginza","t":"comida","d":"Tonkatsu","lat":35.66964,"lng":139.76909,"cid":"6753819169569925874"},
+  {"n":"NUMBER SUGAR","t":"doce","d":"Caramelos artesanais — boa lembrança","lat":35.66649,"lng":139.70617,"cid":"5571226775801367661"},
+  {"n":"Nakano Broadway","t":"compras","d":"Anime, figuras e colecionáveis","lat":35.70925,"lng":139.66565,"cid":"16264325981541494974"},
+  {"n":"cafe capyba","t":"animais","d":"Café de capivaras","lat":35.71999,"lng":139.81438,"cid":"1532132383146045950"},
+  {"n":"Abicajo Butter Studio","t":"doce","d":"Sandes, gelado de baunilha e bolos","lat":35.70192,"lng":139.74038,"cid":"10649632718990390081"},
+  {"n":"HISEKI 東京原宿店","t":"experiencia","d":"Faz um anel a partir de uma moeda (~15 min)","lat":35.67085,"lng":139.70464,"cid":"11623613743564353847"},
+  {"n":"Shinjuku Station","t":"pratico","d":"Estação","lat":35.69055,"lng":139.69955,"cid":"685824612531656048"},
+  {"n":"Hakone-Yumoto Station","t":"pratico","d":"Estação · entrada de Hakone","lat":35.23328,"lng":139.10359,"cid":"11215525749338637986"},
+  {"n":"BANDAI CO., LTD. Head Office","t":"visita","d":"Sede da Bandai — estátuas de anime à porta","lat":35.70732,"lng":139.79465,"cid":"12297538516565162502"},
+  {"n":"Ken's Coffee Shop","t":"cafe","d":"Kissaten retro · latte art 3D de gato","lat":35.67106,"lng":139.76922,"cid":"12722047021403672350"},
+  {"n":"HATCOFFEE","t":"cafe","d":"Latte art 3D","lat":35.70729,"lng":139.7933,"cid":"104420054988547294"},
+  {"n":"AMAM DACOTAN","t":"doce","d":"Padaria famosa (pão e bolos)","lat":35.66451,"lng":139.71103,"cid":"458511399196080674"},
+  {"n":"Suzukien Asakusa matcha gelato","t":"doce","d":"Gelado de matcha (7 intensidades)","lat":35.71633,"lng":139.79693,"cid":"1927186369537713749"},
+  {"n":"Kappabashi Kitchen Supply Town","t":"compras","d":"Rua de facas e utensílios de cozinha","lat":35.71058,"lng":139.78796,"cid":"2397099946291010547"},
+  {"n":"DOLCE TACUBO GINZA","t":"doce","d":"Gelataria italiana","lat":35.66832,"lng":139.76349,"cid":"3172317434032296708"},
+  {"n":"Tokyo Metropolitan Government Building","t":"visita","d":"Miradouro gratuito","lat":35.68948,"lng":139.69169,"cid":"17394692006143746536"},
+  {"n":"Rizlabo Kitchen","t":"doce","d":"Panquecas de farinha de arroz","lat":35.66858,"lng":139.7108,"cid":"10459571319697532958"},
+  {"n":"uzna omom","t":"doce","d":"Panquecas (doces e salgadas)","lat":35.66587,"lng":139.70536,"cid":"13511041769400040769"},
+  {"n":"Micasadeco & Cafe Jingumae","t":"doce","d":"Panquecas fofas","lat":35.66655,"lng":139.70543,"cid":"15841918644929353932"},
+  {"n":"Tokyu Plaza Harajuku “Harakado”","t":"compras","d":"Centro comercial · sentō na cave","lat":35.66843,"lng":139.70499,"cid":"8567568301111815145"},
+  {"n":"Aoyama Flower Market Green House","t":"cafe","d":"Café dentro de uma estufa de flores","lat":35.66225,"lng":139.71348,"cid":"13910613159915711643"},
+  {"n":"RURU SHIBUYA","t":"cafe","d":"Café com mesas de água","lat":35.65593,"lng":139.70269,"cid":"17194959624729823643"},
+  {"n":"Starbucks Reserve® Roastery Tokyo","t":"cafe","d":"Torrefação Starbucks de 4 andares","lat":35.64931,"lng":139.69251,"cid":"2392264685855697580"},
+  {"n":"ART AQUARIUM MUSEUM","t":"visita","d":"Museu de peixes dourados e luz","lat":35.67078,"lng":139.76611,"cid":"15689961400037075470"},
+  {"n":"SOOOP","t":"cafe","d":"Café-floresta com riacho (Shin-Okubo)","lat":35.69919,"lng":139.70201,"cid":"2492632449508235976"},
+  {"n":"Egg Baby Cafe","t":"cafe","d":"Sandes de ovo e pudim","lat":35.70536,"lng":139.77433,"cid":"3955904181159182041"},
+  {"n":"Hatoya Shibuya","t":"cafe","d":"Bancada de matcha","lat":35.66563,"lng":139.69257,"cid":"13307284615104196974"},
+  {"n":"Shibuya Post Office","t":"pratico","d":"Correios — postais e selos","lat":35.65996,"lng":139.70416,"cid":"5673514151402024526"},
+  {"n":"Unagi Motochou","t":"comida","d":"Enguia (unagi)","lat":35.25087,"lng":139.04942,"cid":"10592172809777200688"},
+  {"n":"Hakone no Mori no Pancake","t":"doce","d":"Panquecas","lat":35.2498,"lng":139.04761,"cid":"17794434422450272992"},
+  {"n":"Shibuya Sakuragaoka Post Office","t":"pratico","d":"Correios — postais e selos","lat":35.65425,"lng":139.70112,"cid":"15508504406763744599"},
+  {"n":"Dogenzaka Church -The Church-","t":"bar","d":"Bar-capela com DJs (até às 5h)","lat":35.6586,"lng":139.6969,"cid":"9991713438252585583"},
+  {"n":"Hakone Ropeway Sounzan Station","t":"pratico","d":"Teleférico de Hakone","lat":35.24657,"lng":139.03542,"cid":"979538722074344731"},
+  {"n":"Gotemba Premium Outlets","t":"compras","d":"Outlet com vista do Fuji","lat":35.30727,"lng":138.96565,"cid":"5814346422745768836"},
+  {"n":"Templo Hakone","t":"visita","d":"Santuário e torii no lago","lat":35.20483,"lng":139.02538,"cid":"12314146949413986458"},
+  {"n":"Tsune Sushi","t":"comida","d":"Sushi","lat":35.71196,"lng":139.79414,"cid":"8201215017643744244"},
+  {"n":"TORASUZU","t":"bar","d":"Izakaya","lat":35.71116,"lng":139.79693,"cid":"5158765776454660800"},
+  {"n":"YAKITORI Torikizoku Okachimachi Store","t":"comida","d":"Yakitori barato","lat":35.70586,"lng":139.77501,"cid":"2553443634641405730"},
+  {"n":"Shibuya Nonbei Yokocho","t":"bar","d":"Beco de bares minúsculos","lat":35.65995,"lng":139.70153,"cid":"16117838036510679637"},
+  {"n":"Used camera BOX","t":"compras","d":"Câmaras usadas","lat":35.68948,"lng":139.69665,"cid":"4246803842506942068"},
+  {"n":"Atelier Bigi","t":"pratico","d":"Relojoeiro — reparações e pilhas","lat":35.70284,"lng":139.79798,"cid":"11305478747050791365"},
+  {"n":"Mizutani Camera","t":"compras","d":"Câmaras usadas","lat":35.71004,"lng":139.77548,"cid":"3242914758146698671"},
+  {"n":"Spo-Dori!","t":"experiencia","d":"Desportos e jogos indoor","lat":35.70354,"lng":139.75188,"cid":"4421569061135684103"},
+  {"n":"Active Akiba Batting Cage Centre","t":"experiencia","d":"Batting cage (basebol)","lat":35.69895,"lng":139.77475,"cid":"13357517691317599366"},
+  {"n":"Samoyed Cafe moffu harajuku / Samoyed Lounge moffu","t":"animais","d":"Café de cães samoiedos","lat":35.67073,"lng":139.70748,"cid":"6036243207313651831"},
+  {"n":"Asahi Sky Room","t":"bar","d":"Bar com vista da Skytree","lat":35.71021,"lng":139.80068,"cid":"8809896662460774498"},
+  {"n":"Kotobuki Yu","t":"experiencia","d":"Sentō (banho público)","lat":35.71219,"lng":139.7827,"cid":"8027089939204605072"},
+  {"n":"TOKYO SHIBUYA WALK-IN TATTOO STUDIO","t":"experiencia","d":"Tatuagens sem marcação","lat":35.66026,"lng":139.70544,"cid":"14779516361242786247"},
+  {"n":"COIN LUCK 東京店","t":"experiencia","d":"Faz um anel a partir de uma moeda","lat":35.71397,"lng":139.78056,"cid":"9566817870213239319"},
+  {"n":"Shirubee","t":"comida","d":"Izakaya (cavala, guisado)","lat":35.66254,"lng":139.70109,"cid":"13718118885801977326"},
+  {"n":"Godzilla Head","t":"visita","d":"Cabeça do Godzilla","lat":35.69505,"lng":139.70191,"cid":"3278137894263719495"},
+  {"n":"Kurikoan","t":"doce","d":"Taiyaki (às vezes em forma de Pokémon)","lat":35.70392,"lng":139.57901,"cid":"8364685805527875103"},
+  {"n":"North Observation Deck, Tokyo Metropolitan Government Building No. 1","t":"visita","d":"Miradouro gratuito (torre norte)","lat":35.68973,"lng":139.69166,"cid":"16551227205725519406"},
+  {"n":"RAMEN Takao","t":"comida","d":"Ramen","lat":35.70229,"lng":139.61895,"cid":"16365950323625893971"},
+  {"n":"MoN Takanawa: The Museum of Narratives","t":"visita","d":"Museu novo em Takanawa","lat":35.6397,"lng":139.74182,"cid":"17632002082880567205","note":"Trainspotting"},
+  {"n":"Ginza Sand","t":"comida","d":"Sandes gourmet (wagyu, katsu)","lat":35.66983,"lng":139.76216,"cid":"992059522184691072"}
+];
+function myPlaceLink(p){ return "https://maps.google.com/?cid="+p.cid; }
+const MYCAT = {
+  animais:{e:"🐾", l:"Café de animais"},
+  cafe:{e:"☕", l:"Café"},
+  doce:{e:"🍰", l:"Doces"},
+  comida:{e:"🍜", l:"Comida"},
+  bar:{e:"🍺", l:"Bar & noite"},
+  compras:{e:"🛍️", l:"Compras"},
+  experiencia:{e:"🎯", l:"Experiência"},
+  visita:{e:"📸", l:"Ver & visitar"},
+  pratico:{e:"🚉", l:"Prático"}
+};
+function myTag(p){ const c=MYCAT[p.t]; return '<span class="mytag t-'+p.t+'">'+c.e+' '+c.l+'</span>'; }
+
+function kmBetween(a,b){
+  const R=6371,dLat=(b[0]-a[0])*Math.PI/180,dLng=(b[1]-a[1])*Math.PI/180;
+  const s=Math.sin(dLat/2)**2+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dLng/2)**2;
+  return 2*R*Math.asin(Math.sqrt(s));
+}
+
+// pontos da lista perto de alguma paragem do dia (o mais perto primeiro).
+// Em Hakone o raio é maior: o circuito anda de comboio/teleférico entre paragens espalhadas.
+const NEAR_KM = 1.0, NEAR_KM_HAKONE = 3.0;
+function dayNearby(d){
+  const out=[];
+  MYLIST.forEach(p=>{
+    let best=null;
+    d.stops.forEach(s=>{
+      const c=COORDS[s.q]; if(!c) return;
+      const km=kmBetween(c,[p.lat,p.lng]);
+      if(!best || km<best.km) best={km, stop:s.name};
+    });
+    if(best && best.km<=(p.lat<35.4?NEAR_KM_HAKONE:NEAR_KM)) out.push(Object.assign({}, p, best));
+  });
+  return out.sort((a,b)=>a.km-b.km);
+}
+
+function nearbyHTML(d){
+  const list=dayNearby(d);
+  if(!list.length) return "";
+  const dist=km=> km<0.1 ? "mesmo ao lado" : km<1 ? "~"+(Math.round(km*1000/50)*50)+" m" : "~"+km.toFixed(1).replace(".",",")+" km";
+  return '<details class="daymap nearby"><summary><span class="mapico">⭐</span>Perto daqui · da tua lista'
+    +'<span class="ncount">'+list.length+'</span><span class="mapchev">▾</span></summary>'
+    +'<div class="daymap-body"><div class="daymap-hint">Sítios que guardaste no Google Maps perto das paragens deste dia</div>'
+    +'<ul class="nearlist">'+list.map(p=>
+      '<li><div><div class="en">'+myTag(p)+p.n+'</div><div class="ed">'+p.d+(p.note?' · '+p.note:'')+'</div><div class="enote">'+dist(p.km)+' de '+p.stop+'</div></div>'
+      +'<a href="'+myPlaceLink(p)+'" target="_blank" rel="noopener" aria-label="Abrir no Google Maps">📍</a></li>').join("")
+    +'</ul></div></details>';
+}
 
 function dayMapSVG(d){
   const seen={}, pts=[];
@@ -707,12 +870,27 @@ function globalMapSVG(){
      +'<text x="'+(W-34)+'" y="82" text-anchor="middle" font-size="8" font-weight="800" fill="#666">N</text></g>';
   // título Tóquio
   svg+='<text x="'+(W-20)+'" y="34" text-anchor="end" font-size="15" font-weight="800" fill="#2E4A78" opacity="0.5" letter-spacing="1">GRANDE TÓQUIO</text>';
-  svg+=main.labels+main.marks;
+  // camada "a minha lista" (pontos pequenos por baixo dos dias; fora do enquadramento ficam de fora)
+  let mineOut=[];
+  const myLayer=(pan,pts)=>{
+    if(!pan.proj) { mineOut=mineOut.concat(pts); return ""; }
+    const b=pan.bounds; let g="";
+    pts.forEach(p=>{
+      const xy=pan.proj(p.lat,p.lng);
+      if(xy[0]<b.x0+6||xy[0]>b.x0+b.pw-6||xy[1]<b.y0+6||xy[1]>b.y0+b.ph-6){ mineOut.push(p); return; }
+      const x=xy[0].toFixed(1), y=xy[1].toFixed(1);
+      g+='<a class="mym m-'+p.t+'" href="'+myPlaceLink(p)+'" target="_blank" rel="noopener"><title>'+esc(MYCAT[p.t].e+' '+p.n+' — '+p.d)+'</title>'
+        +'<circle cx="'+x+'" cy="'+y+'" r="8" fill="#fff" stroke="#d9b54a" stroke-width="1.3"/>'
+        +'<text x="'+x+'" y="'+(xy[1]+3.6).toFixed(1)+'" text-anchor="middle" font-size="10">'+MYCAT[p.t].e+'</text></a>';
+    });
+    return '<g class="mylayer">'+g+'</g>';
+  };
+  svg+=main.labels+myLayer(main, MYLIST.filter(p=>p.lat>=35.4))+main.marks;
   // inset box
   if(hak.length){
     svg+='<rect x="'+ix+'" y="'+iy+'" width="'+iw+'" height="'+ih+'" rx="12" fill="#dfe8ea" stroke="#b9ccce" stroke-width="1.5"/>';
     svg+='<text x="'+(ix+12)+'" y="'+(iy+22)+'" font-size="13" font-weight="800" fill="#2F7E8C" letter-spacing="0.5">HAKONE · ~80 km SO</text>';
-    svg+=inset.labels+inset.marks;
+    svg+=inset.labels+myLayer(inset, MYLIST.filter(p=>p.lat<35.4))+inset.marks;
   }
   svg+='</svg>';
 
@@ -726,7 +904,16 @@ function globalMapSVG(){
   });
   leg+='</div>';
 
-  return '<div class="gmap-wrap"><div class="gmap-hint">Cada cor é um dia · nomes esbatidos = distritos · linha verde = Yamanote · Hakone à parte (~80 km SO)</div>'+svg+leg+'</div>';
+  const mine='<div class="gmine"><button class="gmine-btn" aria-pressed="true" onclick="toggleMine(this)">'
+    +'<span class="gmine-dot"></span>A minha lista · '+MYLIST.length+'</button>'
+    +'<a class="gmine-link" href="'+MYLIST_URL+'" target="_blank" rel="noopener">Abrir no Google Maps ↗</a>'
+    +'<div class="gmine-cats">'+Object.keys(MYCAT).map(k=>{
+        const n=MYLIST.filter(p=>p.t===k).length; if(!n) return "";
+        return '<button class="gcat" aria-pressed="true" onclick="toggleMyCat(this,\''+k+'\')">'+MYCAT[k].e+' '+MYCAT[k].l+' <b>'+n+'</b></button>';
+      }).join("")+'</div>'
+    +(mineOut.length?'<div class="gmine-out">Fora do mapa: '+mineOut.map(p=>'<a href="'+myPlaceLink(p)+'" target="_blank" rel="noopener">'+MYCAT[p.t].e+' '+esc(p.n)+'</a>').join(' · ')+'</div>':'')
+    +'</div>';
+  return '<div class="gmap-wrap show-mine"><div class="gmap-hint">Cada cor é um dia · emojis = a tua lista por categoria (toca para abrir) · nomes esbatidos = distritos · linha verde = Yamanote · Hakone à parte (~80 km SO)</div>'+svg+leg+mine+'</div>';
 }
 
 const DAYS = [
@@ -1410,6 +1597,7 @@ function dayHTML(d){
       ${pass}
       <ol class="timeline">${stops}</ol>
       ${dayMapSVG(d)}
+      ${nearbyHTML(d)}
       ${eat}
       ${notes}
     </div>
@@ -1679,6 +1867,18 @@ function renderEstadias(){
     </div>`;
   }).join("");
   document.getElementById("panel-estadias").innerHTML = top + cards;
+}
+
+function toggleMine(btn){
+  const on = btn.getAttribute("aria-pressed")!=="true";
+  btn.setAttribute("aria-pressed", on);
+  btn.closest(".gmap-wrap").classList.toggle("show-mine", on);
+}
+
+function toggleMyCat(btn,k){
+  const on = btn.getAttribute("aria-pressed")!=="true";
+  btn.setAttribute("aria-pressed", on);
+  btn.closest(".gmap-wrap").querySelectorAll(".m-"+k).forEach(el=>el.style.display=on?"":"none");
 }
 
 function renderMapa(){
