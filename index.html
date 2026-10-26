@@ -1423,7 +1423,7 @@ const DAYS = [
      q:"Shinjuku Gyoen National Garden"},
     {time:"17:00", tag:"compras", name:"Compras finais — Shinjuku", jp:"新宿",
      desc:"A leste da estação: Don Quijote (24h), Bic Camera/Yodobashi para eletrónica, Kinokuniya para livros, e mil sítios para lembranças e KitKats de sabores.",
-     dica:"Faz as compras grandes hoje — amanhã sais cedo. Guarda espaço e recibos para o tax-free (leva o passaporte).",
+     dica:"Faz as compras grandes hoje — amanhã sais cedo. Tax-free: mostra o passaporte na loja e paga o preço com imposto; o reembolso é feito à saída, no aeroporto. Leva as compras na bagagem de mão.",
      q:"Don Quijote Shinjuku"},
     {time:"19:30", tag:"comida", name:"Jantar de despedida", jp:"",
      desc:"Última noite: escolhe o que mais gostaste — sushi, um bom ramen, yakitori num beco ou um izakaya animado em Shinjuku.",
@@ -1437,7 +1437,7 @@ const DAYS = [
   ],
   notes:[
     "Deixa a bagagem pronta esta noite: amanhã o voo é às 09:55 e sais cedo.",
-    "Tax-free: leva o passaporte nas compras e junta os recibos."
+    "Tax-free (desde 1 Nov 2026): pagas com imposto e és reembolsado à saída. No aeroporto, antes do check-in das malas, passa no quiosque da alfândega com o passaporte; compras na bagagem de mão; mínimo ¥5.000 por loja."
   ]
 },
 {
@@ -2890,7 +2890,7 @@ function showPlace(i){place=i;open=-1;const p=PHRASES[i];try{localStorage.setIte
 }
 function toggle(k){const rows=el('phrbody').querySelectorAll('.phritem');
   rows.forEach((r,j)=>{const on=(j===k&&open!==k);r.classList.toggle('on',on);r.querySelector('.phra').hidden=!on;r.querySelector('.phrq').setAttribute('aria-expanded',on);});
-  if(open===k){open=-1;return;}open=k;const it=PHRASES[place].items[k];speak(it.say||it.ja,0.9);
+  if(open===k){open=-1;return;}open=k;
   rows[k].scrollIntoView({block:'nearest',behavior:'smooth'});}
 function showBig(it){el('phrbigja').textContent=it.ja;el('phrbigro').textContent=it.ro;el('phrbigpt').textContent=it.pt;el('phrbig').hidden=false;}
 return{
