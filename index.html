@@ -368,6 +368,60 @@ header.top{
 footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 10px;line-height:1.7}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+/* ---------- FRASES ÚTEIS ---------- */
+.phrbtn{display:inline-flex;align-items:center;gap:9px;padding:11px 16px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#1f9e7a,#167a5e);color:#fff;font-family:inherit;
+  border-radius:12px;font-size:14px;font-weight:800;box-shadow:0 3px 10px rgba(31,158,122,.3);transition:.15s}
+.phrbtn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(31,158,122,.42)}
+.phrbtn .mmicon{font-size:16px}
+.phroverlay{position:fixed;inset:0;z-index:190;display:none;align-items:flex-end;justify-content:center;
+  background:rgba(22,33,58,.55);backdrop-filter:blur(3px)}
+.phroverlay.show{display:flex}
+@media(min-width:600px){.phroverlay{align-items:center;padding:20px}}
+.phrmodal{background:var(--paper);width:100%;max-width:560px;max-height:92dvh;display:flex;flex-direction:column;
+  border-radius:18px 18px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.25);animation:planpop .22s ease;overflow:hidden}
+@media(min-width:600px){.phrmodal{border-radius:18px;max-height:86dvh}}
+.phrhead{display:flex;align-items:center;gap:10px;padding:16px 16px 12px;border-bottom:2px solid #e0ddd4}
+.phrht{flex:1;min-width:0}
+.phrht h3{margin:0;font-size:19px;font-weight:800;color:var(--ink)}
+.phrht p{margin:2px 0 0;font-size:12.5px;color:var(--muted);font-weight:600}
+.phrback,.phrclose{flex:none;width:36px;height:36px;border-radius:50%;border:none;background:#e8e6df;color:var(--ink);
+  font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+.phrback:hover,.phrclose:hover{background:var(--shu);color:#fff}
+.phrhint{margin:10px 16px 0;padding:9px 12px;border-radius:10px;background:#fff4d6;border:1px solid #f0d58a;font-size:12.5px;line-height:1.45;color:#6a5310}
+.phrbody{overflow-y:auto;padding:14px 16px 22px;-webkit-overflow-scrolling:touch}
+.phrgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+@media(max-width:400px){.phrgrid{grid-template-columns:repeat(2,1fr)}}
+.phrplace{display:flex;flex-direction:column;align-items:center;gap:3px;padding:14px 6px 12px;border-radius:14px;border:1.5px solid #ddd8cc;
+  background:#fff;cursor:pointer;font-family:inherit;transition:.12s}
+.phrplace:hover{border-color:#1f9e7a;transform:translateY(-1px)}
+.phrplace .pi{font-size:26px;line-height:1.1}
+.phrplace .pn{font-size:13.5px;font-weight:800;color:var(--ink);text-align:center}
+.phrplace .pj{font-size:11.5px;color:var(--muted)}
+.phrlist{display:flex;flex-direction:column;gap:8px}
+.phritem{background:#fff;border:1.5px solid #e3dfd4;border-radius:13px;overflow:hidden}
+.phritem.on{border-color:#1f9e7a;box-shadow:0 3px 12px rgba(31,158,122,.14)}
+.phrq{display:flex;align-items:center;gap:10px;width:100%;padding:13px 14px;border:none;background:none;cursor:pointer;
+  text-align:left;font-family:inherit;font-size:14.5px;font-weight:700;color:var(--ink)}
+.phrq .pchev{margin-left:auto;color:var(--muted);transition:transform .2s}
+.phritem.on .pchev{transform:rotate(180deg)}
+.phra{padding:2px 14px 14px;border-top:1px dashed #e3dfd4}
+.phrja{font-size:24px;font-weight:700;line-height:1.35;color:var(--ink);margin-top:10px;word-break:keep-all;overflow-wrap:anywhere}
+.phrro{font-size:14px;color:#1f7a5e;font-style:italic;margin-top:4px}
+.phrnote{font-size:12.5px;color:var(--muted);line-height:1.45;margin-top:8px;padding:8px 10px;background:#f4f2ec;border-radius:9px}
+.phrbtns{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+.phrbtns .pb{flex:1 1 auto;min-width:92px;padding:10px 10px;border-radius:10px;border:1.5px solid #1f9e7a;background:#fff;
+  color:#167a5e;font-family:inherit;font-size:13.5px;font-weight:800;cursor:pointer}
+.phrbtns .pb.play{background:#1f9e7a;color:#fff}
+.phrbtns .pb:active{transform:scale(.97)}
+.phrbig{position:fixed;inset:0;z-index:5;background:#16213A;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:28px;text-align:center;cursor:pointer}
+.phrbig[hidden]{display:none}
+.phrbigja{font-size:clamp(34px,9vw,64px);font-weight:800;line-height:1.3;overflow-wrap:anywhere}
+.phrbigro{font-size:18px;color:#9fe0c8;font-style:italic;margin-top:18px}
+.phrbigpt{font-size:15px;color:#c9cfdf;margin-top:8px}
+.phrbigx{position:absolute;bottom:22px;font-size:12px;color:#8a92a8}
+
 /* ---------- JOGO (overlay) ---------- */
 .gameoverlay{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
   background:rgba(12,10,22,.86);padding:10px}
@@ -440,6 +494,10 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 1
         <span class="mmicon">🎮</span>
         <span class="mmtxt">Jogo</span>
       </button>
+      <button class="phrbtn" onclick="openPhrases()">
+        <span class="mmicon">🗣️</span>
+        <span class="mmtxt">Frases</span>
+      </button>
     </div>
   </header>
 
@@ -481,6 +539,24 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 10px 1
   <div class="planmodal" role="dialog" aria-modal="true" aria-labelledby="plantitle">
     <button class="planclose" onclick="closePlan()" aria-label="Fechar">✕</button>
     <div id="plancontent"></div>
+  </div>
+</div>
+
+<div class="phroverlay" id="phroverlay" aria-hidden="true" onclick="if(event.target===this)closePhrases()">
+  <div class="phrmodal" role="dialog" aria-modal="true" aria-labelledby="phrtitle">
+    <div class="phrhead">
+      <button class="phrback" id="phrback" onclick="PHR.back()" aria-label="Voltar aos locais" hidden>←</button>
+      <div class="phrht"><h3 id="phrtitle">Frases úteis</h3><p id="phrsub">Escolhe o local</p></div>
+      <button class="phrclose" onclick="closePhrases()" aria-label="Fechar">✕</button>
+    </div>
+    <div class="phrhint" id="phrhint" hidden></div>
+    <div class="phrbody" id="phrbody"></div>
+  </div>
+  <div class="phrbig" id="phrbig" hidden onclick="PHR.closeBig()">
+    <div class="phrbigja" id="phrbigja" lang="ja"></div>
+    <div class="phrbigro" id="phrbigro"></div>
+    <div class="phrbigpt" id="phrbigpt"></div>
+    <div class="phrbigx">toca para fechar</div>
   </div>
 </div>
 
@@ -1347,7 +1423,7 @@ const DAYS = [
      q:"Shinjuku Gyoen National Garden"},
     {time:"17:00", tag:"compras", name:"Compras finais — Shinjuku", jp:"新宿",
      desc:"A leste da estação: Don Quijote (24h), Bic Camera/Yodobashi para eletrónica, Kinokuniya para livros, e mil sítios para lembranças e KitKats de sabores.",
-     dica:"Faz as compras grandes hoje — amanhã sais cedo. Guarda espaço e recibos para o tax-free (leva o passaporte).",
+     dica:"Faz as compras grandes hoje — amanhã sais cedo. Tax-free: mostra o passaporte na loja e paga o preço com imposto; o reembolso é feito à saída, no aeroporto. Leva as compras na bagagem de mão.",
      q:"Don Quijote Shinjuku"},
     {time:"19:30", tag:"comida", name:"Jantar de despedida", jp:"",
      desc:"Última noite: escolhe o que mais gostaste — sushi, um bom ramen, yakitori num beco ou um izakaya animado em Shinjuku.",
@@ -1361,7 +1437,7 @@ const DAYS = [
   ],
   notes:[
     "Deixa a bagagem pronta esta noite: amanhã o voo é às 09:55 e sais cedo.",
-    "Tax-free: leva o passaporte nas compras e junta os recibos."
+    "Tax-free (desde 1 Nov 2026): pagas com imposto e és reembolsado à saída. No aeroporto, antes do check-in das malas, passa no quiosque da alfândega com o passaporte; compras na bagagem de mão; mínimo ¥5.000 por loja."
   ]
 },
 {
@@ -2685,6 +2761,148 @@ return{
 function openGame(n){TQ.open(n);}
 document.addEventListener('visibilitychange',()=>{const ov=document.getElementById('gameoverlay');if(!ov||!ov.classList.contains('show'))return;if(document.hidden)SND.stop();else{SND.init();const m=TQ._debug();if(m)SND.music(m.theme);}});
 function closeGame(){TQ.close();}
+
+
+/* ===== FRASES ÚTEIS (guia de conversação) ===== */
+const PHRASES=[
+ {id:'izakaya',ic:'🏮',pt:'Izakaya',jp:'居酒屋',items:[
+  {pt:'Somos duas pessoas.',ja:'二人です。',ro:'futari desu',n:'Mostra dois dedos ao mesmo tempo. À entrada costumam perguntar "Nan-mei-sama?" (quantas pessoas?).'},
+  {pt:'Têm menu em inglês?',ja:'英語のメニューはありますか？',ro:'eigo no menyū wa arimasu ka?'},
+  {pt:'O que recomenda?',ja:'おすすめは何ですか？',ro:'osusume wa nan desu ka?'},
+  {pt:'Isto, por favor. (a apontar)',ja:'これをお願いします。',ro:'kore o onegaishimasu',n:'Funciona para tudo: aponta para o menu ou para o prato do vizinho.'},
+  {pt:'Duas cervejas de pressão, por favor.',ja:'生ビールを二つお願いします。',ro:'nama bīru o futatsu onegaishimasu',n:'"Nama" é a cerveja de pressão — o pedido clássico para começar.'},
+  {pt:'Saúde! (brinde)',ja:'乾杯！',ro:'kanpai!',n:'Espera que todos tenham bebida antes de beber o primeiro gole.'},
+  {pt:'Mais um, por favor.',ja:'おかわりお願いします。',ro:'okawari onegaishimasu',n:'Serve para pedir outra bebida igual ou repetir o arroz.'},
+  {pt:'Têm pratos sem carne?',ja:'肉を使っていない料理はありますか？',ro:'niku o tsukatte inai ryōri wa arimasu ka?'},
+  {pt:'Posso pagar com cartão?',ja:'カードで払えますか？',ro:'kādo de haraemasu ka?',n:'Muitos izakaya pequenos só aceitam dinheiro — confirma à entrada.'},
+  {pt:'A conta, por favor.',ja:'お会計お願いします。',ro:'okaikei onegaishimasu',n:'Também podes cruzar os indicadores em "X". O "otōshi" (petisco que chega sem pedires) é cobrado por pessoa — é normal.'},
+  {pt:'Estava delicioso! (ao sair)',ja:'ごちそうさまでした。',ro:'gochisōsama deshita',n:'Diz-se ao sair, para agradecer a refeição. Não se deixa gorjeta.'}]},
+ {id:'restaurante',ic:'🍜',pt:'Restaurante',jp:'レストラン',items:[
+  {pt:'Quanto tempo de espera?',ja:'どのくらい待ちますか？',ro:'dono kurai machimasu ka?'},
+  {pt:'Pode ser ao balcão.',ja:'カウンターでも大丈夫です。',ro:'kauntā demo daijōbu desu',n:'O balcão costuma ter menos espera.'},
+  {pt:'Como se usa a máquina de senhas?',ja:'券売機の使い方を教えてください。',ro:'kenbaiki no tsukaikata o oshiete kudasai',n:'Em muitas casas de ramen paga-se primeiro na máquina e entrega-se a senha ao balcão.'},
+  {pt:'Água, por favor.',ja:'お水をお願いします。',ro:'o-mizu o onegaishimasu',n:'A água e o chá são gratuitos.'},
+  {pt:'Pouco picante, por favor.',ja:'辛さ控えめでお願いします。',ro:'karasa hikaeme de onegaishimasu'},
+  {pt:'Tenho alergia a marisco.',ja:'甲殻類アレルギーがあります。',ro:'kōkakurui arerugī ga arimasu',n:'"Kōkakurui" = crustáceos (camarão, caranguejo).'},
+  {pt:'Para levar, por favor.',ja:'持ち帰りでお願いします。',ro:'mochikaeri de onegaishimasu'},
+  {pt:'A conta, por favor.',ja:'お会計お願いします。',ro:'okaikei onegaishimasu',n:'Normalmente paga-se na caixa à saída, não na mesa.'},
+  {pt:'Obrigado pela refeição!',ja:'ごちそうさまでした。',ro:'gochisōsama deshita'}]},
+ {id:'loja',ic:'🛍️',pt:'Loja',jp:'お店',items:[
+  {pt:'Estou só a ver, obrigado.',ja:'見ているだけです。',ro:'mite iru dake desu'},
+  {pt:'Tem isto noutro tamanho?',ja:'別のサイズはありますか？',ro:'betsu no saizu wa arimasu ka?'},
+  {pt:'Posso experimentar?',ja:'試着してもいいですか？',ro:'shichaku shite mo ii desu ka?'},
+  {pt:'Levo este.',ja:'これをください。',ro:'kore o kudasai'},
+  {pt:'Dá para ser tax-free?',ja:'免税できますか？',ro:'menzei dekimasu ka?',n:'Desde 1 Nov 2026 pagas o preço com imposto e o reembolso é depois. Mostra o passaporte na compra (mínimo ¥5.000 sem imposto). Em Haneda, ANTES de despachar a mala, passa o passaporte no quiosque tax-free da alfândega e leva as compras na bagagem de mão.'},
+  {pt:'Aceita cartão?',ja:'カードは使えますか？',ro:'kādo wa tsukaemasu ka?'},
+  {pt:'Não preciso de saco.',ja:'袋は大丈夫です。',ro:'fukuro wa daijōbu desu',n:'Os sacos são pagos. "Daijōbu desu" é a forma educada de recusar.'},
+  {pt:'Pode embrulhar para oferta?',ja:'プレゼント用に包んでもらえますか？',ro:'purezento-yō ni tsutsunde moraemasu ka?'},
+  {pt:'Têm cartas Pokémon?',ja:'ポケモンカードはありますか？',ro:'pokemon kādo wa arimasu ka?'},
+  {pt:'Têm boosters desta coleção?',ja:'このパックはありますか？',ro:'kono pakku wa arimasu ka?',n:'Mostra a foto do produto no telemóvel ao mesmo tempo.'}]},
+ {id:'konbini',ic:'🏪',pt:'Konbini',jp:'コンビニ',items:[
+  {pt:'Pode aquecer, por favor?',ja:'温めてください。',ro:'atatamete kudasai',n:'Vão perguntar "Atatamemasu ka?" (aqueço?) quando comprares refeições.'},
+  {pt:'Não é preciso aquecer.',ja:'温めなくて大丈夫です。',ro:'atatamenakute daijōbu desu'},
+  {pt:'Pauzinhos, por favor.',ja:'お箸をお願いします。',ro:'o-hashi o onegaishimasu'},
+  {pt:'Um saco, por favor.',ja:'袋をお願いします。',ro:'fukuro o onegaishimasu'},
+  {pt:'Pago com Suica.',ja:'Suicaで払います。',say:'スイカで払います。',ro:'suika de haraimasu',n:'Encosta o telemóvel/cartão ao leitor quando o ecrã acender.'},
+  {pt:'Onde é o multibanco (ATM)?',ja:'ATMはどこですか？',say:'エーティーエムはどこですか？',ro:'ē-tī-emu wa doko desu ka?',n:'As ATM do 7-Eleven aceitam cartões estrangeiros.'}]},
+ {id:'comboio',ic:'🚃',pt:'Comboio & Metro',jp:'電車',items:[
+  {pt:'Este comboio vai para Shinjuku?',ja:'この電車は新宿に行きますか？',ro:'kono densha wa Shinjuku ni ikimasu ka?'},
+  {pt:'Qual é a linha para Hakone-Yumoto?',ja:'箱根湯本行きは何番線ですか？',ro:'Hakone-Yumoto-yuki wa nanban-sen desu ka?',n:'"Nanban-sen" = número da plataforma.'},
+  {pt:'Onde compro o Hakone Free Pass?',ja:'箱根フリーパスはどこで買えますか？',ro:'Hakone furī pasu wa doko de kaemasu ka?'},
+  {pt:'Onde é a saída oeste?',ja:'西口はどこですか？',ro:'nishiguchi wa doko desu ka?',n:'Saídas: 東口 higashiguchi (este), 西口 nishiguchi (oeste), 南口 minamiguchi (sul), 北口 kitaguchi (norte).'},
+  {pt:'O Suica não passou na entrada.',ja:'改札でSuicaが通りませんでした。',say:'改札でスイカが通りませんでした。',ro:'kaisatsu de suika ga tōrimasen deshita',n:'Vai ao guiché com funcionário ao lado das cancelas.'},
+  {pt:'Este lugar está livre?',ja:'この席は空いていますか？',ro:'kono seki wa aite imasu ka?'}]},
+ {id:'hotel',ic:'🏨',pt:'Hotel & Ryokan',jp:'ホテル・旅館',items:[
+  {pt:'Tenho reserva em nome de Fragoso.',ja:'フラゴソの名前で予約しています。',ro:'Furagoso no namae de yoyaku shite imasu'},
+  {pt:'Check-in, por favor.',ja:'チェックインをお願いします。',ro:'chekku-in o onegaishimasu'},
+  {pt:'Pode guardar a bagagem?',ja:'荷物を預かってもらえますか？',ro:'nimotsu o azukatte moraemasu ka?',n:'Útil no dia de chegada, antes da hora de check-in.'},
+  {pt:'Qual é a password do Wi-Fi?',ja:'Wi-Fiのパスワードを教えてください。',say:'ワイファイのパスワードを教えてください。',ro:'waifai no pasuwādo o oshiete kudasai'},
+  {pt:'A que horas é o jantar?',ja:'夕食は何時ですか？',ro:'yūshoku wa nanji desu ka?'},
+  {pt:'Podemos reservar o banho privado?',ja:'貸切風呂を予約できますか？',ro:'kashikiri-buro o yoyaku dekimasu ka?',n:'No Shiunso o banho privado é gratuito, mas tem de ser reservado.'},
+  {pt:'Check-out, por favor.',ja:'チェックアウトをお願いします。',ro:'chekku-auto o onegaishimasu'}]},
+ {id:'templo',ic:'⛩️',pt:'Templo & Santuário',jp:'お寺・神社',items:[
+  {pt:'Posso tirar fotografias?',ja:'写真を撮ってもいいですか？',ro:'shashin o totte mo ii desu ka?',n:'Dentro dos pavilhões costuma ser proibido.'},
+  {pt:'Pode tirar-nos uma foto?',ja:'写真を撮ってもらえますか？',ro:'shashin o totte moraemasu ka?'},
+  {pt:'Onde se pede o goshuin?',ja:'御朱印はどこでいただけますか？',ro:'goshuin wa doko de itadakemasu ka?',n:'Selo caligrafado num caderno próprio (goshuinchō), ~¥500.'},
+  {pt:'Um amuleto, por favor.',ja:'お守りをください。',ro:'o-mamori o kudasai'},
+  {pt:'Etiqueta: como rezar num santuário',ja:'二礼二拍手一礼',ro:'ni-rei ni-hakushu ichi-rei',n:'Num santuário xintoísta: 2 vénias, 2 palmas, 1 vénia. Antes, lava as mãos e a boca no temizuya. Nos templos budistas não se bate palmas.'}]},
+ {id:'onsen',ic:'♨️',pt:'Onsen',jp:'温泉',items:[
+  {pt:'Onde é o banho dos homens?',ja:'男湯はどこですか？',ro:'otoko-yu wa doko desu ka?',n:'男 = homens (cortina azul), 女 = mulheres (cortina vermelha). As cortinas trocam por vezes durante o dia.'},
+  {pt:'Pode-se entrar com tatuagens?',ja:'タトゥーがあっても入れますか？',ro:'tatū ga atte mo hairemasu ka?'},
+  {pt:'Posso alugar uma toalha?',ja:'タオルを借りられますか？',ro:'taoru o kariraremasu ka?'},
+  {pt:'Etiqueta do onsen',ja:'かけ湯をしてから入ります',ro:'kakeyu o shite kara hairimasu',n:'Lava-te bem sentado nos chuveiros antes de entrar. Sem fato de banho. A toalha pequena não entra na água — põe-na na cabeça.'}]},
+ {id:'taxi',ic:'🚕',pt:'Táxi',jp:'タクシー',items:[
+  {pt:'Para este endereço, por favor. (mostrar)',ja:'この住所までお願いします。',ro:'kono jūsho made onegaishimasu',n:'Mostra o endereço em japonês no telemóvel. As portas abrem e fecham sozinhas.'},
+  {pt:'Para a estação de Shinjuku.',ja:'新宿駅までお願いします。',ro:'Shinjuku-eki made onegaishimasu'},
+  {pt:'Para Haneda, terminal 3.',ja:'羽田空港の第3ターミナルまでお願いします。',say:'羽田空港の第三ターミナルまでお願いします。',ro:'Haneda kūkō no dai-san tāminaru made onegaishimasu'},
+  {pt:'Pare aqui, por favor.',ja:'ここで止めてください。',ro:'koko de tomete kudasai'},
+  {pt:'Posso pagar com cartão?',ja:'カードで払えますか？',ro:'kādo de haraemasu ka?'}]},
+ {id:'ajuda',ic:'🆘',pt:'Ajuda & Saúde',jp:'緊急',items:[
+  {pt:'Ajuda!',ja:'助けて！',ro:'tasukete!',n:'Emergências: 119 ambulância/bombeiros · 110 polícia.'},
+  {pt:'Chame uma ambulância, por favor.',ja:'救急車を呼んでください。',ro:'kyūkyūsha o yonde kudasai'},
+  {pt:'Estou perdido.',ja:'道に迷いました。',ro:'michi ni mayoimashita',n:'Os postos de polícia de bairro (交番 kōban) ajudam com direções.'},
+  {pt:'Onde é a farmácia?',ja:'薬局はどこですか？',ro:'yakkyoku wa doko desu ka?'},
+  {pt:'Dói-me aqui.',ja:'ここが痛いです。',ro:'koko ga itai desu'},
+  {pt:'Perdi a carteira.',ja:'財布をなくしました。',ro:'saifu o nakushimashita'}]},
+ {id:'basico',ic:'👋',pt:'Básico',jp:'基本',items:[
+  {pt:'Bom dia.',ja:'おはようございます。',ro:'ohayō gozaimasu'},
+  {pt:'Olá / Boa tarde.',ja:'こんにちは。',ro:'konnichiwa'},
+  {pt:'Obrigado.',ja:'ありがとうございます。',ro:'arigatō gozaimasu'},
+  {pt:'Com licença / Desculpe.',ja:'すみません。',ro:'sumimasen',n:'A palavra mais útil: serve para chamar o empregado, pedir passagem ou pedir desculpa.'},
+  {pt:'Não, obrigado. (recusar)',ja:'大丈夫です。',ro:'daijōbu desu'},
+  {pt:'Não percebo japonês.',ja:'日本語がわかりません。',ro:'nihongo ga wakarimasen'},
+  {pt:'Fala inglês?',ja:'英語を話せますか？',ro:'eigo o hanasemasu ka?'},
+  {pt:'Pode repetir devagar?',ja:'もう一度ゆっくりお願いします。',ro:'mō ichido yukkuri onegaishimasu'},
+  {pt:'Onde é a casa de banho?',ja:'トイレはどこですか？',ro:'toire wa doko desu ka?'},
+  {pt:'Quanto custa?',ja:'いくらですか？',ro:'ikura desu ka?'}]}
+];
+
+const PHR=(function(){
+let place=null,open=-1,jaVoice=null;
+function el(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function pickVoice(){try{const vs=speechSynthesis.getVoices();jaVoice=vs.find(v=>/^ja(-|_|$)/i.test(v.lang)&&/kyoko|o-ren|google|natural|premium|enhanced/i.test(v.name))||vs.find(v=>/^ja/i.test(v.lang))||null;}catch(e){jaVoice=null;}}
+if('speechSynthesis' in window){pickVoice();try{speechSynthesis.addEventListener('voiceschanged',pickVoice);}catch(e){}}
+function speak(txt,rate){
+  if(!('speechSynthesis' in window)){hint('Este browser não tem síntese de voz.');return;}
+  pickVoice();
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang='ja-JP';if(jaVoice)u.voice=jaVoice;u.rate=rate;u.pitch=1;speechSynthesis.speak(u);}catch(e){}
+  if(!jaVoice)hint('Não encontrei voz japonesa neste dispositivo. iPhone: Definições › Acessibilidade › Conteúdo falado › Vozes › Japonês. Android: Definições › Sistema › Idiomas › Saída de texto para voz › instalar Japonês.');
+}
+function hint(t){const h=el('phrhint');if(!h)return;h.textContent=t;h.hidden=false;clearTimeout(hint._t);hint._t=setTimeout(()=>{h.hidden=true;},9000);}
+function renderPlaces(){
+  el('phrtitle').textContent='Frases úteis';el('phrsub').textContent='Escolhe o local';el('phrback').hidden=true;
+  el('phrbody').innerHTML='<div class="phrgrid">'+PHRASES.map((p,i)=>'<button class="phrplace" data-i="'+i+'"><span class="pi">'+p.ic+'</span><span class="pn">'+esc(p.pt)+'</span><span class="pj">'+p.jp+'</span></button>').join('')+'</div>';
+  el('phrbody').querySelectorAll('.phrplace').forEach(b=>b.addEventListener('click',()=>showPlace(+b.dataset.i)));
+}
+function showPlace(i){place=i;open=-1;const p=PHRASES[i];try{localStorage.setItem('phr_place',p.id);}catch(e){}
+  el('phrtitle').textContent=p.ic+' '+p.pt;el('phrsub').textContent=p.jp+' · toca numa frase';el('phrback').hidden=false;
+  el('phrbody').innerHTML='<div class="phrlist">'+p.items.map((it,k)=>'<div class="phritem" data-k="'+k+'"><button class="phrq" aria-expanded="false"><span>'+esc(it.pt)+'</span><span class="pchev">▾</span></button>'
+    +'<div class="phra" hidden><div class="phrja" lang="ja">'+esc(it.ja)+'</div><div class="phrro">'+esc(it.ro)+'</div>'
+    +(it.n?'<div class="phrnote">'+esc(it.n)+'</div>':'')
+    +'<div class="phrbtns"><button class="pb play">🔊 Ouvir</button><button class="pb slow">🐢 Devagar</button><button class="pb show">⛶ Mostrar</button></div></div></div>').join('')+'</div>';
+  el('phrbody').scrollTop=0;
+  el('phrbody').querySelectorAll('.phritem').forEach(row=>{const k=+row.dataset.k,it=p.items[k],say=it.say||it.ja;
+    row.querySelector('.phrq').addEventListener('click',()=>toggle(k));
+    row.querySelector('.play').addEventListener('click',()=>speak(say,0.9));
+    row.querySelector('.slow').addEventListener('click',()=>speak(say,0.6));
+    row.querySelector('.show').addEventListener('click',()=>showBig(it));});
+}
+function toggle(k){const rows=el('phrbody').querySelectorAll('.phritem');
+  rows.forEach((r,j)=>{const on=(j===k&&open!==k);r.classList.toggle('on',on);r.querySelector('.phra').hidden=!on;r.querySelector('.phrq').setAttribute('aria-expanded',on);});
+  if(open===k){open=-1;return;}open=k;
+  rows[k].scrollIntoView({block:'nearest',behavior:'smooth'});}
+function showBig(it){el('phrbigja').textContent=it.ja;el('phrbigro').textContent=it.ro;el('phrbigpt').textContent=it.pt;el('phrbig').hidden=false;}
+return{
+  open(){const ov=el('phroverlay');ov.classList.add('show');ov.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+    let last=null;try{last=localStorage.getItem('phr_place');}catch(e){}const i=PHRASES.findIndex(p=>p.id===last);if(i>=0)showPlace(i);else renderPlaces();},
+  close(){const ov=el('phroverlay');ov.classList.remove('show');ov.setAttribute('aria-hidden','true');document.body.style.overflow='';el('phrbig').hidden=true;try{speechSynthesis.cancel();}catch(e){}},
+  back(){renderPlaces();try{localStorage.removeItem('phr_place');}catch(e){}},
+  closeBig(){el('phrbig').hidden=true;}
+};})();
+function openPhrases(){PHR.open();}
+function closePhrases(){PHR.close();}
+document.addEventListener('keydown',e=>{const ov=document.getElementById('phroverlay');if(e.key==='Escape'&&ov&&ov.classList.contains('show')){if(!document.getElementById('phrbig').hidden)PHR.closeBig();else PHR.close();}});
 </script>
 </body>
 </html>
